@@ -1,0 +1,53 @@
+# depslib dependency file v1.0
+1414159801 source:c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\main.cc
+	"stdlib.h"
+	"stdio.h"
+	<windows.h>
+	<GL/glut.h>
+	<ctype.h>
+	"user_code.h"
+	<iostream>
+
+1414077654 c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\user_code.h
+	<GL/gl.h>
+	<vector>
+	"figura.h"
+
+1414077565 source:c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\user_code.cc
+	"user_code.h"
+
+1379607504 source:c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\file_ply_stl.cc
+	"file_ply_stl.h"
+
+1379607504 c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\file_ply_stl.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<string>
+	<vector>
+	<assert.h>
+
+1413532731 source:c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\punto.cc
+
+1413535019 c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\punto.h
+	<GL/gl.h>
+
+1413535068 source:c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\figura.cc
+
+1414159693 c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\figura.h
+	<vector>
+	"vertex.h"
+	<GL/gl.h>
+	"windows.h"
+	"file_ply_stl.h"
+	"colores.h"
+
+1349172506 c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\vertex.h
+	<stdio.h>
+	<assert.h>
+	<math.h>
+	<iostream>
+
+1414158752 c:\users\juan\desktop\informaticagrafica1415\practica1\practica1\colores.h
+	<GL/gl.h>
+
