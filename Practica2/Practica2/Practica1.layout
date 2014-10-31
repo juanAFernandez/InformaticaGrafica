@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="colores.h" open="1" top="0" tabpos="8">
+		<Cursor position="473" topLine="0" />
+	</File>
+	<File name="figura.h" open="1" top="0" tabpos="2">
+		<Cursor position="16955" topLine="137" />
+	</File>
+	<File name="file_ply_stl.cc" open="1" top="0" tabpos="3">
+		<Cursor position="0" topLine="26" />
+	</File>
+	<File name="file_ply_stl.h" open="1" top="0" tabpos="7">
+		<Cursor position="0" topLine="34" />
+	</File>
+	<File name="main.cc" open="1" top="1" tabpos="1">
+		<Cursor position="608" topLine="0" />
+	</File>
+	<File name="punto.h" open="0" top="0" tabpos="0">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="user_code.cc" open="1" top="0" tabpos="4">
+		<Cursor position="1348" topLine="22" />
+	</File>
+	<File name="user_code.h" open="1" top="0" tabpos="5">
+		<Cursor position="312" topLine="0" />
+	</File>
+	<File name="vertex.h" open="1" top="0" tabpos="6">
+		<Cursor position="1077" topLine="45" />
+	</File>
+</CodeBlocks_layout_file>

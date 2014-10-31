@@ -1,0 +1,115 @@
+# depslib dependency file v1.0
+1379603904 source:c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\file_ply_stl.cc
+	"file_ply_stl.h"
+
+1379603904 c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\file_ply_stl.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<string>
+	<vector>
+	<assert.h>
+
+1414771197 source:c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\main.cc
+	"stdlib.h"
+	"stdio.h"
+	<windows.h>
+	<GL/glut.h>
+	<ctype.h>
+	<iostream>
+	"figuraCargada.h"
+	"figuraRevolucionada.h"
+
+1414077654 c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\user_code.h
+	<GL/gl.h>
+	<vector>
+	"figura.h"
+
+1414268348 c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\figura.h
+	<vector>
+	"vertex.h"
+	<GL/gl.h>
+	"windows.h"
+	"file_ply_stl.h"
+	"colores.h"
+
+1349168906 c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\vertex.h
+	<stdio.h>
+	<assert.h>
+	<math.h>
+	<iostream>
+
+1414155152 c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\colores.h
+	<GL/gl.h>
+
+1414077565 source:c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\user_code.cc
+	"user_code.h"
+
+1413535068 source:c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\figura.cc
+
+1414266405 c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\figuracargada.h
+	"figuraSolida.h"
+	"file_ply_stl.h"
+
+1414443135 c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\figurasolida.h
+	"figuraSimple.h"
+
+1414266991 c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\figurasimple.h
+	<GL/gl.h>
+	<vector>
+	"vertex.h"
+	"colores.h"
+
+1414771279 c:\users\juan\desktop\informaticagrafica1415\practica2\practica2\figurarevolucionada.h
+	"figuraSolida.h"
+	<math.h>
+	"file_ply_stl.h"
+
+1379603904 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\file_ply_stl.cc
+	"file_ply_stl.h"
+
+1379603904 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\file_ply_stl.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<string>
+	<vector>
+	<assert.h>
+
+1414772145 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\main.cc
+	"stdlib.h"
+	"stdio.h"
+	<windows.h>
+	<GL/glut.h>
+	<ctype.h>
+	<iostream>
+	"figuraCargada.h"
+	"figuraRevolucionada.h"
+
+1414266405 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\figuracargada.h
+	"figuraSolida.h"
+	"file_ply_stl.h"
+
+1414443135 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\figurasolida.h
+	"figuraSimple.h"
+
+1414266991 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\figurasimple.h
+	<GL/gl.h>
+	<vector>
+	"vertex.h"
+	"colores.h"
+
+1349168906 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\vertex.h
+	<stdio.h>
+	<assert.h>
+	<math.h>
+	<iostream>
+
+1414155152 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\colores.h
+	<GL/gl.h>
+
+1414771679 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\figurarevolucionada.h
+	"figuraSolida.h"
+	<math.h>
+	"file_ply_stl.h"
+
