@@ -61,7 +61,8 @@ de la que se encargará un función independiente.
 
     //Correspondiente a la práctica 2
 
-    figuraRevolucionada prueba;
+    figuraRevolucionada peon;
+    figuraRevolucionada figuraPrueba;
 
 //###############
 
@@ -157,11 +158,11 @@ void draw_objects()
     por todas las funciones declaradas tras ellos.
     */
 
-
-    prueba.dibujarVertices("todo");
-    prueba.dibujarCaras("todo","caras");
-    prueba.dibujarAristas("todo");
-
+    /*
+    figuraPrueba.dibujarVertices("todo");
+    figuraPrueba.dibujarCaras("todo","caras");
+    figuraPrueba.dibujarAristas("todo");
+    */
     //Llamadas a algunas figuras básicas:
 
     //triangulo.dibujarVertices();
@@ -177,44 +178,43 @@ void draw_objects()
     en el figura.h
     */
 
-    /*
+
     switch(FIGURA){
 
+        //Figura de prueba:
         case 1:
             if(MODO==1)
-                hormiga.dibujarVertices("solo y+");
+                figuraPrueba.dibujarVertices("todo");
             if(MODO==2)
-                hormiga.dibujarAristas("solo y+");
+                figuraPrueba.dibujarAristas("todo");
             if(MODO==3)
-                hormiga.dibujarCaras("solo y+", "ajedrez");
-            if(MODO==4)
-                hormiga.dibujarCaras("solo y+", "especial");
+                figuraPrueba.dibujarCaras("todo", "ajedrez");
+            if(MODO==4){
+                figuraPrueba.dibujarVertices("todo");
+                figuraPrueba.dibujarCaras("todo","caras");
+                figuraPrueba.dibujarAristas("todo");
+            }
             break;
 
+        //Perfil del peón
         case 2:
-           if(MODO==1)
-                beethoven.dibujarVertices("solo y+");
-            if(MODO==2)
-                beethoven.dibujarAristas("solo y+");
-            if(MODO==3)
-                beethoven.dibujarCaras("solo y+","ajedrez");
-            if(MODO==4)
-                beethoven.dibujarCaras("solo y+","especial");
+           if(MODO==1) //Dibujar vértices
+                peon.dibujarVertices("todo");
+            if(MODO==2) //Dibujar aristas
+                peon.dibujarAristas("todo");
+            if(MODO==3) //Dibujar sólido
+                peon.dibujarCaras("solo y+","ajedrez");
+            if(MODO==4){ //Dibujar mezcla
+                peon.dibujarVertices("todo");
+                peon.dibujarCaras("todo","caras");
+                peon.dibujarAristas("todo");
+            }
             break;
 
-        case 3:
-            if(MODO==1)
-                dodge.dibujarVertices("solo y+");
-            if(MODO==2)
-                dodge.dibujarAristas("solo y+");
-            if(MODO==3)
-                dodge.dibujarCaras("solo y+","ajedrez");
-            if(MODO==4)
-                dodge.dibujarCaras("solo y+","especial");
-            break;
+
 
     };
-    */
+
 
 }
 
@@ -307,9 +307,11 @@ if(Tecla1=='+'){
     //Aumentamos el número de revoluciones
     REVOLUCIONES++;
     //Eliminamos el contenido de vertices y caras y que hay que generarlos de nuevo:
-    prueba.vaciaFigura();
+    figuraPrueba.vaciaFigura();
+    peon.vaciaFigura();
     //Volvemos a realizar la revolución:
-    prueba.revoluciona(REVOLUCIONES);
+    figuraPrueba.revoluciona(REVOLUCIONES);
+    peon.revoluciona(REVOLUCIONES);
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
 }
@@ -319,9 +321,11 @@ if(Tecla1=='-'){
     if(REVOLUCIONES>3){ //No permitiremos realizar el proceso con menos de tres revoluciones.
         REVOLUCIONES--;
         //Eliminamos el contenido de vertices y caras y que hay que generarlos de nuevo:
-        prueba.vaciaFigura();
+        figuraPrueba.vaciaFigura();
+        peon.vaciaFigura();
         //Volvemos a realizar la revolución:
-        prueba.revoluciona(REVOLUCIONES);
+        figuraPrueba.revoluciona(REVOLUCIONES);
+        peon.revoluciona(REVOLUCIONES);
         //Llamamos a dibujar escena donde se decide que y como dibujar
         draw_scene();
     }
@@ -403,15 +407,24 @@ int main(int argc, char **argv)
     perfil.push_back({1,-1,0});
     //perfil.push_back({2.5,0,0});
     perfil.push_back({1,1,0});
-    //perfil.push_back({0,1,0});
+    perfil.push_back({0,1,0});
 
 
     //Ahora mismo prueba sólo contiene el perfil de la figura
 
     //De la siguiente manera se carga el perfil una sola vez y en tiempo de ejecución con el control de las teclas + y -
     //puede variarse el número de revoluciones.
-    prueba.leerPerfil("perfil.ply");
-    prueba.revoluciona(REVOLUCIONES);
+
+    //El perfil puede ser un fichero ply.
+    peon.cargarPerfil("perfil.ply");
+
+    //El perfil tb puede ser un vector de _vertex3f
+    figuraPrueba.cargarPerfil(perfil);
+
+
+    peon.revoluciona(REVOLUCIONES);
+    figuraPrueba.revoluciona(REVOLUCIONES);
+
 
     //cout << prueba.numeroVertices();
     //cout << prueba.numeroCaras();

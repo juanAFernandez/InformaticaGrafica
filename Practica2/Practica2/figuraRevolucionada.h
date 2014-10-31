@@ -31,11 +31,6 @@ class figuraRevolucionada: public figuraSolida{
         * @param numVP El número de vértices por perfil que tiene nuestra figura. (POSIBLEMENTE SE ELIMINE POR CAMBIO DE FUNCINOALIDAD)
         **/
         void generaCaras(int numRev, int numVP){
-            //numVP: numero de vértices en el perfil
-
-
-
-
 
 
             int verticeA, verticeB, verticeC;
@@ -92,7 +87,11 @@ class figuraRevolucionada: public figuraSolida{
 
     public:
 
-        void leerPerfil(char *nombreFichero){
+        /**
+        * @brief Función para cargar el perfil a partir de un fichero .ply
+        * param nombreFichero El nombre dle fichero que vamos a usar.
+        */
+        void cargarPerfil(char *nombreFichero){
 
             _file_ply fichero;
             fichero.open(nombreFichero);
@@ -116,6 +115,15 @@ class figuraRevolucionada: public figuraSolida{
 
             //Cerramos el fichero.
             fichero.close();
+        }
+
+        /**
+        * @brief Función para cargar el perfil a partir de un vector.
+        * param vectorPerfil Elvector de _vertex3f que almacena el perfil.
+        */
+        void cargarPerfil(vector <_vertex3f> vectorPerfil){
+            for(int i=0; i<vectorPerfil.size(); i++)
+                perfil.push_back(vectorPerfil[i]);
         }
 
         /**
@@ -145,12 +153,11 @@ class figuraRevolucionada: public figuraSolida{
         */
         void revoluciona(int numRev){
 
-            //Atención: El pefil es una estructura de datos distinta de nuestro vector de vertices, hay que pasar la informacióna este,
+            //Atención: El pefil es una estructura de datos distinta de nuestro vector de vertices, hay que pasar la información a este,
             //que es lo que se hace cuando se pasa a revolucionar, se leen datos del perfil y se introducen en el vector de vértices
             //de nuestra nueva figura revolucionada.
 
-
-
+            // #ALGORITMO# //
 
             // ##1## Lo primero que nuestro algoritmo va a hacer es detectar la presencia de las tapas:
             bool tapaSuperior=false;
