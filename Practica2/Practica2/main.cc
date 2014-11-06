@@ -308,10 +308,10 @@ if(Tecla1=='+'){
     REVOLUCIONES++;
     //Eliminamos el contenido de vertices y caras y que hay que generarlos de nuevo:
     figuraPrueba.vaciaFigura();
-    peon.vaciaFigura();
+   // peon.vaciaFigura();
     //Volvemos a realizar la revolución:
     figuraPrueba.revoluciona(REVOLUCIONES);
-    peon.revoluciona(REVOLUCIONES);
+    //peon.revoluciona(REVOLUCIONES);
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
 }
@@ -322,10 +322,10 @@ if(Tecla1=='-'){
         REVOLUCIONES--;
         //Eliminamos el contenido de vertices y caras y que hay que generarlos de nuevo:
         figuraPrueba.vaciaFigura();
-        peon.vaciaFigura();
+        //peon.vaciaFigura();
         //Volvemos a realizar la revolución:
         figuraPrueba.revoluciona(REVOLUCIONES);
-        peon.revoluciona(REVOLUCIONES);
+        //peon.revoluciona(REVOLUCIONES);
         //Llamamos a dibujar escena donde se decide que y como dibujar
         draw_scene();
     }
@@ -399,6 +399,7 @@ glViewport(0,0,UI_window_width,UI_window_height);
 int main(int argc, char **argv)
 {
 
+
     //Introducimos vertices a un perfil para que a partir de ellos e genere la figura
     //vector<_vertex3f> perfil; //Es declarado globlal para poder ser usado en draw_objects()
 
@@ -416,13 +417,11 @@ int main(int argc, char **argv)
     //puede variarse el número de revoluciones.
 
     //El perfil puede ser un fichero ply.
-    peon.cargarPerfil("perfil.ply");
+    //peon.cargarPerfil("perfil.ply");
+    //peon.revoluciona(REVOLUCIONES);
 
     //El perfil tb puede ser un vector de _vertex3f
     figuraPrueba.cargarPerfil(perfil);
-
-
-    peon.revoluciona(REVOLUCIONES);
     figuraPrueba.revoluciona(REVOLUCIONES);
 
 
@@ -480,31 +479,6 @@ int main(int argc, char **argv)
 
 
     // ########################## FIN CUBO ##############################################
-
-
-    //CARGANDO LOS MODELOS...
-
-    /*La carga del modelo sólo se realiza una vez en el main, aunque se visualice cientos de
-    veces no tiene sentido que esté constantemente cargandose. Esta es la diferencia entre el modeloado, tener
-    cargado los datos del objeto en memoria y la visualización, que accede a esos datos para trabajar con ellos
-    y mostrarlos en pantalla bajo una determinada configuración.
-    */
-
-
-    hormiga.leerFichero("ant.ply");
-    cout << "Numero de vertices del modelo hormiga: " << hormiga.numeroVertices() << endl;
-    cout << "Numero de caaras del modelo hormiga: " << hormiga.numeroCaras() << endl;
-
-    beethoven.leerFichero("beethoven.ply");
-    cout << "Numero de vertices del modelo beethoven: " << beethoven.numeroVertices() << endl;
-    cout << "Numero de caaras del modelo beethoven: " << beethoven.numeroCaras() << endl;
-
-    dodge.leerFichero("big_dodge.ply");
-    cout << "Numero de vertices del modelo big_dodge: " << dodge.numeroVertices() << endl;
-    cout << "Numero de caaras del modelo big_dodge: " << dodge.numeroCaras() << endl;
-
-
-
 
 
 
