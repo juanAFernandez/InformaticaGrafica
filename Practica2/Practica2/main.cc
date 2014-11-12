@@ -35,11 +35,13 @@ de la que se encargará un función independiente.
     //### Varialbes de Control de Visualización
 
         //Declaramos una variable para controlar el modelo que se visualiza.
-        int FIGURA=0;
+        int FIGURA=1; //Por defecto seleccionamos la primera.
         //Otra para controlar el modo de visualización: VERTICES, ALAMBRE y SÓLIDO
         int MODO=0;
         //Para controlar el número de revoluciones en las figuras de este tipo
         int REVOLUCIONES=4;
+        //Para algunos bucles que limpian el código:
+        int NUM_FIGURAS=6;
 
     //### Fin de variable de control de Visualización
 
@@ -62,6 +64,9 @@ de la que se encargará un función independiente.
     vector<_vertex3f> perfilSinTapas;
 
     //Figuras para cargar y revolucionar los perfiles simples:
+
+    vector <figuraRevolucionada> vectorFiguras;
+
     figuraRevolucionada figuraPerfilCompleto;
     figuraRevolucionada figuraPerfilParcialSinTapaArriba;
     figuraRevolucionada figuraPerfilParcialSinTapaAbajo;
@@ -225,10 +230,28 @@ void draw_objects()
     cout << "FIN" << endl;
     */
 
+    //Dibujamos la figura FIGURA en el modo MODO que tengamos seleciconado
 
-    /*Para evitar que tanto en el switch como el normal_keys se produzca un código farragoso y repetitivo
-      vamos a meter las figuras en un vector para recorrerlo de forma más compacta en acciones comunes para todos.*/
+        //Sólo vértices
+        if(MODO==1)
+            vectorFiguras[FIGURA-1].dibujarVertices("todo");
+        //Sólo aristas
+        if(MODO==2)
+            vectorFiguras[FIGURA-1].dibujarAristas("todo");
+        //Modo sólido
+        if(MODO==3)
+            vectorFiguras[FIGURA-1].dibujarCaras("todo","ajedrez");
+        //Modo sólido especial: vertices + aristas + caras + representación de normales.
+        if(MODO==4){
+            vectorFiguras[FIGURA-1].dibujarVertices("todo");
+            vectorFiguras[FIGURA-1].dibujarAristas("todo");
+            vectorFiguras[FIGURA-1].dibujarCaras("todo","caras");
+            vectorFiguras[FIGURA-1].dibujarNormales();
+            vectorFiguras[FIGURA-1].dibujaBaricentros();
+        }
 
+
+    /*
     switch(FIGURA){
 
         //Si FIGURA==1 dibujamos la figura 1 según el modo que queramos:
@@ -270,7 +293,7 @@ void draw_objects()
 
 
 
-    };
+    }; */
 
 
 }
@@ -392,6 +415,12 @@ if(Tecla1=='-'){
     //###Disminuimos el número de revoluciones:
     if(REVOLUCIONES>3){ //No permitiremos realizar el proceso con menos de tres revoluciones.
         REVOLUCIONES--;
+
+
+        --> Seguir aquí haciendo el proceso para todos las figuras.
+
+
+
         //Eliminamos el contenido de vertices y caras y que hay que generarlos de nuevo:
         figuraPrueba.vaciaFigura();
         peon.vaciaFigura();
@@ -517,6 +546,12 @@ int main(int argc, char **argv)
         figuraPerfilSinTapas.cargarPerfil(perfilSinTapas);
         figuraPerfilSinTapas.revoluciona(REVOLUCIONES);
 
+        //Después de inicializarlas las meto en un vector para poder trabajar con ellas mejor.
+
+        vectorFiguras.push_back(figuraPerfilCompleto);
+        vectorFiguras.push_back(figuraPerfilParcialSinTapaAbajo);
+        vectorFiguras.push_back(figuraPerfilParcialSinTapaArriba);
+        vectorFiguras.push_back(figuraPerfilSinTapas);
 
     //Introducimos vertices a un perfil para que a partir de ellos e genere la figura
     //vector<_vertex3f> perfil; //Es declarado globlal para poder ser usado en draw_objects()
@@ -528,6 +563,10 @@ int main(int argc, char **argv)
     perfil.push_back({1,1,0});
     //perfil.push_back({0,1,0});
 
+    figuraPrueba.cargarPerfil(perfil);
+    figuraPrueba.revoluciona(REVOLUCIONES);
+
+    vectorFiguras.push_back(figuraPrueba);
 
     //Ahora mismo prueba sólo contiene el perfil de la figura
 
@@ -538,12 +577,15 @@ int main(int argc, char **argv)
       peon.cargarPerfil("perfil.ply");
       peon.revoluciona(REVOLUCIONES);
 
+      vectorFiguras.push_back(peon);
+
     //El perfil tb puede ser un vector de _vertex3f
 
     //figuraPerfilCompleto.cargarPerfil("perfilPeon.ply");
 
-    figuraPrueba.cargarPerfil(perfil);
-    //figuraPrueba.revoluciona(REVOLUCIONES);
+
+
+
 
     //figuraPrueba.calculaNormalesCaras();
     //figuraPrueba.calculaBaricentrosCaras();

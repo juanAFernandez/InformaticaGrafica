@@ -507,12 +507,13 @@ class figuraRevolucionada: public figuraSolida{
 
 
 
-                //calculaNormalesCaras();
+                calculaNormalesCaras();
+                calculaBaricentrosCaras();
 
 
 
 
-        }
+        } //###Fin de revoluciona
 
 
 
