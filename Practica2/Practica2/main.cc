@@ -34,35 +34,39 @@ de la que se encargará un función independiente.
 
     //### Varialbes de Control de Visualización
 
-    //Declaramos una variable para controlar el modelo que se visualiza.
-    int FIGURA=0;
-    //Otra para controlar el modo de visualización: VERTICES, ALAMBRE y SÓLIDO
-    int MODO=0;
-    //Para controlar el número de revoluciones en las figuras de este tipo
-    int REVOLUCIONES=4;
-
-    //Introducimos vertices a un perfil para que a partir de ellos e genere la figura
-    vector<_vertex3f> perfil;
-
-
+        //Declaramos una variable para controlar el modelo que se visualiza.
+        int FIGURA=0;
+        //Otra para controlar el modo de visualización: VERTICES, ALAMBRE y SÓLIDO
+        int MODO=0;
+        //Para controlar el número de revoluciones en las figuras de este tipo
+        int REVOLUCIONES=4;
 
     //### Fin de variable de control de Visualización
 
 
-    //Declaramos las variables tipo figura para cargar en el main el modelo almacenado en los ficheros .ply
+    //Correspondiente a la práctica 2 ############
 
-    //Figura 1
-    figuraCargada hormiga;
-    //Figura 2
-    figuraCargada beethoven;
-    //Figura 3
-    figuraCargada dodge;
+    //Introducimos vertices a un perfil para que a partir de ellos e genere la figura
+    vector<_vertex3f> perfil;
 
-
-    //Correspondiente a la práctica 2
-
+    //La figura del peon (cuyo perfil será cargado desde un .ply)
     figuraRevolucionada peon;
+
+    //Una figura extra con la que probar cosas.
     figuraRevolucionada figuraPrueba;
+
+    //Perfiles simples para el examen:
+    vector<_vertex3f> perfilCompleto;
+    vector<_vertex3f> perfilParcialSinTapaArriba;
+    vector<_vertex3f> perfilParcialSinTapaAbajo;
+    vector<_vertex3f> perfilSinTapas;
+
+    //Figuras para cargar y revolucionar los perfiles simples:
+    figuraRevolucionada figuraPerfilCompleto;
+    figuraRevolucionada figuraPerfilParcialSinTapaArriba;
+    figuraRevolucionada figuraPerfilParcialSinTapaAbajo;
+    figuraRevolucionada figuraPerfilSinTapas;
+
 
 //###############
 
@@ -81,7 +85,7 @@ GLfloat Observer_angle_y;
 GLfloat Window_width,Window_height,Front_plane,Back_plane;
 
 // variables que determninan la posicion y tamaño de la ventana X
-int UI_window_pos_x=50,UI_window_pos_y=30,UI_window_width=800,UI_window_height=730;
+int UI_window_pos_x=500,UI_window_pos_y=30,UI_window_width=800,UI_window_height=730;
 
 //**************************************************************************
 //
@@ -178,21 +182,74 @@ void draw_objects()
     en el figura.h
     */
 
+    /*
+    cout << "NORMALES DIABOLICAS" << endl;
+
+    figuraSolida fig;
+    fig.setVerticeManual(1,,-2);
+    fig.setVerticeManual(0,1,0);
+    fig.setVerticeManual(0,0,0);
+
+    fig.dibujarVertices("todo");
+    fig.setCaraManual(0,1,2);
+    fig.dibujarAristas("todo");
+    fig.dibujarCaras("todo","solido");
+
+
+    _vertex3f ca,cb;
+    ca.x=1; ca.y=0; ca.z=0;
+    cb.x=0; cb.y=1; cb.z=0;
+
+    //Producto vectorial:
+    _vertex3f n;
+
+    n.x=ca.y*cb.z - ca.z*cb.y;
+    n.y=ca.z*cb.x - ca.x*cb.z;
+    n.z=ca.x*cb.y - ca.y*cb.x;
+
+    cout << "n" << n.x << n.y << n.z << endl;
+
+    n.normalize();
+    cout << "n nor" << n.x << n.y << n.z << endl;
+
+    //Calcular baricentro
+
+    fig.setVerticeManual(0.33,0.33,0);
+    fig.dibujarVertices("todo");
+
+    glBegin(GL_LINES);
+        glVertex3f(0.33,0.33,0);
+        glVertex3f(0.33,0.33,1);
+    glEnd();
+
+    cout << "FIN" << endl;
+    */
+
+
+    /*Para evitar que tanto en el switch como el normal_keys se produzca un código farragoso y repetitivo
+      vamos a meter las figuras en un vector para recorrerlo de forma más compacta en acciones comunes para todos.*/
 
     switch(FIGURA){
 
-        //Figura de prueba:
+        //Si FIGURA==1 dibujamos la figura 1 según el modo que queramos:
         case 1:
+            //Sólo vertices
             if(MODO==1)
-                figuraPrueba.dibujarVertices("todo");
+                figuraPerfilCompleto.dibujarVertices("todo");
+            //Sólo aristas
             if(MODO==2)
-                figuraPrueba.dibujarAristas("todo");
+                figuraPerfilCompleto.dibujarAristas("todo");
+            //Módo sólido
             if(MODO==3)
-                figuraPrueba.dibujarCaras("todo", "ajedrez");
+                figuraPerfilCompleto.dibujarCaras("todo", "ajedrez");
+            //Modo detalle: vertices + aristas + caras + representación de normales.
             if(MODO==4){
-                figuraPrueba.dibujarVertices("todo");
-                figuraPrueba.dibujarCaras("todo","caras");
-                figuraPrueba.dibujarAristas("todo");
+                figuraPerfilCompleto.dibujarVertices("todo");
+                figuraPerfilCompleto.dibujarCaras("todo","caras");
+                figuraPerfilCompleto.dibujarAristas("todo");
+                //figuraPrueba.dibujarNormales();
+                //figuraPrueba.dibujaBaricentros();
+
             }
             break;
 
@@ -275,15 +332,27 @@ y se llama a draw_scene(); que llama a draw_objects(); donde segun el estado
 de esas variables se dibujará una cosa u otra.
 */
 
+/*Para la práctica dos vamos a tener 6 figuras. Las cuatro a partir de la revolución de los
+cuatro perfiles de examen, una quinta con la que nosostros hacemos pruebas y como sexta y última
+el peón cargado desde el fichero .ply*/
 
-//Para dibujar a la hormiga pulsamos la techa 1
+//Para dibujar la figura 1 pulsamos la techa 1
 if(toupper(Tecla1)=='1'){FIGURA=1; draw_scene();}
 
-//Para dibujar a beethoven pulsamos la techa 2
+//Para dibujar la figura 2 pulsamos la techa 2
 if(toupper(Tecla1)=='2'){FIGURA=2; draw_scene();}
 
-//Para dibujar al dodge pulsamos la techa 3
+//Para dibujar la figura 3 pulsamos la techa 3
 if(toupper(Tecla1)=='3'){FIGURA=3; draw_scene();}
+
+//Para dibujar la figura 4 pulsamos la techa 4
+if(toupper(Tecla1)=='4'){FIGURA=4; draw_scene();}
+
+//Para dibujar la figura 5 pulsamos la techa 5
+if(toupper(Tecla1)=='5'){FIGURA=5; draw_scene();}
+
+//Para dibujar la figura 6 pulsamos la techa 6
+if(toupper(Tecla1)=='6'){FIGURA=6; draw_scene();}
 
 
 //Ahora seleccionamos el modo, VERTICES, ALAMBRE O SÓLID y el especial de 4 colores del examen.
@@ -304,28 +373,33 @@ if(toupper(Tecla1)=='D'){MODO=4; draw_scene();}
 
 //Pulsar la tecla + aumenta el número y vuelve a dibujar
 if(Tecla1=='+'){
-    //Aumentamos el número de revoluciones
+    //###Aumentamos el número de revoluciones:
     REVOLUCIONES++;
     //Eliminamos el contenido de vertices y caras y que hay que generarlos de nuevo:
     figuraPrueba.vaciaFigura();
-   // peon.vaciaFigura();
-    //Volvemos a realizar la revolución:
+    peon.vaciaFigura();
+
+    //Volvemos a realizar la revolución en todas las figuras:
     figuraPrueba.revoluciona(REVOLUCIONES);
-    //peon.revoluciona(REVOLUCIONES);
+    peon.revoluciona(REVOLUCIONES);
+
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
 }
+
 //Pulsar la tecla - reduce el número y vuelve a dibujar
 if(Tecla1=='-'){
-    //Aumentamos el número de revoluciones
+    //###Disminuimos el número de revoluciones:
     if(REVOLUCIONES>3){ //No permitiremos realizar el proceso con menos de tres revoluciones.
         REVOLUCIONES--;
         //Eliminamos el contenido de vertices y caras y que hay que generarlos de nuevo:
         figuraPrueba.vaciaFigura();
-        //peon.vaciaFigura();
-        //Volvemos a realizar la revolución:
+        peon.vaciaFigura();
+
+        //Volvemos a realizar la revolución en todas las figuras:
         figuraPrueba.revoluciona(REVOLUCIONES);
-        //peon.revoluciona(REVOLUCIONES);
+        peon.revoluciona(REVOLUCIONES);
+
         //Llamamos a dibujar escena donde se decide que y como dibujar
         draw_scene();
     }
@@ -399,16 +473,60 @@ glViewport(0,0,UI_window_width,UI_window_height);
 int main(int argc, char **argv)
 {
 
+    //Definimos los perfiles para el examen dándoles vértices:
+
+        /*
+           Hubiera sido interesante tener los ficheros en ficheros .ply pero windows se niega a leer ficheros que
+           no sean bajados de la plataforma, parece que su codificación al guardar la información hace que no puedan
+           abrirse y para lo que se va a conseguir, se ha optado por esta solución.
+        */
+
+
+        //El perfil simple completo (con tapas):
+        perfilCompleto.push_back({0,-1,0});
+        perfilCompleto.push_back({1,-1,0});
+        perfilCompleto.push_back({1,1,0});
+        perfilCompleto.push_back({0,1,0});
+
+        //El pefil simple sin tapa abajo:
+        perfilParcialSinTapaAbajo.push_back({1,-1,0});
+        perfilParcialSinTapaAbajo.push_back({1,1,0});
+        perfilParcialSinTapaAbajo.push_back({0,1,0});
+
+        //El perfil simple sin tapa arriba:
+        perfilParcialSinTapaArriba.push_back({0,-1,0});
+        perfilParcialSinTapaArriba.push_back({1,-1,0});
+        perfilParcialSinTapaArriba.push_back({1,1,0});
+
+        //El perfil simple sin tapas:
+        perfilSinTapas.push_back({1,-1,0});
+        perfilSinTapas.push_back({1,1,0});
+
+
+    //Inicializamos las figuras del tipo "figuraRevolucionada" con estos perfiles y les damos la revolución general mínima:
+
+        figuraPerfilCompleto.cargarPerfil(perfilCompleto);
+        figuraPerfilCompleto.revoluciona(REVOLUCIONES);
+
+        figuraPerfilParcialSinTapaAbajo.cargarPerfil(perfilParcialSinTapaAbajo);
+        figuraPerfilParcialSinTapaAbajo.revoluciona(REVOLUCIONES);
+
+        figuraPerfilParcialSinTapaArriba.cargarPerfil(perfilParcialSinTapaArriba);
+        figuraPerfilParcialSinTapaArriba.revoluciona(REVOLUCIONES);
+
+        figuraPerfilSinTapas.cargarPerfil(perfilSinTapas);
+        figuraPerfilSinTapas.revoluciona(REVOLUCIONES);
+
 
     //Introducimos vertices a un perfil para que a partir de ellos e genere la figura
     //vector<_vertex3f> perfil; //Es declarado globlal para poder ser usado en draw_objects()
 
     //Ojo, aquí se dan los perfiles por orden inverso a como se dibujarían. El primero dado es el de abajo y así hacia arriba. !!
-    perfil.push_back({0,-1,0});
+    //perfil.push_back({0,-1,0});
     perfil.push_back({1,-1,0});
-    //perfil.push_back({2.5,0,0});
+    perfil.push_back({2.5,0,0});
     perfil.push_back({1,1,0});
-    perfil.push_back({0,1,0});
+    //perfil.push_back({0,1,0});
 
 
     //Ahora mismo prueba sólo contiene el perfil de la figura
@@ -417,12 +535,19 @@ int main(int argc, char **argv)
     //puede variarse el número de revoluciones.
 
     //El perfil puede ser un fichero ply.
-    //peon.cargarPerfil("perfil.ply");
-    //peon.revoluciona(REVOLUCIONES);
+      peon.cargarPerfil("perfil.ply");
+      peon.revoluciona(REVOLUCIONES);
 
     //El perfil tb puede ser un vector de _vertex3f
+
+    //figuraPerfilCompleto.cargarPerfil("perfilPeon.ply");
+
     figuraPrueba.cargarPerfil(perfil);
-    figuraPrueba.revoluciona(REVOLUCIONES);
+    //figuraPrueba.revoluciona(REVOLUCIONES);
+
+    //figuraPrueba.calculaNormalesCaras();
+    //figuraPrueba.calculaBaricentrosCaras();
+
 
 
     //cout << prueba.numeroVertices();
