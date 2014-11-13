@@ -45,8 +45,8 @@ class figuraRevolucionada: public figuraSolida{
             for(int i=0; i<numVP-1; i++)
                 for(int j=0; j<numRev; j++){
                     verticeA=(((j*numVP)+i)%elementosVector);
-                    verticeB=(((j*numVP)+(numVP+i))%elementosVector);
-                    verticeC=(((j*numVP)+(1+i))%elementosVector);
+                    verticeC=(((j*numVP)+(numVP+i))%elementosVector);
+                    verticeB=(((j*numVP)+(1+i))%elementosVector);
                     if(DEBUGG)
                         cout << "Cara PAR generada n. "<< verticeA << " "<< verticeB << " "<< verticeC << endl;
                     //Introduciendo la cara
@@ -58,8 +58,8 @@ class figuraRevolucionada: public figuraSolida{
             for(int i=0; i<numVP-1; i++)
                 for(int j=0; j<numRev; j++){
                     verticeA=(((j*numVP)+(numVP+i))%elementosVector);
-                    verticeB=((verticeA+1)%elementosVector);
-                    verticeC=(((j*numVP)+(1+i))%elementosVector);
+                    verticeC=((verticeA+1)%elementosVector);
+                    verticeB=(((j*numVP)+(1+i))%elementosVector);
                     if(DEBUGG)
                         cout << "Cara IMPAR generada n. "<< verticeA << " "<< verticeB << " "<< verticeC << endl;
                     //Introduciendo la cara
@@ -81,26 +81,26 @@ class figuraRevolucionada: public figuraSolida{
             //No es necesario generar el verticeA porque siempre será el mismo: posTi
             int verticeB, verticeC;
             for(int i=0; i<numRev; i++){
-                verticeB=((i+1)*nVPST)%posTi;
-                verticeC=((i*nVPST)%posTi);
+                verticeC=((i+1)*nVPST)%posTi;
+                verticeB=((i*nVPST)%posTi);
                 setCaraManual(posTi,verticeB,verticeC);
-                cout << "Cara tapa inferior generada: ["<<posTi<<" "<<verticeB <<" "<<verticeC <<"]"<<endl;
+                //cout << "Cara tapa inferior generada: ["<<posTi<<" "<<verticeB <<" "<<verticeC <<"]"<<endl;
             }
 
         }
 
         void generaCarasTapaSuperior(int numRev, int posTs, int nVPST, int nVST){
             //No es necesario general el vértice B ya que es siempre el mismo
-             cout << "numero de revoluciones: " << numRev << endl;
-             cout << "posición del vertice central de la tapa inferior: " << posTs << endl;
-             cout << "numero de vertices del perfil sin tapa: " << nVPST << endl;
-             cout << "numero de vertices  sin tapa: " << nVST << endl;
+             //cout << "numero de revoluciones: " << numRev << endl;
+             //cout << "posición del vertice central de la tapa inferior: " << posTs << endl;
+             //cout << "numero de vertices del perfil sin tapa: " << nVPST << endl;
+             //cout << "numero de vertices  sin tapa: " << nVST << endl;
              int verticeA, verticeC;
             for(int i=0; i<numRev; i++){
-                verticeA=((nVPST*(i+1))+(nVPST-1))%nVST;
-                verticeC=(verticeA+(nVST-nVPST))%nVST;
+                verticeC=((nVPST*(i+1))+(nVPST-1))%nVST;
+                verticeA=(verticeC+(nVST-nVPST))%nVST;
                 setCaraManual(verticeA, posTs, verticeC);
-                cout << "Cara tapa superior generada: ["<<verticeA<<" "<<posTs <<" "<<verticeC <<"]"<<endl;
+                //cout << "Cara tapa superior generada: ["<<verticeA<<" "<<posTs <<" "<<verticeC <<"]"<<endl;
             }
         }
 
@@ -113,14 +113,14 @@ class figuraRevolucionada: public figuraSolida{
         double gradosARadianes(double angulo){return angulo*(M_PI/180);}
 
         void muestraVertice(_vertex3f vertice){
-            cout << "[ " << vertice.x << " " << vertice.y << " " << vertice.z << " ]" << endl;
+            //cout << "[ " << vertice.x << " " << vertice.y << " " << vertice.z << " ]" << endl;
         }
 
-        _vertex3f productoVectorial(_vertex3f a, _vertex3f b){
-            _vertex3f producto;
-            producto.x=(a.y*b.z)-(a.z*b.y);
-            producto.y=(a.x*b.z)-(a.z*b.x);
-            producto.z=(a.x*b.y)-(a.y*b.x);
+        _vertex3f productoVectorial(_vertex3f ab, _vertex3f ac){
+                _vertex3f producto;
+                producto.x=(ab.y*ac.z)-(ab.z*ac.y);
+                producto.y=(ab.z*ac.x)-(ab.x*ac.z);
+                producto.z=(ab.x*ac.y)-(ab.y*ac.x);
             return producto;
         }
 
@@ -136,75 +136,69 @@ class figuraRevolucionada: public figuraSolida{
             de los puntos del vértice extremo al origen. Así si tenemos que B=v3-->v2, el vector B son las coordenadas de v2 - las de v3.*/
 
             //Variables que usaremos en el proceso:
-            _vertex3f v1, v2, v3; //Vértices que extraeremos de la cara.
-            _vertex3f A,B; //Vectores rsultantes de los puntos.
+            _vertex3f a, b, c; //Vértices que extraeremos de la cara.
+            _vertex3f ab,ac; //Vectores rsultantes de los puntos.
             _vertex3f normal; //Vector normal resultante del proceso.
 
             float modulo; //Para la normalizción de la normal.
 
-            cout << endl << endl << " ### Procesamiento de normales ### " << endl;
+            //cout << endl << endl << " ### Procesamiento de normales ### " << endl;
 
             //El proceso debe repetirse en tantas caras como tengamos.
-            for(int i=0; i<caras.size(); i++){
+            for(unsigned int i=0; i<caras.size(); i++){
 
-                cout << "Procesando cara " << i << endl;
+                //cout << "Procesando cara " << i << endl;
 
                 //Extraemos los vértices de la cara:
-                v1=vertices[caras[i]._0];
-                v2=vertices[caras[i]._1];
-                v3=vertices[caras[i]._2];
+                a=vertices[caras[i]._0];
+                b=vertices[caras[i]._1];
+                c=vertices[caras[i]._2];
 
-                cout << "Extracción de los vertices" << endl;
-                cout << "Vertices de la cara " << i << " :" << endl;
-                muestraVertice(v1); muestraVertice(v2); muestraVertice(v3);
-                cout << endl;
+                //cout << "Extracción de los vertices" << endl;
+                //cout << "Vertices de la cara " << i << " :" << endl;
+                //muestraVertice(a); muestraVertice(b); muestraVertice(c);
+                //cout << endl;
 
 
                 //A partir de esos vértices obtenemos los vectores
 
                     //A= v1-->v2 ==> v2-v1 = [(v2x-v1x),(v2y-v1y),(v2x-v1y)]
-                    A.x=v2.x-v1.x; A.y=v2.y-v1.y; A.z=v2.z-v1.z;
+                    ab.x=b.x-a.x; ab.y=b.y-a.y; ab.z=b.z-a.z;
 
-                    cout << "Vector A: "<< endl;
-                    muestraVertice(A);
+                    //cout << "Vector A: "<< endl;
+                    //muestraVertice(A);
 
                     //B= v1-->v3 ==> v3-v1 = [(v3x-v1x),(v3y-v1y),(v3z-v1z)]
-                    B.x=v3.x-v1.x; B.y=v3.y-v1.y; B.z=v3.z-v1.z;
+                    ac.x=c.x-a.x; ac.y=c.y-a.y; ac.z=c.z-a.z;
 
-                    cout << "Vector B: "<< endl;
-                    muestraVertice(B);
+                    //cout << "Vector B: "<< endl;
+                    //muestraVertice(B);
 
                 //Hacemos el producto vectorial mediante la fórumla abreviada extraida de (http://es.wikipedia.org/wiki/Producto_vectorial)
 
 
-                normal=productoVectorial(B,A);
+                normal=productoVectorial(ab,ac);
 
-                cout << "NORMAL antes de normalizar: " << endl;
-                muestraVertice(normal);
+                //cout << "NORMAL antes de normalizar: " << endl;
+                //muestraVertice(normal);
 
                 //Antes de finalizar hay que normalizar la normal (diviéndola entre su módulo)
-                //normal.normalize();
+                normal.normalize();
 
-                cout << "NORMAL **normalizada**: " << endl;
-                muestraVertice(normal);
+                //cout << "NORMAL **normalizada**: " << endl;
+                //muestraVertice(normal);
 
                 //cout << "normal:" << normal.x << " " << normal.y << " " << normal.z << endl;
-
-
-                //Quizas la solución esté en la cambiarla de sentido aquí:
-                normal.x=normal.x*-1;
-                normal.y=normal.y*-1;
-                normal.z=normal.z*-1;
 
                 //Introducimos la normal en el vector de normales.
                 normales.push_back(normal);
 
                 //cout << "normal:" << normal.x << " " << normal.y << " " << normal.z << endl;
-                cout << endl << endl;
+               // cout << endl << endl;
 
             }
 
-            cout << "Número de normales generadas: " << normales.size() << endl;
+            //cout << "Número de normales generadas: " << normales.size() << endl;
             calculaBaricentrosCaras();
 
         }
@@ -219,10 +213,9 @@ class figuraRevolucionada: public figuraSolida{
         }
 
         void dibujarNormales(){
-            //Teniendo la normal y el baricentro, ¿Cómo dibujo una linea que salga de la caras
+            //Teniendo la normal y el baricentro, ¿Cómo dibujo una linea que salga de la caras?
             glBegin(GL_LINES);
                 for(unsigned int i=0; i<caras.size(); i++){
-                    //cout << "normal a dibujar:" << -1*normales[i].x << " " << -1*normales[i].y << " " << -1*normales[i].z << endl;
                     glVertex3f(baricentros[i].x,baricentros[i].y,baricentros[i].z);
                     glVertex3f(baricentros[i].x+normales[i].x, baricentros[i].y+normales[i].y, baricentros[i].z+normales[i].z);
                 }
@@ -237,7 +230,7 @@ class figuraRevolucionada: public figuraSolida{
                 baricentro.y=((vertices[caras[i]._0].y + vertices[caras[i]._1].y + vertices[caras[i]._2].y)/3);
                 baricentro.z=((vertices[caras[i]._0].z + vertices[caras[i]._1].z + vertices[caras[i]._2].z)/3);
 
-                cout << "Baricentro de la cara " << i << endl;
+                //cout << "Baricentro de la cara " << i << endl;
                 muestraVertice(baricentro);
 
                 baricentros.push_back(baricentro);
@@ -288,30 +281,30 @@ class figuraRevolucionada: public figuraSolida{
         * @brief Función que nos muestra en terminal las caras almacenadas en el vector de caras con un formato legible.
         */
         void muestraCaras(){
-            for(int i=0; i<caras.size(); i++)
-                cout << "Cara n." << i << " [" << caras[i]._0 << " " << caras[i]._1 << " " << caras[i]._2 << "]" << endl;
+            //for(int i=0; i<caras.size(); i++)
+                //cout << "Cara n." << i << " [" << caras[i]._0 << " " << caras[i]._1 << " " << caras[i]._2 << "]" << endl;
 
         }
 
         void muestraPerfil(){
-            cout << "Vertices del perfil: " << endl;
-            for(int i=0; i<perfil.size(); i++)
-                cout << "Vertice n." << i << " [" << perfil[i].x << " " << perfil[i].y << " " << perfil[i].z << "]" << endl;
+            //cout << "Vertices del perfil: " << endl;
+            //for(int i=0; i<perfil.size(); i++)
+                //cout << "Vertice n." << i << " [" << perfil[i].x << " " << perfil[i].y << " " << perfil[i].z << "]" << endl;
         }
 
         /**
         * @brief Función que nos muestra en el terminal los vértices almacenados en el vector de vértices en formato legible.
         */
         void muestraVertices(){
-            cout << "Vector de vertices: " << endl;
-            for(int i=0; i<vertices.size(); i++){
-                cout << "Vertice n." << i;
-                cout << " [" << vertices[i].x <<" , "<< vertices[i].y << " , "<< vertices[i].z << "]" << endl;
-            }
+            //cout << "Vector de vertices: " << endl;
+           // for(int i=0; i<vertices.size(); i++){
+              //  cout << "Vertice n." << i;
+                //cout << " [" << vertices[i].x <<" , "<< vertices[i].y << " , "<< vertices[i].z << "]" << endl;
+            //}
         }
 
         void muestraNormales(){
-            cout << "Vector de normales" << endl;
+            //cout << "Vector de normales" << endl;
             //for(int i=0; i<normales; i++)
 
         }
@@ -323,7 +316,7 @@ class figuraRevolucionada: public figuraSolida{
         */
         void revoluciona(int numRev){
 
-            cout << endl << "Numero de revoluciones: " << numRev << endl;
+           // cout << endl << "Numero de revoluciones: " << numRev << endl;
 
             //Atención: El perfil es una estructura de datos distinta de nuestro vector de vertices, hay que pasar la información a este,
             //que es lo que se hace cuando se pasa a revolucionar, se leen datos del perfil y se introducen en el vector de vértices

@@ -52,26 +52,6 @@ class figuraSolida : public figuraSimple {
 
                 for(unsigned i=0; i<caras.size(); i++){
 
-
-
-                    /*
-
-                    if(modo=="ajedrez"){
-                    //Gestión del color de las caras si el modo es "ajedrez"
-                    if(i%2==0)
-                        //Para las caras pares:
-                        glColor3fv(GRIS_OSCURO);
-                    else
-                        //Para las caras impares:
-                        glColor3fv(GRIS_CLARO);
-                    }
-
-                    //Cuando se quiere dibujar pareciendo formar un único sólido.
-                    if(modo=="solido")
-                        glColor3fv(GRIS_CLARO);
-
-                    */
-
                     if(seccion=="todo"){
 
                         /*Para dibujar una cara se necesitan tres vértices y como nosotros guardamos en el vector de caras
@@ -107,6 +87,8 @@ class figuraSolida : public figuraSimple {
                         glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
                         //  caras[0]._2  Tercer vértice de la cara 0
                         glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+
+
                     }
 
                     if(seccion=="solo y+" && modo=="especial"){

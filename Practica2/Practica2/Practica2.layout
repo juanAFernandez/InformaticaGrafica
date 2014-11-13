@@ -7,8 +7,8 @@
 	<File name="figuraCargada.h" open="1" top="0" tabpos="3">
 		<Cursor position="140" topLine="0" />
 	</File>
-	<File name="figuraRevolucionada.h" open="1" top="0" tabpos="2">
-		<Cursor position="22902" topLine="494" />
+	<File name="figuraRevolucionada.h" open="1" top="1" tabpos="2">
+		<Cursor position="10375" topLine="356" />
 	</File>
 	<File name="figuraSimple.h" open="1" top="0" tabpos="4">
 		<Cursor position="1924" topLine="34" />
@@ -22,8 +22,8 @@
 	<File name="file_ply_stl.h" open="1" top="0" tabpos="8">
 		<Cursor position="287" topLine="22" />
 	</File>
-	<File name="main.cc" open="1" top="1" tabpos="1">
-		<Cursor position="14129" topLine="470" />
+	<File name="main.cc" open="1" top="0" tabpos="1">
+		<Cursor position="13517" topLine="393" />
 	</File>
 	<File name="vertex.h" open="0" top="0" tabpos="3">
 		<Cursor position="16708" topLine="624" />

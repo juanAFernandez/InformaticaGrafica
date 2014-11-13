@@ -187,49 +187,78 @@ void draw_objects()
     en el figura.h
     */
 
-    /*
+    if(false){
     cout << "NORMALES DIABOLICAS" << endl;
 
-    figuraSolida fig;
-    fig.setVerticeManual(1,,-2);
-    fig.setVerticeManual(0,1,0);
-    fig.setVerticeManual(0,0,0);
 
-    fig.dibujarVertices("todo");
-    fig.setCaraManual(0,1,2);
-    fig.dibujarAristas("todo");
-    fig.dibujarCaras("todo","solido");
+    _vertex3f a; a.x=1; a.y=0; a.z=0;
+    _vertex3f b; b.x=0; b.y=1; b.z=0;
+    _vertex3f c; c.x=0.5; c.y=0.5; c.z=1;
+
+        glColor3fv(NEGRO);
+    glPointSize(5);
+    glBegin(GL_POINTS);
+        glVertex3f(a.x, a.y, a.z);
+        glVertex3f(b.x, b.y, b.z);
+        glVertex3f(c.x, c.y, c.z);
+    glEnd();
+
+    glBegin(GL_LINES);
+        glVertex3f(a.x,a.y,a.z);
+        glVertex3f(b.x,b.y,b.z);
+    glEnd();
+
+    glBegin(GL_LINES);
+        glVertex3f(a.x,a.y,a.z);
+        glVertex3f(c.x,c.y,c.z);
+    glEnd();
+
+    glBegin(GL_LINES);
+        glVertex3f(c.x,c.y,c.z);
+        glVertex3f(b.x,b.y,b.z);
+    glEnd();
 
 
-    _vertex3f ca,cb;
-    ca.x=1; ca.y=0; ca.z=0;
-    cb.x=0; cb.y=1; cb.z=0;
+    _vertex3f ab;
+    _vertex3f ac;
+
+    ab.x=b.x-a.x; ab.y=b.y-a.y; ab.z=b.z-a.z;
+    cout << "ab" << ab.x << ab.y << ab.z << endl;
+    ac.x=c.x-a.x; ac.y=c.y-a.y; ac.z=c.z-a.z;
+    cout << "ac" << ac.x << ac.y << ac.z << endl;
+
 
     //Producto vectorial:
     _vertex3f n;
-
-    n.x=ca.y*cb.z - ca.z*cb.y;
-    n.y=ca.z*cb.x - ca.x*cb.z;
-    n.z=ca.x*cb.y - ca.y*cb.x;
+    n.x=(ab.y*ac.z)-(ab.z*ac.y);
+    n.y=(ab.z*ac.x)-(ab.x*ac.z);
+    n.z=(ab.x*ac.y)-(ab.y*ac.x);
 
     cout << "n" << n.x << n.y << n.z << endl;
-
     n.normalize();
-    cout << "n nor" << n.x << n.y << n.z << endl;
 
-    //Calcular baricentro
+    _vertex3f baric;
 
-    fig.setVerticeManual(0.33,0.33,0);
-    fig.dibujarVertices("todo");
+    baric.x=((a.x+b.x+c.x)/3);
+    baric.y=((a.y+b.y+c.y)/3);
+    baric.z=((a.z+b.z+c.z)/3);
 
-    glBegin(GL_LINES);
-        glVertex3f(0.33,0.33,0);
-        glVertex3f(0.33,0.33,1);
+    glBegin(GL_POINTS);
+        glVertex3f(baric.x, baric.y, baric.z);
     glEnd();
 
-    cout << "FIN" << endl;
-    */
+    glBegin(GL_LINES);
+        glVertex3f(baric.x,baric.y,baric.z);
+        glVertex3f(baric.x+n.x, baric.y+n.y, baric.z+n.z);
+    glEnd();
 
+
+
+    cout << "FIN" << endl;
+    }
+
+
+    if(true){
     //Dibujamos la figura FIGURA en el modo MODO que tengamos seleciconado
 
         //Sólo vértices
@@ -249,6 +278,8 @@ void draw_objects()
             vectorFiguras[FIGURA-1].dibujarNormales();
             vectorFiguras[FIGURA-1].dibujaBaricentros();
         }
+    }
+
 
 
     /*
@@ -398,36 +429,32 @@ if(toupper(Tecla1)=='D'){MODO=4; draw_scene();}
 if(Tecla1=='+'){
     //###Aumentamos el número de revoluciones:
     REVOLUCIONES++;
-    //Eliminamos el contenido de vertices y caras y que hay que generarlos de nuevo:
-    figuraPrueba.vaciaFigura();
-    peon.vaciaFigura();
 
-    //Volvemos a realizar la revolución en todas las figuras:
-    figuraPrueba.revoluciona(REVOLUCIONES);
-    peon.revoluciona(REVOLUCIONES);
+        //Eliminamos el contenido de vertices y caras ya que hay que generarlos de nuevo:
+        for(int i=0; i<NUM_FIGURAS; i++)
+            vectorFiguras[i].vaciaFigura();
 
-    //Llamamos a dibujar escena donde se decide que y como dibujar
-    draw_scene();
+        //Volvemos a realizar la revolución en todas las figuras:
+        for(int i=0; i<NUM_FIGURAS; i++)
+            vectorFiguras[i].revoluciona(REVOLUCIONES);
+
+        //Llamamos a dibujar escena donde se decide que y como dibujar
+        draw_scene();
 }
 
-//Pulsar la tecla - reduce el número y vuelve a dibujar
+//Pulsar la tecla - reduce  el número y vuelve a dibujar
 if(Tecla1=='-'){
     //###Disminuimos el número de revoluciones:
     if(REVOLUCIONES>3){ //No permitiremos realizar el proceso con menos de tres revoluciones.
         REVOLUCIONES--;
 
-
-        --> Seguir aquí haciendo el proceso para todos las figuras.
-
-
-
-        //Eliminamos el contenido de vertices y caras y que hay que generarlos de nuevo:
-        figuraPrueba.vaciaFigura();
-        peon.vaciaFigura();
+        //Eliminamos el contenido de vertices y caras ya que hay que generarlos de nuevo:
+        for(int i=0; i<NUM_FIGURAS; i++)
+            vectorFiguras[i].vaciaFigura();
 
         //Volvemos a realizar la revolución en todas las figuras:
-        figuraPrueba.revoluciona(REVOLUCIONES);
-        peon.revoluciona(REVOLUCIONES);
+        for(int i=0; i<NUM_FIGURAS; i++)
+            vectorFiguras[i].revoluciona(REVOLUCIONES);
 
         //Llamamos a dibujar escena donde se decide que y como dibujar
         draw_scene();
