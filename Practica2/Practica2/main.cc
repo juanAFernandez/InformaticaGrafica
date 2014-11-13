@@ -42,6 +42,8 @@ de la que se encargará un función independiente.
         int REVOLUCIONES=4;
         //Para algunos bucles que limpian el código:
         int NUM_FIGURAS=6;
+        //Grados de revolución:
+        float GRADOS=360.0;
 
     //### Fin de variable de control de Visualización
 
@@ -436,7 +438,7 @@ if(Tecla1=='+'){
 
         //Volvemos a realizar la revolución en todas las figuras:
         for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].revoluciona(REVOLUCIONES);
+            vectorFiguras[i].revoluciona(REVOLUCIONES, GRADOS);
 
         //Llamamos a dibujar escena donde se decide que y como dibujar
         draw_scene();
@@ -454,7 +456,45 @@ if(Tecla1=='-'){
 
         //Volvemos a realizar la revolución en todas las figuras:
         for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].revoluciona(REVOLUCIONES);
+            vectorFiguras[i].revoluciona(REVOLUCIONES, GRADOS);
+
+        //Llamamos a dibujar escena donde se decide que y como dibujar
+        draw_scene();
+    }
+}
+
+//Pulsar la tecla * aumenta los grados de revolución hasta 360.0 de máximo
+if(Tecla1=='*'){
+
+    if(GRADOS<=360.0){ //No permitiremos subir más de 360 grados
+        GRADOS++;
+
+        //Eliminamos el contenido de vertices y caras ya que hay que generarlos de nuevo:
+        for(int i=0; i<NUM_FIGURAS; i++)
+            vectorFiguras[i].vaciaFigura();
+
+        //Volvemos a realizar la revolución en todas las figuras:
+        for(int i=0; i<NUM_FIGURAS; i++)
+            vectorFiguras[i].revoluciona(REVOLUCIONES, GRADOS);
+
+        //Llamamos a dibujar escena donde se decide que y como dibujar
+        draw_scene();
+    }
+}
+
+//Pulsar la tecla _ reduce los grados de revolución hasta 0.0 de mínimo
+if(Tecla1=='_'){
+
+    if(GRADOS>=0.0){ //No permitiremos bajar de 0 grados.
+        GRADOS--;
+
+        //Eliminamos el contenido de vertices y caras ya que hay que generarlos de nuevo:
+        for(int i=0; i<NUM_FIGURAS; i++)
+            vectorFiguras[i].vaciaFigura();
+
+        //Volvemos a realizar la revolución en todas las figuras:
+        for(int i=0; i<NUM_FIGURAS; i++)
+            vectorFiguras[i].revoluciona(REVOLUCIONES, GRADOS);
 
         //Llamamos a dibujar escena donde se decide que y como dibujar
         draw_scene();
@@ -562,16 +602,16 @@ int main(int argc, char **argv)
     //Inicializamos las figuras del tipo "figuraRevolucionada" con estos perfiles y les damos la revolución general mínima:
 
         figuraPerfilCompleto.cargarPerfil(perfilCompleto);
-        figuraPerfilCompleto.revoluciona(REVOLUCIONES);
+        figuraPerfilCompleto.revoluciona(REVOLUCIONES, GRADOS);
 
         figuraPerfilParcialSinTapaAbajo.cargarPerfil(perfilParcialSinTapaAbajo);
-        figuraPerfilParcialSinTapaAbajo.revoluciona(REVOLUCIONES);
+        figuraPerfilParcialSinTapaAbajo.revoluciona(REVOLUCIONES,GRADOS);
 
         figuraPerfilParcialSinTapaArriba.cargarPerfil(perfilParcialSinTapaArriba);
-        figuraPerfilParcialSinTapaArriba.revoluciona(REVOLUCIONES);
+        figuraPerfilParcialSinTapaArriba.revoluciona(REVOLUCIONES, GRADOS);
 
         figuraPerfilSinTapas.cargarPerfil(perfilSinTapas);
-        figuraPerfilSinTapas.revoluciona(REVOLUCIONES);
+        figuraPerfilSinTapas.revoluciona(REVOLUCIONES, GRADOS);
 
         //Después de inicializarlas las meto en un vector para poder trabajar con ellas mejor.
 
@@ -591,7 +631,7 @@ int main(int argc, char **argv)
     //perfil.push_back({0,1,0});
 
     figuraPrueba.cargarPerfil(perfil);
-    figuraPrueba.revoluciona(REVOLUCIONES);
+    figuraPrueba.revoluciona(REVOLUCIONES, GRADOS);
 
     vectorFiguras.push_back(figuraPrueba);
 
@@ -602,7 +642,7 @@ int main(int argc, char **argv)
 
     //El perfil puede ser un fichero ply.
       peon.cargarPerfil("perfil.ply");
-      peon.revoluciona(REVOLUCIONES);
+      peon.revoluciona(REVOLUCIONES, GRADOS);
 
       vectorFiguras.push_back(peon);
 

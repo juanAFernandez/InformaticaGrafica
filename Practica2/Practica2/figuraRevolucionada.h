@@ -314,7 +314,7 @@ class figuraRevolucionada: public figuraSolida{
         * @param perfil Vector de vertices del tipo _verte3f que forman el perfil.
         * @param numRev Número de revoluciones con las que queremos formar nuestro objeto a partir del perfil.
         */
-        void revoluciona(int numRev){
+        void revoluciona(int numRev, float grados){
 
            // cout << endl << "Numero de revoluciones: " << numRev << endl;
 
@@ -385,7 +385,7 @@ class figuraRevolucionada: public figuraSolida{
                 //La circuferencia la componen 360º
                 //En el caso de ser 360º serían 90º cada porción, es decir el perfil de la primera revolución formaría
                 //90º respecto al original, así con todos.
-                const float gradosPorcion=360.0/numRev;
+                const float gradosPorcion=grados/numRev;
 
                 float gradosPerfilActual=gradosPorcion;
 
@@ -407,7 +407,7 @@ class figuraRevolucionada: public figuraSolida{
                         //Ejecutado tantas veces como vertices tenga el perfil para general otro pero con una ferencia de
                         //grados como se pretende.
 
-                        //Se obtiene el readio del vertice del perfil.
+                        //Se obtiene el radio del vertice del perfil.
                         radio=perfil[j].x;
 
 

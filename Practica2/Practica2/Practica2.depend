@@ -76,7 +76,7 @@
 	<vector>
 	<assert.h>
 
-1415899544 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\main.cc
+1415902567 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -108,7 +108,7 @@
 1414155152 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\colores.h
 	<GL/gl.h>
 
-1415900190 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\figurarevolucionada.h
+1415902442 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica2\practica2\figurarevolucionada.h
 	"figuraSolida.h"
 	<math.h>
 	"file_ply_stl.h"
