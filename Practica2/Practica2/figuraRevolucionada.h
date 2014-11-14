@@ -20,6 +20,7 @@ class figuraRevolucionada: public figuraSolida{
 
         //Vector para el almacenaje de los vectores normales de las caras para la iluminación.
         vector<_vertex3f> normales;
+        vector<_vertex3f> normalesVertices;
         vector<_vertex3f> baricentros;
 
 
@@ -203,12 +204,43 @@ class figuraRevolucionada: public figuraSolida{
 
         }
 
+        void calculaNormalesVertices(){
+            //Sumaresmoa la normal de cada cara a la normal de sus tres vértices.
+            _vertex3f normal(0,0,0);
+            //Inicializo todos las normales de los vectores a 0
+            for(unsigned int i=0; i<vertices.size(); i++)
+                normalesVertices.push_back(normal);
+
+            //Después recorro todos las caras y le sumo su normal a los vértices que la forman:
+            for(unsigned int i=0; i<caras.size(); i++){
+                normalesVertices[caras[i]._0]+=normales[i];
+                normalesVertices[caras[i]._1]+=normales[i];
+                normalesVertices[caras[i]._2]+=normales[i];
+            }
+
+            //Por último normalizamos todos las normales de los vértices que hemos calculado:
+            for(unsigned int i=0; i<normalesVertices.size(); i++)
+                normalesVertices[i].normalize();
+
+
+        }
+
         void dibujaBaricentros(){
             glColor3fv(NEGRO);
             glPointSize(5);
             glBegin(GL_POINTS);
                 for(unsigned int i=0; i<caras.size(); i++)
                     glVertex3f(baricentros[i].x,baricentros[i].y,baricentros[i].z);
+            glEnd();
+        }
+
+        void dibujarNormalesVertices(){
+            glColor3fv(ROJO);
+            glBegin(GL_LINES);
+                for(unsigned int i=0; i<normalesVertices.size(); i++){
+                    glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
+                    glVertex3f(vertices[i].x+normalesVertices[i].x, vertices[i].y+normalesVertices[i].y, vertices[i].z+normalesVertices[i].z);
+                }
             glEnd();
         }
 
@@ -499,9 +531,11 @@ class figuraRevolucionada: public figuraSolida{
 
 
 
+            //Después de revolucionar realizamos la gestión de las normales para iluminación.
 
                 calculaNormalesCaras();
                 calculaBaricentrosCaras();
+                calculaNormalesVertices();
 
 
 
@@ -523,6 +557,8 @@ class figuraRevolucionada: public figuraSolida{
             caras.clear();
 
             normales.clear();
+
+            normalesVertices.clear();
 
             baricentros.clear();
 

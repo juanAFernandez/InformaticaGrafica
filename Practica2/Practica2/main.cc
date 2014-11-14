@@ -277,8 +277,9 @@ void draw_objects()
             vectorFiguras[FIGURA-1].dibujarVertices("todo");
             vectorFiguras[FIGURA-1].dibujarAristas("todo");
             vectorFiguras[FIGURA-1].dibujarCaras("todo","caras");
-            vectorFiguras[FIGURA-1].dibujarNormales();
             vectorFiguras[FIGURA-1].dibujaBaricentros();
+            vectorFiguras[FIGURA-1].dibujarNormales();
+            vectorFiguras[FIGURA-1].dibujarNormalesVertices();
         }
     }
 
@@ -585,14 +586,14 @@ int main(int argc, char **argv)
         perfilCompleto.push_back({0,1,0});
 
         //El pefil simple sin tapa abajo:
-        perfilParcialSinTapaAbajo.push_back({1,-1,0});
+        perfilParcialSinTapaAbajo.push_back({2,-1,0});
         perfilParcialSinTapaAbajo.push_back({1,1,0});
         perfilParcialSinTapaAbajo.push_back({0,1,0});
 
         //El perfil simple sin tapa arriba:
         perfilParcialSinTapaArriba.push_back({0,-1,0});
         perfilParcialSinTapaArriba.push_back({1,-1,0});
-        perfilParcialSinTapaArriba.push_back({1,1,0});
+        perfilParcialSinTapaArriba.push_back({2,1,0});
 
         //El perfil simple sin tapas:
         perfilSinTapas.push_back({1,-1,0});
