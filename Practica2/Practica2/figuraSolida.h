@@ -37,6 +37,10 @@ class figuraSolida : public figuraSimple {
             caraTemporal.z=verticeC;
             caras.push_back(caraTemporal);
         };
+
+        void eliminarUltimaCara(){
+            caras.pop_back();
+        }
         //Función que dibuja las caras ajustable a la sección y al modo de dibujado.
         void dibujarCaras(string seccion, string modo){
 

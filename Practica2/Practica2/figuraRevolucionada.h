@@ -43,21 +43,27 @@ class figuraRevolucionada: public figuraSolida{
 
 
             //### Generando las caras PAR:
-            for(int i=0; i<numVP-1; i++)
-                for(int j=0; j<numRev; j++){
+            for(int i=0; i<numVP-1; i++){
+                for(int j=0; j<numRev-1; j++){
                     verticeA=(((j*numVP)+i)%elementosVector);
                     verticeC=(((j*numVP)+(numVP+i))%elementosVector);
                     verticeB=(((j*numVP)+(1+i))%elementosVector);
-                    if(DEBUGG)
-                        cout << "Cara PAR generada n. "<< verticeA << " "<< verticeB << " "<< verticeC << endl;
+
+                        //cout << "Cara PAR generada n. "<< verticeA << " "<< verticeB << " "<< verticeC << endl;
                     //Introduciendo la cara
                     setCaraManual(verticeA,verticeB,verticeC);
+
                 }
+            }
+
+            //eliminarUltimaCara();
+            //eliminarUltimaCara();
+            //cout << "numero de caras pares: " << caras.size();
 
 
             //### Generando las caras IMPAR:
             for(int i=0; i<numVP-1; i++)
-                for(int j=0; j<numRev; j++){
+                for(int j=0; j<numRev-1; j++){
                     verticeA=(((j*numVP)+(numVP+i))%elementosVector);
                     verticeC=((verticeA+1)%elementosVector);
                     verticeB=(((j*numVP)+(1+i))%elementosVector);
@@ -67,6 +73,8 @@ class figuraRevolucionada: public figuraSolida{
                     setCaraManual(verticeA,verticeB,verticeC);
 
                 }
+            //eliminarUltimaCara();
+            //eliminarUltimaCara();
             if(DEBUGG){
                 cout << "Numero total de caras generados: " << caras.size() << endl;
             }
@@ -81,7 +89,7 @@ class figuraRevolucionada: public figuraSolida{
             */
             //No es necesario generar el verticeA porque siempre será el mismo: posTi
             int verticeB, verticeC;
-            for(int i=0; i<numRev; i++){
+            for(int i=0; i<numRev-1; i++){
                 verticeC=((i+1)*nVPST)%posTi;
                 verticeB=((i*nVPST)%posTi);
                 setCaraManual(posTi,verticeB,verticeC);
@@ -97,7 +105,7 @@ class figuraRevolucionada: public figuraSolida{
              //cout << "numero de vertices del perfil sin tapa: " << nVPST << endl;
              //cout << "numero de vertices  sin tapa: " << nVST << endl;
              int verticeA, verticeC;
-            for(int i=0; i<numRev; i++){
+            for(int i=0; i<numRev-1; i++){
                 verticeC=((nVPST*(i+1))+(nVPST-1))%nVST;
                 verticeA=(verticeC+(nVST-nVPST))%nVST;
                 setCaraManual(verticeA, posTs, verticeC);
@@ -346,7 +354,7 @@ class figuraRevolucionada: public figuraSolida{
         * @param perfil Vector de vertices del tipo _verte3f que forman el perfil.
         * @param numRev Número de revoluciones con las que queremos formar nuestro objeto a partir del perfil.
         */
-        void revoluciona(int numRev, float grados){
+        void revoluciona(int numRev, float gradosInicial, float gradosFinal){
 
            // cout << endl << "Numero de revoluciones: " << numRev << endl;
 
@@ -355,6 +363,9 @@ class figuraRevolucionada: public figuraSolida{
             //de nuestra nueva figura revolucionada.
 
             // #ALGORITMO# //
+
+            //Si activamos esto se hace un corte por cada revolción.
+//            numRev=gradosFinal-gradosInicial;
 
             // ##1## Lo primero que nuestro algoritmo va a hacer es detectar la presencia de las tapas:
             bool tapaSuperior=false;
@@ -412,14 +423,18 @@ class figuraRevolucionada: public figuraSolida{
 
                 //Revolucionado de los vértices de perfil y añadidos a nueestro vector de vértices de nuestra figura.
 
+                //gradosFinal+=gradosInicial;
+
                 //##Inicio de la revolución
                 _vertex3f nuevoVertice;
                 //La circuferencia la componen 360º
                 //En el caso de ser 360º serían 90º cada porción, es decir el perfil de la primera revolución formaría
                 //90º respecto al original, así con todos.
-                const float gradosPorcion=grados/numRev;
+                const float gradosPorcion=(gradosFinal-gradosInicial)/(numRev-1);
 
-                float gradosPerfilActual=gradosPorcion;
+                //Para
+
+                float gradosPerfilActual=gradosInicial;
 
                 //El valor de x del anterior vértice por el coseno del grado que queremos colocarlo en el eje de rotación
                 //(en nuestro caso Y) en radianes que es como funciona openGL
@@ -427,11 +442,13 @@ class figuraRevolucionada: public figuraSolida{
                 float radio;
 
                 //Introducimos el primer  perfil en el vector de vértices de la figura
+                if(gradosInicial==0.0){
                 for(int i=0; i<perfil.size(); i++)
                     setVerticeManual(perfil[i].x, perfil[i].y, perfil[i].z );
+                }
 
                 //Repetimos el proceso tantas veces como revoluciones queramos hacer.
-                for(int i=0; i<numRev-1; i++){
+                for(int i=0; i<numRev; i++){
 
 
                     //Núcleo del algoritmo, que se realiza por cada revolución.
@@ -443,7 +460,7 @@ class figuraRevolucionada: public figuraSolida{
                         radio=perfil[j].x;
 
 
-                        if(DEBUGG)
+
                             cout << "gradosPerfilActual: " << gradosPerfilActual << endl;
 
 
@@ -455,15 +472,16 @@ class figuraRevolucionada: public figuraSolida{
 
                         if(DEBUGG)
                             cout << "Generado vértice x:" << nuevoVertice.x << " y:" << nuevoVertice.y << " z:" << nuevoVertice.z <<endl;
+
                         setVerticeManual(nuevoVertice.x, nuevoVertice.y, nuevoVertice.z);
 
                     }
                     //Cuando terminamos con un perfil sumamos los grados necesarios para general el siguiente.
-                    gradosPerfilActual+=gradosPorcion;
+                    gradosPerfilActual=gradosPerfilActual+gradosPorcion;
                 }
                 //##Fin de la revolución
 
-                cout << "Numero de vertices generados sin tapas: " << vertices.size() << endl;
+               // cout << "Numero de vertices generados sin tapas: " << vertices.size() << endl;
 
                 //Necesitamos la variable número de vértices totales sin tapa para la función generadora de las tapas superiores.
                 int nVST=vertices.size();
@@ -483,7 +501,7 @@ class figuraRevolucionada: public figuraSolida{
                 if(tapaSuperior)
                     vertices.push_back(verticeTapaSuperior);
 
-                cout << "Numero de vertices generados con tapas: " << vertices.size() << endl;
+                //cout << "Numero de vertices generados con tapas: " << vertices.size() << endl;
 
                 //## 4.1 Como es posible que queramos repetir el proceso de revolucionar (en tiempo de ejecución) no se cargará de nuevo el perfil.
                 //       Entonces tendremos que devolver los vertices tapas a sus lugares de origen para que el proceso pueda volver a realizarse
