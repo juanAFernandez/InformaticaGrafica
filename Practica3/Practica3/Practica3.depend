@@ -20,11 +20,11 @@
 	"figuraCargada.h"
 	"figuraRevolucionada.h"
 
-1414266405 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.h
+1416055560 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.h
 	"figuraSolida.h"
 	"file_ply_stl.h"
 
-1416051778 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.h
+1416055382 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.h
 	"figuraSimple.h"
 
 1416053874 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.h
@@ -46,4 +46,10 @@
 	"figuraSolida.h"
 	<math.h>
 	"file_ply_stl.h"
+
+1416054087 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.cc
+	"figuraSimple.h"
+
+1416055365 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.cc
+	"figuraSolida.h"
 

@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin\Debug\Practica1" prefix_auto="1" extension_auto="1" />
+				<Option output="bin\Debug\Practica3" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -36,13 +36,12 @@
 			<Add library="glu32" />
 			<Add library="gdi32" />
 		</Linker>
-		<Unit filename="ant.ply" />
-		<Unit filename="beethoven.ply" />
-		<Unit filename="big_dodge.ply" />
 		<Unit filename="colores.h" />
 		<Unit filename="figuraCargada.h" />
 		<Unit filename="figuraRevolucionada.h" />
+		<Unit filename="figuraSimple.cc" />
 		<Unit filename="figuraSimple.h" />
+		<Unit filename="figuraSolida.cc" />
 		<Unit filename="figuraSolida.h" />
 		<Unit filename="file_ply_stl.cc" />
 		<Unit filename="file_ply_stl.h" />
