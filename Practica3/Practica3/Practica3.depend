@@ -1,0 +1,49 @@
+# depslib dependency file v1.0
+1415738851 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\file_ply_stl.cc
+	"file_ply_stl.h"
+
+1379603904 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\file_ply_stl.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<string>
+	<vector>
+	<assert.h>
+
+1416051021 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\main.cc
+	"stdlib.h"
+	"stdio.h"
+	<windows.h>
+	<GL/glut.h>
+	<ctype.h>
+	<iostream>
+	"figuraCargada.h"
+	"figuraRevolucionada.h"
+
+1414266405 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.h
+	"figuraSolida.h"
+	"file_ply_stl.h"
+
+1416051778 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.h
+	"figuraSimple.h"
+
+1416053874 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.h
+	<GL/gl.h>
+	<vector>
+	"vertex.h"
+	"colores.h"
+
+1349168906 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\vertex.h
+	<stdio.h>
+	<assert.h>
+	<math.h>
+	<iostream>
+
+1416050636 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\colores.h
+	<GL/gl.h>
+
+1415982658 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.h
+	"figuraSolida.h"
+	<math.h>
+	"file_ply_stl.h"
+
