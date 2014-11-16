@@ -26,6 +26,8 @@
 //También incluimos figuraRevolucionada.h (epicentro de esta práctica)
 #include "figuraRevolucionada.h"
 
+#include "variablesControl.h"
+
 //###############d
 
 /*Sección de definición de figuras (el modelado). Donde esta se realiza tan sólo una vez dejando clara la
@@ -36,23 +38,7 @@ de la que se encargará un función independiente.
     figuraSimple triangulo;
     figuraSolida cubo;
 
-    //### Varialbes de Control de Visualización
 
-        //Declaramos una variable para controlar el modelo que se visualiza.
-        int FIGURA=1; //Por defecto seleccionamos la primera.
-        //Otra para controlar el modo de visualización: VERTICES, ALAMBRE y SÓLIDO
-        int MODO=0;
-        //Para controlar el número de revoluciones en las figuras de este tipo
-        int REVOLUCIONES=7;
-        //Para algunos bucles que limpian el código:
-        int NUM_FIGURAS=1;
-        //Grados de revolución:
-//        float GRADOS=360.0;
-        //Grados de sección:
-        float GRADOS_INICIAL=90.0;
-        float GRADOS_FINAL=180.0;
-
-    //### Fin de variable de control de Visualización
 
 
     //Correspondiente a la práctica 2 ############
@@ -284,9 +270,9 @@ void draw_objects()
             vectorFiguras[FIGURA-1].dibujarVertices("todo");
             vectorFiguras[FIGURA-1].dibujarAristas("todo");
             vectorFiguras[FIGURA-1].dibujarCaras("todo","ajedrez");
-            //vectorFiguras[FIGURA-1].dibujaBaricentros();
-            //vectorFiguras[FIGURA-1].dibujarNormales();
-            //vectorFiguras[FIGURA-1].dibujarNormalesVertices();
+            vectorFiguras[FIGURA-1].dibujaBaricentros();
+            vectorFiguras[FIGURA-1].dibujarNormales();
+            vectorFiguras[FIGURA-1].dibujarNormalesVertices();
         }
     }
 
@@ -613,13 +599,13 @@ int main(int argc, char **argv)
         figuraPerfilCompleto.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
 
         figuraPerfilParcialSinTapaAbajo.cargarPerfil(perfilParcialSinTapaAbajo);
-        figuraPerfilParcialSinTapaAbajo.revoluciona(REVOLUCIONES,GRADOS_INICIAL, GRADOS_FINAL);
+        //figuraPerfilParcialSinTapaAbajo.revoluciona(REVOLUCIONES,GRADOS_INICIAL, GRADOS_FINAL);
 
         figuraPerfilParcialSinTapaArriba.cargarPerfil(perfilParcialSinTapaArriba);
-        figuraPerfilParcialSinTapaArriba.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
+        //figuraPerfilParcialSinTapaArriba.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
 
         figuraPerfilSinTapas.cargarPerfil(perfilSinTapas);
-        figuraPerfilSinTapas.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
+        //figuraPerfilSinTapas.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
 
         //Después de inicializarlas las meto en un vector para poder trabajar con ellas mejor.
 
@@ -639,7 +625,7 @@ int main(int argc, char **argv)
     //perfil.push_back({0,1,0});
 
     figuraPrueba.cargarPerfil(perfil);
-    figuraPrueba.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
+    //figuraPrueba.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
 
     vectorFiguras.push_back(figuraPrueba);
 
@@ -650,7 +636,7 @@ int main(int argc, char **argv)
 
     //El perfil puede ser un fichero ply.
       peon.cargarPerfil("perfil.ply");
-      peon.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
+     // peon.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
 
       vectorFiguras.push_back(peon);
 

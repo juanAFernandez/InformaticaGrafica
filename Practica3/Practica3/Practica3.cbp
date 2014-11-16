@@ -37,7 +37,9 @@
 			<Add library="gdi32" />
 		</Linker>
 		<Unit filename="colores.h" />
+		<Unit filename="figuraCargada.cc" />
 		<Unit filename="figuraCargada.h" />
+		<Unit filename="figuraRevolucionada.cc" />
 		<Unit filename="figuraRevolucionada.h" />
 		<Unit filename="figuraSimple.cc" />
 		<Unit filename="figuraSimple.h" />
@@ -46,6 +48,7 @@
 		<Unit filename="file_ply_stl.cc" />
 		<Unit filename="file_ply_stl.h" />
 		<Unit filename="main.cc" />
+		<Unit filename="variablesControl.h" />
 		<Unit filename="vertex.h" />
 		<Extensions>
 			<code_completion />

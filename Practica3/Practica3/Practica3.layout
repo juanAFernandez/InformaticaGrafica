@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="figuraCargada.cc" open="0" top="0" tabpos="0">
+		<Cursor position="93" topLine="0" />
+	</File>
+	<File name="figuraCargada.h" open="0" top="0" tabpos="4">
+		<Cursor position="331" topLine="0" />
+	</File>
+	<File name="figuraRevolucionada.cc" open="1" top="0" tabpos="4">
+		<Cursor position="14479" topLine="0" />
+	</File>
+	<File name="figuraRevolucionada.h" open="1" top="1" tabpos="3">
+		<Cursor position="638" topLine="75" />
+	</File>
+	<File name="figuraSimple.cc" open="0" top="0" tabpos="0">
+		<Cursor position="4278" topLine="0" />
+	</File>
+	<File name="figuraSimple.h" open="0" top="0" tabpos="0">
+		<Cursor position="796" topLine="15" />
+	</File>
+	<File name="figuraSolida.cc" open="0" top="0" tabpos="3">
+		<Cursor position="7304" topLine="0" />
+	</File>
+	<File name="figuraSolida.h" open="0" top="0" tabpos="2">
+		<Cursor position="546" topLine="10" />
+	</File>
+	<File name="file_ply_stl.h" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="35" />
+	</File>
+	<File name="main.cc" open="1" top="0" tabpos="2">
+		<Cursor position="712" topLine="12" />
+	</File>
+	<File name="variablesControl.h" open="1" top="0" tabpos="1">
+		<Cursor position="660" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

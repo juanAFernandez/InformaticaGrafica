@@ -10,7 +10,7 @@
 	<vector>
 	<assert.h>
 
-1416051021 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\main.cc
+1416157718 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -19,8 +19,9 @@
 	<iostream>
 	"figuraCargada.h"
 	"figuraRevolucionada.h"
+	"variablesControl.h"
 
-1416055560 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.h
+1416152806 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.h
 	"figuraSolida.h"
 	"file_ply_stl.h"
 
@@ -42,7 +43,7 @@
 1416050636 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\colores.h
 	<GL/gl.h>
 
-1415982658 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.h
+1416157691 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.h
 	"figuraSolida.h"
 	<math.h>
 	"file_ply_stl.h"
@@ -52,4 +53,12 @@
 
 1416055365 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.cc
 	"figuraSolida.h"
+
+1416152783 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.cc
+	"figuraCargada.h"
+
+1416157873 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.cc
+	"figuraRevolucionada.h"
+
+1416157924 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\variablescontrol.h
 
