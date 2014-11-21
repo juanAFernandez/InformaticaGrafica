@@ -48,6 +48,10 @@
 		<Unit filename="file_ply_stl.cc" />
 		<Unit filename="file_ply_stl.h" />
 		<Unit filename="main.cc" />
+		<Unit filename="parametrosRover.h" />
+		<Unit filename="primitivaCubo.h" />
+		<Unit filename="rover.h" />
+		<Unit filename="suelo.h" />
 		<Unit filename="variablesControl.h" />
 		<Unit filename="vertex.h" />
 		<Extensions>

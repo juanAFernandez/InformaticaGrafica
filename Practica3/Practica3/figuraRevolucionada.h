@@ -10,18 +10,12 @@
 
 //#include "variablesControl.h"
 
-//Si queremos depurar mediante mensajes el proceso de cálculo.
-//bool DEBUGG=false;
-
 
 class figuraRevolucionada: public figuraSolida{
 
     private:
 
-        vector<_vertex3f> perfil;
-        vector<_vertex3f> normales;
-        vector<_vertex3f> normalesVertices;
-        vector<_vertex3f> baricentros;
+        vector<_vertex3f> perfil; /** < Vector de vertices que conforman el perfil */
 
         /**
         * @brief Función para generar las caras en la sección central de las figuras.
@@ -54,24 +48,14 @@ class figuraRevolucionada: public figuraSolida{
         **/
         double gradosARadianes(double angulo){return angulo*(M_PI/180);}
 
-
-        _vertex3f productoVectorial(_vertex3f ab, _vertex3f ac);
-
-
-
     public:
 
-        void calculaNormalesCaras();
+        figuraRevolucionada(){};
 
-        void calculaNormalesVertices();
-
-        void dibujaBaricentros();
-
-        void dibujarNormalesVertices();
-
-        void dibujarNormales();
-
-        void calculaBaricentrosCaras();
+        /**
+        * @brief Constructor que invoca al constructor de la clase padre.
+        */
+        figuraRevolucionada(string nuevoNombre): figuraSolida(nuevoNombre){};
 
         /**
         * @brief Función para cargar el perfil a partir de un fichero .ply
@@ -86,36 +70,9 @@ class figuraRevolucionada: public figuraSolida{
         void cargarPerfil(vector <_vertex3f> vectorPerfil);
 
         /**
-        * @brief Función que nos muestra en terminal las caras almacenadas en el vector de caras con un formato legible.
+        * @brief Para mostrar los vértics del perfil por consola de forma legible.
         */
-        void muestraCaras(){
-            //for(int i=0; i<caras.size(); i++)
-                //cout << "Cara n." << i << " [" << caras[i]._0 << " " << caras[i]._1 << " " << caras[i]._2 << "]" << endl;
-
-        }
-
-        void muestraPerfil(){
-            //cout << "Vertices del perfil: " << endl;
-            //for(int i=0; i<perfil.size(); i++)
-                //cout << "Vertice n." << i << " [" << perfil[i].x << " " << perfil[i].y << " " << perfil[i].z << "]" << endl;
-        }
-
-        /**
-        * @brief Función que nos muestra en el terminal los vértices almacenados en el vector de vértices en formato legible.
-        */
-        void muestraVertices(){
-            //cout << "Vector de vertices: " << endl;
-           // for(int i=0; i<vertices.size(); i++){
-              //  cout << "Vertice n." << i;
-                //cout << " [" << vertices[i].x <<" , "<< vertices[i].y << " , "<< vertices[i].z << "]" << endl;
-            //}
-        }
-
-        void muestraNormales(){
-            //cout << "Vector de normales" << endl;
-            //for(int i=0; i<normales; i++)
-
-        }
+        void muestraPerfil();
 
         /**
         * @brief Función que revoluciona el perfil que pasamos.
@@ -124,9 +81,11 @@ class figuraRevolucionada: public figuraSolida{
         */
         void revoluciona(int numRev, float gradosInicial, float gradosFinal);
 
-
-
-
+        /**
+        * @brief Función que vacía los vectores de contenido generado, todo (caras, vértices, normales de caras y de vértices y baricentros)
+        * a excepción del perfil que no cambia. Estos cambios se deben a que el programa permite cambiar el nº de revoluciones en tiempo de
+        * ejecución.
+        */
         void vaciaFigura();
 };
 #endif

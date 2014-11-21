@@ -7,31 +7,43 @@
 	<File name="figuraCargada.h" open="0" top="0" tabpos="4">
 		<Cursor position="331" topLine="0" />
 	</File>
-	<File name="figuraRevolucionada.cc" open="1" top="0" tabpos="4">
-		<Cursor position="14479" topLine="0" />
+	<File name="figuraRevolucionada.cc" open="0" top="0" tabpos="4">
+		<Cursor position="36" topLine="0" />
 	</File>
-	<File name="figuraRevolucionada.h" open="1" top="1" tabpos="3">
-		<Cursor position="638" topLine="75" />
+	<File name="figuraRevolucionada.h" open="0" top="0" tabpos="2">
+		<Cursor position="2482" topLine="42" />
 	</File>
-	<File name="figuraSimple.cc" open="0" top="0" tabpos="0">
-		<Cursor position="4278" topLine="0" />
+	<File name="figuraSimple.cc" open="0" top="0" tabpos="7">
+		<Cursor position="4409" topLine="0" />
 	</File>
-	<File name="figuraSimple.h" open="0" top="0" tabpos="0">
-		<Cursor position="796" topLine="15" />
+	<File name="figuraSimple.h" open="0" top="0" tabpos="8">
+		<Cursor position="1610" topLine="23" />
 	</File>
-	<File name="figuraSolida.cc" open="0" top="0" tabpos="3">
-		<Cursor position="7304" topLine="0" />
+	<File name="figuraSolida.cc" open="0" top="0" tabpos="6">
+		<Cursor position="1413" topLine="17" />
 	</File>
-	<File name="figuraSolida.h" open="0" top="0" tabpos="2">
-		<Cursor position="546" topLine="10" />
+	<File name="figuraSolida.h" open="0" top="0" tabpos="5">
+		<Cursor position="2265" topLine="0" />
 	</File>
 	<File name="file_ply_stl.h" open="0" top="0" tabpos="0">
 		<Cursor position="0" topLine="35" />
 	</File>
-	<File name="main.cc" open="1" top="0" tabpos="2">
-		<Cursor position="712" topLine="12" />
+	<File name="main.cc" open="1" top="0" tabpos="1">
+		<Cursor position="14323" topLine="463" />
 	</File>
-	<File name="variablesControl.h" open="1" top="0" tabpos="1">
-		<Cursor position="660" topLine="0" />
+	<File name="parametrosRover.h" open="1" top="0" tabpos="3">
+		<Cursor position="425" topLine="0" />
+	</File>
+	<File name="primitivaCubo.h" open="0" top="0" tabpos="9">
+		<Cursor position="145" topLine="0" />
+	</File>
+	<File name="rover.h" open="1" top="1" tabpos="2">
+		<Cursor position="258" topLine="0" />
+	</File>
+	<File name="suelo.h" open="0" top="0" tabpos="0">
+		<Cursor position="4667" topLine="33" />
+	</File>
+	<File name="variablesControl.h" open="0" top="0" tabpos="1">
+		<Cursor position="340" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

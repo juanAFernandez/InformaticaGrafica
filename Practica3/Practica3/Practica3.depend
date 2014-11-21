@@ -10,7 +10,7 @@
 	<vector>
 	<assert.h>
 
-1416157718 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\main.cc
+1416586644 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -20,15 +20,18 @@
 	"figuraCargada.h"
 	"figuraRevolucionada.h"
 	"variablesControl.h"
+	"rover.h"
+	"suelo.h"
+	"parametrosRover.h"
 
 1416152806 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.h
 	"figuraSolida.h"
 	"file_ply_stl.h"
 
-1416055382 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.h
+1416575936 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.h
 	"figuraSimple.h"
 
-1416053874 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.h
+1416585074 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.h
 	<GL/gl.h>
 	<vector>
 	"vertex.h"
@@ -43,22 +46,31 @@
 1416050636 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\colores.h
 	<GL/gl.h>
 
-1416157691 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.h
+1416584948 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.h
 	"figuraSolida.h"
 	<math.h>
 	"file_ply_stl.h"
 
-1416054087 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.cc
+1416422855 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.cc
 	"figuraSimple.h"
 
-1416055365 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.cc
+1416576037 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.cc
 	"figuraSolida.h"
 
 1416152783 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.cc
 	"figuraCargada.h"
 
-1416157873 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.cc
+1416584380 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.cc
 	"figuraRevolucionada.h"
 
-1416157924 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\variablescontrol.h
+1416584299 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\variablescontrol.h
+
+1416586821 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\rover.h
+	"figuraCargada.h"
+	"parametrosRover.h"
+
+1416577362 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\suelo.h
+	"figuraCargada.h"
+
+1416586502 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\parametrosrover.h
 

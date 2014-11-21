@@ -21,22 +21,80 @@ class figuraSolida : public figuraSimple {
         //Las figuras solidas necesitan un vector de caras con el que darle la topología (conexión entre
         // vértices) al objeto.
         vector<_vertex3i> caras;
+        vector<_vertex3f> normales;
+        vector<_vertex3f> normalesVertices;
+        vector<_vertex3f> baricentros;
+
+    private:
+
+        _vertex3f productoVectorial(_vertex3f ab, _vertex3f ac);
+
+
 
     public:
 
-        //Función que devuelve el número de caras alojadas en el vector caras.
+        /**
+        * @brief Constructor "vacío" de la clase.
+        */
+        figuraSolida(){}
+
+        /**
+        * @brief Constructor de la clase que envía el nombre de la figura al constructor de la clase padre.
+        */
+        figuraSolida(string nuevoNombre):figuraSimple(nuevoNombre){};
+
+        /**
+        * @brief Función que nos muestra en terminal las caras almacenadas en el vector de caras con un formato legible.
+        */
+        void muestraCaras();
+
+        /**
+        * @brief Función que devuelve el número de caras alojadas en el vector caras.
+        */
         int numeroCaras();
 
-        //Función para introducir a mano las caras del modelo
+        /**
+        * @brief Para introducir caras de forma manual en el vector de caras.
+        */
         void setCaraManual(unsigned int verticeA, unsigned int verticeB, unsigned int verticeC);
 
+        /**
+        * @brief Para eliminar la última cara de vector de caras.
+        */
         void eliminarUltimaCara();
 
-        //Función que dibuja las caras ajustable a la sección y al modo de dibujado.
-        void dibujarCaras(string seccion, string modo);
+        /**
+        * @brief Función que dibuja las caras ajustable a la sección y al modo de dibujado.
+        * @param seccion
+        * @param modo
+        */
+        void dibujarCaras(string seccion, string modo, string color);
 
-        //Función que usando las caras dibuja las aristas y a la que también se le especifica sección.
+        /**
+        * @brief Función para dibujar las aristas (conexiones entre dos puntos)
+        * @param seccion La sección que queremos dibujar
+        */
         void dibujarAristas(string seccion);
+
+
+        void dibujarNormalesVertices();
+
+        void dibujarNormales();
+
+        void calculaNormalesVertices();
+
+        void calculaNormalesCaras();
+        void dibujaBaricentros();
+        void calculaBaricentrosCaras();
+
+
+        void muestraNormales();
+
+
+
+
+
+
 
 
 };

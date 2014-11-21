@@ -24,10 +24,25 @@ class figuraSimple{
     //Protected para que sin ser visible fuera de las clases pueda ser directamente accesible desde las clases hijas.
     protected:
 
+        string nombreFigura;
         //Vector de vertices usando "vector" de la STL y el tipo vertex.h
         vector<_vertex3f> vertices; /** < vector de vertices del tipo _vertex3f de "vertex.h" usando "vector" de la STL para almacenarlos*/
 
     public:
+
+        /**
+        * @brief Constructor "vacío" de la clase.
+        */
+        figuraSimple(){}
+
+        /**
+        * @brief Constructor que establece el nombre de la figura. Útil para la depuraciónde múltiples figuras.
+        */
+        figuraSimple(string nuevoNombre);
+
+        void setNombre(string nombre){
+            nombreFigura=nombre;
+        }
 
         /**
         * @brief Para introducir un vértice de forma manual al vector de vértices.
@@ -55,6 +70,12 @@ class figuraSimple{
         * 7. "solo z-" : Dibuja sólo los vértices que se encuentran el parte negativa del eje Z
         */
         void dibujarVertices(string seccion);
+
+
+        /**
+        * @brief Función de depuración. Muestra por consola el contenido del vector de vértices.
+        */
+        void muestraVertices();
 
 };
 

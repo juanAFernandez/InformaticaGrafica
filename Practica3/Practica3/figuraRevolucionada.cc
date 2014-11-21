@@ -22,7 +22,7 @@ void figuraRevolucionada::generaCarasCentral(int numRev, int numVP){
             //##############################################
 
             //No olvidar: descomentar lineas siguientes cuando se resuelva la inclusión de las variables de control para que
-            //genere las últimas caras que faltan.
+            //genere las últimas caras que faltan en el caso de que la figura sea de 0 a 360 grados.
 
             //#############################################
 
@@ -103,11 +103,44 @@ void figuraRevolucionada::generaCarasTapaSuperior(int numRev, int posTs, int nVP
             }
 }
 
+void figuraRevolucionada::cargarPerfil(char *nombreFichero){
+
+            _file_ply fichero;
+            fichero.open(nombreFichero);
+
+            vector<float>verticitos;
+            vector<int>caritas;
+
+            fichero.read(verticitos,caritas);
+
+            //Carga de los vertices en nuestro formato _vertex3f
+            unsigned tamVertices=verticitos.size();
+
+            _vertex3f swap;
+            for(unsigned int i=0; i<tamVertices; i=i+3){
+                swap.x=verticitos[i];
+                swap.y=verticitos[i+1];
+                swap.z=verticitos[i+2];
+                //Habría que cambiar la forma de introducir los vertices.
+                perfil.push_back(swap);
+            }
+
+            //Cerramos el fichero.
+            fichero.close();
+}
+
+void figuraRevolucionada::cargarPerfil(vector <_vertex3f> vectorPerfil){
+            for(int i=0; i<vectorPerfil.size(); i++)
+                perfil.push_back(vectorPerfil[i]);
+}
+
+void figuraRevolucionada::muestraPerfil(){
+    cout << "Vertices del perfil de la figura " << nombreFigura << " :" << endl;
+    for(int i=0; i<perfil.size(); i++)
+        cout << "Vertice n." << i << " [" << perfil[i].x << " " << perfil[i].y << " " << perfil[i].z << "]" << endl;
+}
+
 void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gradosFinal){
-
-
-
-
 
             //Atención: El perfil es una estructura de datos distinta de nuestro vector de vertices, hay que pasar la información a este,
             //que es lo que se hace cuando se pasa a revolucionar, se leen datos del perfil y se introducen en el vector de vértices
@@ -316,185 +349,6 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
 
 
 
-}
-
-_vertex3f figuraRevolucionada::productoVectorial(_vertex3f ab, _vertex3f ac){
-                _vertex3f producto;
-                producto.x=(ab.y*ac.z)-(ab.z*ac.y);
-                producto.y=(ab.z*ac.x)-(ab.x*ac.z);
-                producto.z=(ab.x*ac.y)-(ab.y*ac.x);
-            return producto;
-}
-
-void figuraRevolucionada::calculaNormalesCaras(){
-
-            //Dado una cara (un triángulo formado por tres vértices) vamos a obtener la normal que forman los vectores que definen esta.
-
-            /*Sacamos dos vectores y como queremos que la normal vaya hacia el exterior de la cara somos cuidadosos a la hora de
-            elegir los vértices y los vectores para los que sacamos la normal. Como tenemos tres vértices v1, v2 y v3 tendremos los vectores
-            A y B que irán de V3 a v1 y de V3 a V2 respectivamente. El cálculo de un vector mediantes dos puntos se reliza mediante la resta
-            de los puntos del vértice extremo al origen. Así si tenemos que B=v3-->v2, el vector B son las coordenadas de v2 - las de v3.*/
-
-            //Variables que usaremos en el proceso:
-            _vertex3f a, b, c; //Vértices que extraeremos de la cara.
-            _vertex3f ab,ac; //Vectores rsultantes de los puntos.
-            _vertex3f normal; //Vector normal resultante del proceso.
-
-            float modulo; //Para la normalizción de la normal.
-
-            //cout << endl << endl << " ### Procesamiento de normales ### " << endl;
-
-            //El proceso debe repetirse en tantas caras como tengamos.
-            for(unsigned int i=0; i<caras.size(); i++){
-
-                //cout << "Procesando cara " << i << endl;
-
-                //Extraemos los vértices de la cara:
-                a=vertices[caras[i]._0];
-                b=vertices[caras[i]._1];
-                c=vertices[caras[i]._2];
-
-                //cout << "Extracción de los vertices" << endl;
-                //cout << "Vertices de la cara " << i << " :" << endl;
-                //muestraVertice(a); muestraVertice(b); muestraVertice(c);
-                //cout << endl;
-
-
-                //A partir de esos vértices obtenemos los vectores
-
-                    //A= v1-->v2 ==> v2-v1 = [(v2x-v1x),(v2y-v1y),(v2x-v1y)]
-                    ab.x=b.x-a.x; ab.y=b.y-a.y; ab.z=b.z-a.z;
-
-                    //cout << "Vector A: "<< endl;
-                    //muestraVertice(A);
-
-                    //B= v1-->v3 ==> v3-v1 = [(v3x-v1x),(v3y-v1y),(v3z-v1z)]
-                    ac.x=c.x-a.x; ac.y=c.y-a.y; ac.z=c.z-a.z;
-
-                    //cout << "Vector B: "<< endl;
-                    //muestraVertice(B);
-
-                //Hacemos el producto vectorial mediante la fórumla abreviada extraida de (http://es.wikipedia.org/wiki/Producto_vectorial)
-
-
-                normal=productoVectorial(ab,ac);
-
-                //cout << "NORMAL antes de normalizar: " << endl;
-                //muestraVertice(normal);
-
-                //Antes de finalizar hay que normalizar la normal (diviéndola entre su módulo)
-                normal.normalize();
-
-                //cout << "NORMAL **normalizada**: " << endl;
-                //muestraVertice(normal);
-
-                //cout << "normal:" << normal.x << " " << normal.y << " " << normal.z << endl;
-
-                //Introducimos la normal en el vector de normales.
-                normales.push_back(normal);
-
-                //cout << "normal:" << normal.x << " " << normal.y << " " << normal.z << endl;
-               // cout << endl << endl;
-
-            }
-
-            //cout << "Número de normales generadas: " << normales.size() << endl;
-            calculaBaricentrosCaras();
-
-        }
-
-void figuraRevolucionada::calculaNormalesVertices(){
-            //Sumaresmoa la normal de cada cara a la normal de sus tres vértices.
-            _vertex3f normal(0,0,0);
-            //Inicializo todos las normales de los vectores a 0
-            for(unsigned int i=0; i<vertices.size(); i++)
-                normalesVertices.push_back(normal);
-
-            //Después recorro todos las caras y le sumo su normal a los vértices que la forman:
-            for(unsigned int i=0; i<caras.size(); i++){
-                normalesVertices[caras[i]._0]+=normales[i];
-                normalesVertices[caras[i]._1]+=normales[i];
-                normalesVertices[caras[i]._2]+=normales[i];
-            }
-
-            //Por último normalizamos todos las normales de los vértices que hemos calculado:
-            for(unsigned int i=0; i<normalesVertices.size(); i++)
-                normalesVertices[i].normalize();
-}
-
-void figuraRevolucionada::dibujaBaricentros(){
-            glColor3fv(NEGRO);
-            glPointSize(5);
-            glBegin(GL_POINTS);
-                for(unsigned int i=0; i<caras.size(); i++)
-                    glVertex3f(baricentros[i].x,baricentros[i].y,baricentros[i].z);
-            glEnd();
-}
-
-void figuraRevolucionada::dibujarNormalesVertices(){
-            glColor3fv(ROJO);
-            glBegin(GL_LINES);
-                for(unsigned int i=0; i<normalesVertices.size(); i++){
-                    glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
-                    glVertex3f(vertices[i].x+normalesVertices[i].x, vertices[i].y+normalesVertices[i].y, vertices[i].z+normalesVertices[i].z);
-                }
-            glEnd();
-}
-
-void figuraRevolucionada::dibujarNormales(){
-            //Teniendo la normal y el baricentro, ¿Cómo dibujo una linea que salga de la caras?
-            glBegin(GL_LINES);
-                for(unsigned int i=0; i<caras.size(); i++){
-                    glVertex3f(baricentros[i].x,baricentros[i].y,baricentros[i].z);
-                    glVertex3f(baricentros[i].x+normales[i].x, baricentros[i].y+normales[i].y, baricentros[i].z+normales[i].z);
-                }
-            glEnd();
-}
-
-void figuraRevolucionada::calculaBaricentrosCaras(){
-            //Proceso que se repite como tantas caras tengamos.
-            _vertex3f baricentro;
-            for(int i=0; i<caras.size(); i++){
-                baricentro.x=((vertices[caras[i]._0].x + vertices[caras[i]._1].x + vertices[caras[i]._2].x)/3);
-                baricentro.y=((vertices[caras[i]._0].y + vertices[caras[i]._1].y + vertices[caras[i]._2].y)/3);
-                baricentro.z=((vertices[caras[i]._0].z + vertices[caras[i]._1].z + vertices[caras[i]._2].z)/3);
-
-                //cout << "Baricentro de la cara " << i << endl;
-                //muestraVertice(baricentro);
-
-                baricentros.push_back(baricentro);
-            }
-}
-
-void figuraRevolucionada::cargarPerfil(char *nombreFichero){
-
-            _file_ply fichero;
-            fichero.open(nombreFichero);
-
-            vector<float>verticitos;
-            vector<int>caritas;
-
-            fichero.read(verticitos,caritas);
-
-            //Carga de los vertices en nuestro formato _vertex3f
-            unsigned tamVertices=verticitos.size();
-
-            _vertex3f swap;
-            for(unsigned int i=0; i<tamVertices; i=i+3){
-                swap.x=verticitos[i];
-                swap.y=verticitos[i+1];
-                swap.z=verticitos[i+2];
-                //Habría que cambiar la forma de introducir los vertices.
-                perfil.push_back(swap);
-            }
-
-            //Cerramos el fichero.
-            fichero.close();
-}
-
-void figuraRevolucionada::cargarPerfil(vector <_vertex3f> vectorPerfil){
-            for(int i=0; i<vectorPerfil.size(); i++)
-                perfil.push_back(vectorPerfil[i]);
 }
 
 void figuraRevolucionada::vaciaFigura(){

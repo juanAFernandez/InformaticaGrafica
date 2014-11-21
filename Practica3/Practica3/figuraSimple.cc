@@ -1,5 +1,9 @@
 #include "figuraSimple.h"
 
+figuraSimple::figuraSimple(string nuevoNombre){
+    nombreFigura=nombreFigura;
+}
+
 void figuraSimple::setVerticeManual(GLfloat x, GLfloat y, GLfloat z){
     _vertex3f verticeTemporal;
     verticeTemporal.x=x;
@@ -18,6 +22,8 @@ int figuraSimple::numeroVertices(){
 };
 
 void figuraSimple::dibujarVertices(string seccion){
+
+
 
             //Establecemos el color de los vértices
             glColor3fv(NEGRO);
@@ -94,3 +100,12 @@ void figuraSimple::dibujarVertices(string seccion){
 
 
 };
+
+void figuraSimple::muestraVertices(){
+    cout << "Vector de vertices de la figura " << nombreFigura << ": " << endl;
+    for(int i=0; i<vertices.size(); i++){
+        cout << "Vertice n." << i;
+        cout << " [" << vertices[i].x <<" , "<< vertices[i].y << " , "<< vertices[i].z << "]" << endl;
+    }
+}
+

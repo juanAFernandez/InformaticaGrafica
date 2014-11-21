@@ -28,6 +28,14 @@
 
 #include "variablesControl.h"
 
+#include "rover.h"
+#include "suelo.h"
+#include "parametrosRover.h"
+
+
+        rover curiosity;
+        suelo base(100.0);
+
 //###############d
 
 /*Sección de definición de figuras (el modelado). Donde esta se realiza tan sólo una vez dejando clara la
@@ -35,8 +43,8 @@ diferencia entre el modelado (definición de sus puntos y configuración de sus 
 de la que se encargará un función independiente.
 */
     //Declaramos algunas figuras básicas.
-    figuraSimple triangulo;
-    figuraSolida cubo;
+    figuraSimple triangulo("triangulo");
+    figuraSolida cubo("cubo");
 
 
 
@@ -47,10 +55,10 @@ de la que se encargará un función independiente.
     vector<_vertex3f> perfil;
 
     //La figura del peon (cuyo perfil será cargado desde un .ply)
-    figuraRevolucionada peon;
+    figuraRevolucionada peon("peon");
 
     //Una figura extra con la que probar cosas.
-    figuraRevolucionada figuraPrueba;
+    figuraRevolucionada figuraPrueba("figura de prueba");
 
     //Perfiles simples para el examen:
     vector<_vertex3f> perfilCompleto;
@@ -62,10 +70,10 @@ de la que se encargará un función independiente.
 
     vector <figuraRevolucionada> vectorFiguras;
 
-    figuraRevolucionada figuraPerfilCompleto;
-    figuraRevolucionada figuraPerfilParcialSinTapaArriba;
-    figuraRevolucionada figuraPerfilParcialSinTapaAbajo;
-    figuraRevolucionada figuraPerfilSinTapas;
+    figuraRevolucionada figuraPerfilCompleto("h");
+    figuraRevolucionada figuraPerfilParcialSinTapaArriba("a");
+    figuraRevolucionada figuraPerfilParcialSinTapaAbajo("b");
+    figuraRevolucionada figuraPerfilSinTapas("c");
 
 
 //###############
@@ -253,29 +261,36 @@ void draw_objects()
     }
 
 
-    if(true){
+    if(false){
+
+
+
     //Dibujamos la figura FIGURA en el modo MODO que tengamos seleciconado
 
         //Sólo vértices
-        if(MODO==1)
+        if(MODO_VIS==1)
             vectorFiguras[FIGURA-1].dibujarVertices("todo");
         //Sólo aristas
-        if(MODO==2)
+        if(MODO_VIS==2)
             vectorFiguras[FIGURA-1].dibujarAristas("todo");
         //Modo sólido
-        if(MODO==3)
-            vectorFiguras[FIGURA-1].dibujarCaras("todo","solido");
+        if(MODO_VIS==3)
+          //  vectorFiguras[FIGURA-1].dibujarCaras("todo","solido");
         //Modo sólido especial: vertices + aristas + caras + representación de normales.
-        if(MODO==4){
+        if(MODO_VIS==4){
             vectorFiguras[FIGURA-1].dibujarVertices("todo");
             vectorFiguras[FIGURA-1].dibujarAristas("todo");
-            vectorFiguras[FIGURA-1].dibujarCaras("todo","ajedrez");
+         //   vectorFiguras[FIGURA-1].dibujarCaras("todo","ajedrez");
             vectorFiguras[FIGURA-1].dibujaBaricentros();
             vectorFiguras[FIGURA-1].dibujarNormales();
             vectorFiguras[FIGURA-1].dibujarNormalesVertices();
         }
     }
 
+
+    curiosity.dibujarRover();
+
+    //base.dibujarSuelo();
 
 
     /*
@@ -408,16 +423,16 @@ if(toupper(Tecla1)=='6'){FIGURA=6; draw_scene();}
 //Ahora seleccionamos el modo, VERTICES, ALAMBRE O SÓLID y el especial de 4 colores del examen.
 
 //Para dibujar el modelo sólo los VERTICES.
-if(toupper(Tecla1)=='V'){MODO=1; draw_scene();}
+if(toupper(Tecla1)=='V'){MODO_VIS=1; draw_scene();}
 
 //Para dibujar el modelo sólo con ARISTAS.
-if(toupper(Tecla1)=='A'){MODO=2; draw_scene();}
+if(toupper(Tecla1)=='A'){MODO_VIS=2; draw_scene();}
 
 //Para dibujar el modelo sólo SÓLIDO
-if(toupper(Tecla1)=='S'){MODO=3; draw_scene();}
+if(toupper(Tecla1)=='S'){MODO_VIS=3; draw_scene();}
 
 //Para dibujar el modelo con colores especiales de examen
-if(toupper(Tecla1)=='D'){MODO=4; draw_scene();}
+if(toupper(Tecla1)=='D'){MODO_VIS=4; draw_scene();}
 
 //Para el control del número de revoluciones ------------------------------------------------
 
@@ -436,6 +451,36 @@ if(Tecla1=='+'){
 
         //Llamamos a dibujar escena donde se decide que y como dibujar
         draw_scene();
+}
+//Control de parámetros del rover
+if(toupper(Tecla1)=='T'){
+    //###Aumentamos el número de revoluciones:
+    GRADOS_RUEDA_DERECHA++;
+    GRADOS_RUEDA_IZQUIERDA++;
+    //Llamamos a dibujar escena donde se decide que y como dibujar
+    draw_scene();
+}
+//Control de parámetros del rover
+if(toupper(Tecla1)=='G'){
+    //###Aumentamos el número de revoluciones:
+    GRADOS_RUEDA_DERECHA--;
+    GRADOS_RUEDA_IZQUIERDA--;
+    //Llamamos a dibujar escena donde se decide que y como dibujar
+    draw_scene();
+}
+//Control de parámetros del rover
+if(toupper(Tecla1)=='H'){
+    //###Aumentamos el número de revoluciones:
+    GRADOS_GIRO_ROVER--;
+    //Llamamos a dibujar escena donde se decide que y como dibujar
+    draw_scene();
+}
+//Control de parámetros del rover
+if(toupper(Tecla1)=='F'){
+    //###Aumentamos el número de revoluciones:
+    GRADOS_GIRO_ROVER++;
+    //Llamamos a dibujar escena donde se decide que y como dibujar
+    draw_scene();
 }
 
 //Pulsar la tecla - reduce  el número y vuelve a dibujar
@@ -537,8 +582,8 @@ Back_plane=1000;
 
 // se inicia la posicion del observador, en el eje z
 Observer_distance=12*Front_plane;
-Observer_angle_x=0;
-Observer_angle_y=0;
+Observer_angle_x=40;
+Observer_angle_y=-40;
 
 // se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 // blanco=(1,1,1,1) rojo=(1,0,0,1), ...
@@ -572,6 +617,7 @@ int main(int argc, char **argv)
         */
 
 
+
         //El perfil simple completo (con tapas):
         perfilCompleto.push_back({0,-1,0});
         perfilCompleto.push_back({1,-1,0});
@@ -597,6 +643,8 @@ int main(int argc, char **argv)
 
         figuraPerfilCompleto.cargarPerfil(perfilCompleto);
         figuraPerfilCompleto.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
+        figuraPerfilCompleto.muestraVertices();
+
 
         figuraPerfilParcialSinTapaAbajo.cargarPerfil(perfilParcialSinTapaAbajo);
         //figuraPerfilParcialSinTapaAbajo.revoluciona(REVOLUCIONES,GRADOS_INICIAL, GRADOS_FINAL);
