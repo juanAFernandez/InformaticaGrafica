@@ -1,6 +1,7 @@
 #ifndef SUELO
 #define SUELO
 #include "figuraCargada.h"
+//#include "colores.h"
 
 class suelo{
 
@@ -55,15 +56,21 @@ class suelo{
         */
         void dibujarSuelo(){
 
+
+
+                glScaled(10,0,10);
+
+
+            //Sólido
             if(versionA){
                 glPushMatrix();
                     glTranslated(0,-0.25,0);
                     glScaled(tam,0.5,tam);
-                    dibujarBloque("gris");
+                    dibujarBloque(GRIS_CLARO);
                 glPopMatrix();
             }
 
-
+            //Ajedrez
             if(versionB){
 
             for( int j=0; j<numBloques; j++){
@@ -75,14 +82,14 @@ class suelo{
                     glTranslated(-0.5-i,-0.5,-0.5-j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque("gris");
+                            dibujarBloque(GRIS_CLARO);
                         else
-                            dibujarBloque("amarillo");
+                            dibujarBloque(AMARILLO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque("amarillo");
+                            dibujarBloque(AMARILLO);
                         else
-                            dibujarBloque("gris");
+                            dibujarBloque(GRIS_CLARO);
                     }
 
                 glPopMatrix();
@@ -91,14 +98,14 @@ class suelo{
                     glTranslated(0.5+i,-0.5,-0.5-j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque("amarillo");
+                            dibujarBloque(AMARILLO);
                         else
-                            dibujarBloque("gris");
+                            dibujarBloque(GRIS_CLARO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque("gris");
+                            dibujarBloque(GRIS_CLARO);
                         else
-                            dibujarBloque("amarillo");
+                            dibujarBloque(AMARILLO);
                     }
                 glPopMatrix();
             }
@@ -109,28 +116,28 @@ class suelo{
                     glTranslated(-0.5-i,-0.5,0.5+j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque("amarillo");
+                            dibujarBloque(AMARILLO);
                         else
-                            dibujarBloque("gris");
+                            dibujarBloque(GRIS_CLARO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque("gris");
+                            dibujarBloque(GRIS_CLARO);
                         else
-                            dibujarBloque("amarillo");
+                            dibujarBloque(AMARILLO);
                     }
                 glPopMatrix();
                 glPushMatrix();
                     glTranslated(0.5+i,-0.5,0.5+j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque("gris");
+                            dibujarBloque(GRIS_CLARO);
                         else
-                            dibujarBloque("amarillo");
+                            dibujarBloque(AMARILLO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque("amarillo");
+                            dibujarBloque(AMARILLO);
                         else
-                            dibujarBloque("gris");
+                            dibujarBloque(GRIS_CLARO);
                     }
                 glPopMatrix();
             }
@@ -145,7 +152,8 @@ class suelo{
         * @brief Para dibujar un único bloque.
         * @param color El color con el que se desea dibujar el bloque.
         */
-        void dibujarBloque(string color){
+        void dibujarBloque(const GLfloat color[]){
+            //cubo.prueba(*ROJO);
             cubo.dibujarCaras("todo","solido",color);
             //cubo.dibujarAristas("todo");
         }

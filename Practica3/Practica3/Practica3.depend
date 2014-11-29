@@ -10,7 +10,7 @@
 	<vector>
 	<assert.h>
 
-1416586644 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\main.cc
+1417124934 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -24,14 +24,14 @@
 	"suelo.h"
 	"parametrosRover.h"
 
-1416152806 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.h
+1416647148 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.h
 	"figuraSolida.h"
 	"file_ply_stl.h"
 
-1416575936 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.h
+1417123156 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.h
 	"figuraSimple.h"
 
-1416585074 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.h
+1416647833 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.h
 	<GL/gl.h>
 	<vector>
 	"vertex.h"
@@ -43,7 +43,7 @@
 	<math.h>
 	<iostream>
 
-1416050636 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\colores.h
+1417123127 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\colores.h
 	<GL/gl.h>
 
 1416584948 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.h
@@ -54,7 +54,7 @@
 1416422855 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.cc
 	"figuraSimple.h"
 
-1416576037 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.cc
+1417123171 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.cc
 	"figuraSolida.h"
 
 1416152783 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figuracargada.cc
@@ -65,12 +65,13 @@
 
 1416584299 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\variablescontrol.h
 
-1416586821 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\rover.h
+1417124471 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\rover.h
+	<math.h>
 	"figuraCargada.h"
 	"parametrosRover.h"
 
-1416577362 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\suelo.h
+1417124827 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\suelo.h
 	"figuraCargada.h"
 
-1416586502 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\parametrosrover.h
+1417113655 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\parametrosrover.h
 

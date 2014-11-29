@@ -34,7 +34,7 @@
 
 
         rover curiosity;
-        suelo base(100.0);
+        suelo base(20);
 
 //###############d
 
@@ -263,8 +263,6 @@ void draw_objects()
 
     if(false){
 
-
-
     //Dibujamos la figura FIGURA en el modo MODO que tengamos seleciconado
 
         //Sólo vértices
@@ -290,7 +288,7 @@ void draw_objects()
 
     curiosity.dibujarRover();
 
-    //base.dibujarSuelo();
+    base.dibujarSuelo();
 
 
     /*
@@ -457,6 +455,10 @@ if(toupper(Tecla1)=='T'){
     //###Aumentamos el número de revoluciones:
     GRADOS_RUEDA_DERECHA++;
     GRADOS_RUEDA_IZQUIERDA++;
+
+    X+=cos(GRADOS_GIRO_ROVER);
+    Z+=sin(GRADOS_GIRO_ROVER);
+
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
 }
@@ -472,6 +474,7 @@ if(toupper(Tecla1)=='G'){
 if(toupper(Tecla1)=='H'){
     //###Aumentamos el número de revoluciones:
     GRADOS_GIRO_ROVER--;
+
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
 }
@@ -581,7 +584,7 @@ Front_plane=1;
 Back_plane=1000;
 
 // se inicia la posicion del observador, en el eje z
-Observer_distance=12*Front_plane;
+Observer_distance=70*Front_plane;
 Observer_angle_x=40;
 Observer_angle_y=-40;
 

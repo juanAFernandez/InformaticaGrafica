@@ -68,7 +68,7 @@ class figuraSolida : public figuraSimple {
         * @param seccion
         * @param modo
         */
-        void dibujarCaras(string seccion, string modo, string color);
+        void dibujarCaras(string seccion, string modo, const GLfloat color[]);
 
         /**
         * @brief Función para dibujar las aristas (conexiones entre dos puntos)
@@ -91,7 +91,17 @@ class figuraSolida : public figuraSimple {
         void muestraNormales();
 
 
+        void prueba(GLfloat color){
+            cout << "All right!";
+        }
 
+
+
+        _vertex3f getNormal(int pos){
+
+            return normales[pos];
+
+        }
 
 
 

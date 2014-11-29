@@ -14,5 +14,6 @@ class figuraCargada : public figuraSolida {
         //Este tipo de objeto sólo añade la función de carga de los ficheros .ply
         void leerFichero(char *nombre);
 
+
 };
 #endif

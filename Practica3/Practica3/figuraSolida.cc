@@ -16,7 +16,7 @@ void figuraSolida::eliminarUltimaCara(){
             caras.pop_back();
 }
 
-void figuraSolida::dibujarCaras(string seccion, string modo, string color){
+void figuraSolida::dibujarCaras(string seccion, string modo, const GLfloat color[]){
 
             //Usamos la directiva GL_TRIANGLES que necesita que se le pasen tres vectores.
             glBegin(GL_TRIANGLES);
@@ -30,10 +30,10 @@ void figuraSolida::dibujarCaras(string seccion, string modo, string color){
                         //Si queremos que parezca un objeto sólido establecemos el mismo color para todas las caras.
                        if(modo=="solido")
                             //Establecemos el mismo color para todos los pasos del bucle, es decir, para todas las caras.
-                            if(color=="gris")
-                                glColor3fv(GRIS_CLARO);
-                            if(color=="amarillo")
-                                glColor3fv(AMARILLO);
+                           // if(color=="gris")
+                             //   glColor3fv(GRIS_CLARO);
+                            //if(color=="amarillo")
+                              glColor3fv(color);
 
                         //Si queremos dibujar el objeto en modo ajedrez pintamos una cara de un color y otra de otro.
                         if(modo=="ajedrez"){
@@ -237,6 +237,8 @@ void figuraSolida::calculaBaricentrosCaras(){
 
 void figuraSolida::calculaNormalesCaras(){
 
+            cout << "Calculando normales de caras de la figura " << nombreFigura << endl;
+
             //Dado una cara (un triángulo formado por tres vértices) vamos a obtener la normal que forman los vectores que definen esta.
 
             /*Sacamos dos vectores y como queremos que la normal vaya hacia el exterior de la cara somos cuidadosos a la hora de
@@ -348,6 +350,8 @@ void figuraSolida::calculaNormalesVertices(){
 }
 
 void figuraSolida::dibujarNormales(){
+
+    if(!baricentros.empty() && !normales.empty()){
             //Teniendo la normal y el baricentro, ¿Cómo dibujo una linea que salga de la caras?
             glBegin(GL_LINES);
                 for(unsigned int i=0; i<caras.size(); i++){
@@ -355,6 +359,15 @@ void figuraSolida::dibujarNormales(){
                     glVertex3f(baricentros[i].x+normales[i].x, baricentros[i].y+normales[i].y, baricentros[i].z+normales[i].z);
                 }
             glEnd();
+    }else{
+        //Si uno de los dos está vacío el proceso no puede realizarse.
+        cout << "No pueden dibujarse las normales de " << nombreFigura << ". El vector de ";
+        if(baricentros.empty())
+            cout << " baricentros ";
+        if(normales.empty())
+            cout << " normales ";
+        cout << " está vacío."<< endl;
+    }
 }
 
 void figuraSolida::dibujarNormalesVertices(){

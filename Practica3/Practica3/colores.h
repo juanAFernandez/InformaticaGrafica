@@ -12,6 +12,7 @@
 
 const GLfloat ROJO[]={1.0,0.0,0.0}; //100% de ROJO, 0% de Verde, 0% de Azul
 const GLfloat VERDE[]={0.0,1.0,0.0};
+
 const GLfloat AZUL[]={0.0,0.0,1.0};
 const GLfloat NEGRO[]={0.0,0.0,0.0};
 const GLfloat AMARILLO[]={1.0,1.0,0};
