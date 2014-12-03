@@ -36,6 +36,11 @@
         rover curiosity;
         suelo base(20);
 
+        figuraRevolucionada cilindro;
+        figuraRevolucionada semicilindro;
+
+
+
 //###############d
 
 /*Sección de definición de figuras (el modelado). Donde esta se realiza tan sólo una vez dejando clara la
@@ -286,10 +291,18 @@ void draw_objects()
     }
 
 
+    /*
+
     curiosity.dibujarRover();
 
     base.dibujarSuelo();
 
+    */
+
+    //Pruebas:
+
+    semicilindro.dibujarAristas("todo");
+    semicilindro.dibujarCaras("todo","solido",VERDE);
 
     /*
     switch(FIGURA){
@@ -453,11 +466,13 @@ if(Tecla1=='+'){
 //Control de parámetros del rover
 if(toupper(Tecla1)=='T'){
     //###Aumentamos el número de revoluciones:
-    GRADOS_RUEDA_DERECHA++;
-    GRADOS_RUEDA_IZQUIERDA++;
+   // GRADOS_RUEDA_DERECHA++;
+   // GRADOS_RUEDA_IZQUIERDA++;
 
-    X+=cos(GRADOS_GIRO_ROVER);
-    Z+=sin(GRADOS_GIRO_ROVER);
+    curiosity.desplazaAdelante();
+
+  //  X+=cos(GRADOS_GIRO_ROVER);
+  //  Z+=sin(GRADOS_GIRO_ROVER);
 
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
@@ -465,15 +480,20 @@ if(toupper(Tecla1)=='T'){
 //Control de parámetros del rover
 if(toupper(Tecla1)=='G'){
     //###Aumentamos el número de revoluciones:
-    GRADOS_RUEDA_DERECHA--;
-    GRADOS_RUEDA_IZQUIERDA--;
+    //GRADOS_RUEDA_DERECHA--;
+    //GRADOS_RUEDA_IZQUIERDA--;
     //Llamamos a dibujar escena donde se decide que y como dibujar
+
+    curiosity.desplazaAtras();
+
     draw_scene();
 }
 //Control de parámetros del rover
 if(toupper(Tecla1)=='H'){
     //###Aumentamos el número de revoluciones:
-    GRADOS_GIRO_ROVER--;
+ //   GRADOS_GIRO_ROVER--;
+
+    curiosity.giraDerecha();
 
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
@@ -481,8 +501,11 @@ if(toupper(Tecla1)=='H'){
 //Control de parámetros del rover
 if(toupper(Tecla1)=='F'){
     //###Aumentamos el número de revoluciones:
-    GRADOS_GIRO_ROVER++;
+  //  GRADOS_GIRO_ROVER++;
     //Llamamos a dibujar escena donde se decide que y como dibujar
+
+    curiosity.giraIzquierda();
+
     draw_scene();
 }
 
@@ -611,6 +634,7 @@ glViewport(0,0,UI_window_width,UI_window_height);
 int main(int argc, char **argv)
 {
 
+
     //Definimos los perfiles para el examen dándoles vértices:
 
         /*
@@ -643,6 +667,18 @@ int main(int argc, char **argv)
 
 
     //Inicializamos las figuras del tipo "figuraRevolucionada" con estos perfiles y les damos la revolución general mínima:
+
+
+        //Para pruebas:
+            cilindro.cargarPerfil(perfilCompleto);
+            cilindro.revoluciona(8,0,180);
+
+            semicilindro.cargarPerfil(perfilCompleto);
+            semicilindro.revoluciona(32,0,180);
+
+
+        //Fin de pruebas
+
 
         figuraPerfilCompleto.cargarPerfil(perfilCompleto);
         figuraPerfilCompleto.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);

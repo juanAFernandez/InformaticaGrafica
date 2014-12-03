@@ -103,6 +103,10 @@ class figuraSolida : public figuraSimple {
 
         }
 
+        _vertex3f getBaricentro(int pos){
+            return baricentros[pos];
+        }
+
 
 
 
