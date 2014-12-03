@@ -3,7 +3,7 @@
 
 bool DEBUGG=false;
 
-void figuraRevolucionada::generaCarasCentral(int numRev, int numVP){
+void figuraRevolucionada::generaCarasCentral(int numRev, int numVP, double gradosInicial, double gradosFinal){
 
 
             int verticeA, verticeB, verticeC;
@@ -26,8 +26,10 @@ void figuraRevolucionada::generaCarasCentral(int numRev, int numVP){
 
             //#############################################
 
-            //if(GRADOS_INICIAL==0.0 && GRADOS_FINAL==360.0)
-              //  numRev++;
+
+            //Si la figura es completa hay que procesar las últimas caras
+            if(gradosInicial==0.0 && gradosFinal==360.0)
+                numRev++;
 
 
 
@@ -70,13 +72,19 @@ void figuraRevolucionada::generaCarasCentral(int numRev, int numVP){
 
 }
 
-void figuraRevolucionada::generaCarasTapaInferior(int numRev, int posTi, int nVPST){
+void figuraRevolucionada::generaCarasTapaInferior(int numRev, int posTi, int nVPST, double gradosInicial, double gradosFinal){
             /*
             cout << "numero de revoluciones: " << numRev << endl;
             cout << "posición del vertice central de la tapa inferior: " << posTi << endl;
             cout << "numero de vertices del perfil sin tapa: " << nVPST << endl;
             cout << ((0+1)*nVPST) << endl;
             */
+
+            //Si la figura es completa hay que procesar la última cara
+            if(gradosInicial==0.0 && gradosFinal==360.0)
+                numRev++;
+
+
             //No es necesario generar el verticeA porque siempre será el mismo: posTi
             int verticeB, verticeC;
             for(int i=0; i<numRev-1; i++){
@@ -88,12 +96,17 @@ void figuraRevolucionada::generaCarasTapaInferior(int numRev, int posTi, int nVP
 
 }
 
-void figuraRevolucionada::generaCarasTapaSuperior(int numRev, int posTs, int nVPST, int nVST){
+void figuraRevolucionada::generaCarasTapaSuperior(int numRev, int posTs, int nVPST, int nVST, double gradosInicial, double gradosFinal){
             //No es necesario general el vértice B ya que es siempre el mismo
              //cout << "numero de revoluciones: " << numRev << endl;
              //cout << "posición del vertice central de la tapa inferior: " << posTs << endl;
              //cout << "numero de vertices del perfil sin tapa: " << nVPST << endl;
              //cout << "numero de vertices  sin tapa: " << nVST << endl;
+
+             //Si la figura es completa hay que procesar la última cara
+            if(gradosInicial==0.0 && gradosFinal==360.0)
+                numRev++;
+
              int verticeA, verticeC;
             for(int i=0; i<numRev-1; i++){
                 verticeC=((nVPST*(i+1))+(nVPST-1))%nVST;
@@ -281,7 +294,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
                 //Procesa caras centrales
 
                 //Una vez revolucionado se procede a generar las caras usando el vector de vértices obtenido:
-                generaCarasCentral(numRev, perfil.size());
+                generaCarasCentral(numRev, perfil.size(), gradosInicial, gradosFinal);
 
             // ##4## Añadimos al final del nuevo vector de vértices los vértices que componen las tapas
 
@@ -322,7 +335,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
 
                     //2ºProcesamos las caras  de la tapa inferior, usando ese valor.
                         //llamada a la función procesa tapas inferiores.
-                        generaCarasTapaInferior(numRev, posTi,nVPST);
+                        generaCarasTapaInferior(numRev, posTi,nVPST,gradosInicial,gradosFinal);
                 }
 
                 if(tapaSuperior){
@@ -335,7 +348,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
                     cout << "posTs" << posTs << endl;
 
                     //2ºProcesamos las caras de la tapa superior
-                        generaCarasTapaSuperior(numRev,posTs,nVPST,nVST);
+                        generaCarasTapaSuperior(numRev,posTs,nVPST,nVST,gradosInicial,gradosFinal);
                 }
 
 

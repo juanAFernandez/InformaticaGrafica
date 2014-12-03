@@ -22,7 +22,7 @@ class figuraRevolucionada: public figuraSolida{
         * @param numRev El número de revoluciones con la que queremos formar nuestro objeto.
         * @param numVP El número de vértices por perfil que tiene nuestra figura. (POSIBLEMENTE SE ELIMINE POR CAMBIO DE FUNCINOALIDAD)
         **/
-        void generaCarasCentral(int numRev, int numVP);
+        void generaCarasCentral(int numRev, int numVP, double gradosInicial=0.0, double gradosFinal=360.0);
 
         /**
         * @brief Para generar las caras de la tapa inferior en caso de que esta existiera.
@@ -30,7 +30,7 @@ class figuraRevolucionada: public figuraSolida{
         * @param posTi Posición en el vector de vértices del punto en el eje Y representativo de la tapa inferior.
         * @param nVPST Número de vertices del perfil original con el que formamos la figura sin contar los vértices de las tapas.
         */
-        void generaCarasTapaInferior(int numRev, int posTi, int nVPST);
+        void generaCarasTapaInferior(int numRev, int posTi, int nVPST, double gradosInicial=0.0, double gradosFinal=360.0);
 
         /**
         * @brief Para generar las caras de la tapa superior en caso de que esta existiera.
@@ -39,7 +39,7 @@ class figuraRevolucionada: public figuraSolida{
         * @param nVPST Número de vertices del perfil original con el que formamos la figura sin contar los vértices de las tapas.
         * @param nVST Número de vertices del vector vértices sin contar los vértices de las tapas, como máximo sin dos.
         */
-        void generaCarasTapaSuperior(int numRev, int posTs, int nVPST, int nVST);
+        void generaCarasTapaSuperior(int numRev, int posTs, int nVPST, int nVST, double gradosInicial=0.0, double gradosFinal=360.0);
 
         /**
         * @brief Función para realizar la conversión de ángulos a radianes que necesitamos para trabajar con OpenGL

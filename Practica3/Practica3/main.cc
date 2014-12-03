@@ -674,7 +674,7 @@ int main(int argc, char **argv)
             cilindro.revoluciona(8,0,180);
 
             semicilindro.cargarPerfil(perfilCompleto);
-            semicilindro.revoluciona(32,0,180);
+            semicilindro.revoluciona(8,0,360);
 
 
         //Fin de pruebas
