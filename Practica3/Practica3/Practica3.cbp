@@ -36,6 +36,7 @@
 			<Add library="glu32" />
 			<Add library="gdi32" />
 		</Linker>
+		<Unit filename="Robot.h" />
 		<Unit filename="colores.h" />
 		<Unit filename="figuraCargada.cc" />
 		<Unit filename="figuraCargada.h" />

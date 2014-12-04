@@ -14,7 +14,7 @@ double GRADOS_RUEDA_IZQUIERDA=0.0;
 double GRADOS_GIRO_ROVER=0.0;
 
 //Cuanto mayor sea este valor menos real será la frección con el suelo, al menos que no se cambie tb el giro de las ruedas.
-double AGARRE_SUELO=0.15;
+double AGARRE_SUELO=1;
 
 double X=0.0;
 double Z=0.0;

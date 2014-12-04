@@ -82,14 +82,14 @@ class suelo{
                     glTranslated(-0.5-i,-0.5,-0.5-j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque(GRIS_CLARO);
+                            dibujarBloque(MARRON_CLARO);
                         else
-                            dibujarBloque(AMARILLO);
+                            dibujarBloque(MARRON_OSCURO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque(AMARILLO);
+                            dibujarBloque(MARRON_OSCURO);
                         else
-                            dibujarBloque(GRIS_CLARO);
+                            dibujarBloque(MARRON_CLARO);
                     }
 
                 glPopMatrix();
@@ -98,14 +98,14 @@ class suelo{
                     glTranslated(0.5+i,-0.5,-0.5-j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque(AMARILLO);
+                            dibujarBloque(MARRON_OSCURO);
                         else
-                            dibujarBloque(GRIS_CLARO);
+                            dibujarBloque(MARRON_CLARO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque(GRIS_CLARO);
+                            dibujarBloque(MARRON_CLARO);
                         else
-                            dibujarBloque(AMARILLO);
+                            dibujarBloque(MARRON_OSCURO);
                     }
                 glPopMatrix();
             }
@@ -116,28 +116,28 @@ class suelo{
                     glTranslated(-0.5-i,-0.5,0.5+j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque(AMARILLO);
+                            dibujarBloque(MARRON_OSCURO);
                         else
-                            dibujarBloque(GRIS_CLARO);
+                            dibujarBloque(MARRON_CLARO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque(GRIS_CLARO);
+                            dibujarBloque(MARRON_CLARO);
                         else
-                            dibujarBloque(AMARILLO);
+                            dibujarBloque(MARRON_OSCURO);
                     }
                 glPopMatrix();
                 glPushMatrix();
                     glTranslated(0.5+i,-0.5,0.5+j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque(GRIS_CLARO);
+                            dibujarBloque(MARRON_CLARO);
                         else
-                            dibujarBloque(AMARILLO);
+                            dibujarBloque(MARRON_OSCURO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque(AMARILLO);
+                            dibujarBloque(MARRON_OSCURO);
                         else
-                            dibujarBloque(GRIS_CLARO);
+                            dibujarBloque(MARRON_CLARO);
                     }
                 glPopMatrix();
             }

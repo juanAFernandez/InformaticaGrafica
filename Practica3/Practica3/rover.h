@@ -6,6 +6,8 @@
 #include "parametrosRover.h"
 //#include "figuraRevolucionada.h"
 
+#include "Robot.h"
+
 
 /*
 Cada vez que el coche se gira hay que calcular la ecuación de la recta para que siga una normal cuando avanza hacia adelante.
@@ -21,10 +23,75 @@ class rover{
 
         figuraCargada cubo; /** < Figura primitiva #1: Cubo centrado en el origen y de tamaño unidad */
         figuraRevolucionada cilindro;
+        figuraRevolucionada semiCilindro;
+
+        void dibujarDetalles(){
+
+        //Detalles
+
+            //Cubos rojos:
+            //Derecho:
+            glPushMatrix();
+                glTranslated(5,16,-20);
+                glScaled(5,5,5);
+                dibujarCubo(ROJO);
+            glPopMatrix();
+            //Izquierdo:
+            glPushMatrix();
+                glTranslated(-5,16,-20);
+                glScaled(5,5,5);
+                dibujarCubo(ROJO);
+            glPopMatrix();
+
+            //Parachoques trasero:
+            glPushMatrix();
+                glScaled(20,1,1);
+                glTranslated(0,6,-25.5);
+                dibujarCubo(GRIS_OSCURO);
+            glPopMatrix();
+
+            //Tanques de combustible:
+
+            //Izquierdo:
+            glPushMatrix();
+                glTranslated(6,13,6);
+                glScaled(5,5,30);
+                glRotated(-90,1,0,0);
+                dibujarSemiCilindro(AZUL);
+            glPopMatrix();
+
+            //Derecho:
+            glPushMatrix();
+                glTranslated(-6,13,6);
+                glScaled(5,5,30);
+                glRotated(-90,1,0,0);
+                dibujarSemiCilindro(AZUL);
+            glPopMatrix();
+
+
+            //Antena:
+            glPushMatrix();
+                glTranslated(0,22,-20);
+                glScaled(7,2.5,7);
+                glRotated(gradosRotacionCoche*10,0,1,0);
+                dibujarSemiCilindro(GRIS_CLARO);
+            glPopMatrix();
+
+            //BaseAntena
+            glPushMatrix();
+                glTranslated(0,20,-20);
+                glScaled(1,10,1);
+                dibujarCilindro(GRIS_OSCURO);
+            glPopMatrix();
+
+
+        }
 
         void dibujarCuerpo(){
             //Cada vez que se dibuje de nuevo el cuerpo vamos a mostrar la directriz:
-            mostrarDirectriz();
+            mostrarVerctorDireccion();
+
+            //Chasis metálico
             glPushMatrix();
                 //glRotated(GRADOS_GIRO_ROVER,0,1,0);
                 glTranslated(0,9.5,0);
@@ -32,14 +99,33 @@ class rover{
                 //Dibujar chasis gris
                 dibujarChasis(GRIS_CLARO);
             glPopMatrix();
+
+            //Brazo robótico:
+            glPushMatrix();
+                glTranslated(0,12.5,29);
+                glScaled(2,2,2);
+                glRotated(-90,0,1,0);
+                brazo.dibujarRobot();
+            glPopMatrix();
+
+            dibujarDetalles();
+
+
         }
 
+        //El chasis se dibuja del mismo color:
         void dibujarChasis(const GLfloat color[]){
             glPushMatrix();
                 glScaled(20,8,50);
                 dibujarCubo(color);
-                //cubo.dibujarAristas("todo");
             glPopMatrix();
+
+            glPushMatrix();
+                glTranslated(0,-2,29);
+                glScaled(20,4,8);
+                dibujarCubo(color);
+            glPopMatrix();
+
         }
 
         void dibujarRuedas(){
@@ -51,13 +137,13 @@ class rover{
             //Rueda delantera izquierda:
             glPushMatrix();
                 glTranslated(10.5,0,15);
-                glRotated(GRADOS_RUEDA_IZQUIERDA,1,0,0);
+                glRotated(gradosRuedasIzquierdas*5,1,0,0);
                 dibujarRueda();
             glPopMatrix();
             //Rueda trasera izquierda:
             glPushMatrix();
                 glTranslated(10.5,0,-15);
-                glRotated(GRADOS_RUEDA_IZQUIERDA,1,0,0);
+                glRotated(gradosRuedasIzquierdas*5,1,0,0);
                 dibujarRueda();
             glPopMatrix();
         }
@@ -66,14 +152,14 @@ class rover{
             //Rueda delantera derecha:
             glPushMatrix();
                 glTranslated(-10.5,0,15);
-                glRotated(GRADOS_RUEDA_DERECHA,1,0,0);
+                glRotated(gradosRuedasDerechas*5,1,0,0);
                 dibujarRueda();
             glPopMatrix();
 
             //Rueda trasera derecha:
             glPushMatrix();
                 glTranslated(-10.5,0,-15);
-                glRotated(GRADOS_RUEDA_DERECHA,1,0,0);
+                glRotated(gradosRuedasDerechas*5,1,0,0);
                 dibujarRueda();
             glPopMatrix();
         }
@@ -95,37 +181,50 @@ class rover{
         void dibujarCubo(const GLfloat color[]){
             cubo.dibujarCaras("todo","solido",color);
             cubo.dibujarAristas("todo");
-            cubo.dibujarNormales();
+            //cubo.dibujarNormales();
         }
 
-        void mostrarDirectriz(){
-            cout << "Normal directriz: " << normalDirectriz.x << " " << normalDirectriz.y << " " << normalDirectriz.z << endl;
+        void dibujarCilindro(const GLfloat color[]){
+            cilindro.dibujarCaras("todo","solido",color);
+            cilindro.dibujarAristas("todo");
+        }
+
+        void dibujarSemiCilindro(const GLfloat color[]){
+            semiCilindro.dibujarCaras("todo","solido",color);
+            semiCilindro.dibujarAristas("todo");
+        }
+
+        void mostrarVerctorDireccion(){
+            cout << "Vector Direccion: " << vectorDireccion.x << " " << vectorDireccion.y << " " << vectorDireccion.z << endl;
            // cout << "Angulo cUerpo: " << anguloCue << endl;
         }
 
-        //Valor que nos servirá tb para el calculo del movimiento dirigido.
-        double anguloDiferenciaOrigen;
-        double anguloRotacionPropia;
+
         double Cx;
         double Cz;
-        int radio;
+        int gradosRotacionCoche;
         _vertex3f baricentro;
+        _vertex3f vectorDireccion;
 
-        float RAD_TO_DAG;
+        float RAD_TO_DEG;
+        double gradosRuedasDerechas;
+        double gradosRuedasIzquierdas;
 
     public: //Todas menos el contructor deberían ser privadas ??¿¿
+
+        Robot brazo;
 
         /**
         * @brief Constructur de la clase que carga el modelo y topología de las figuras primitivas de las que se partirá para cosntruir.
         */
         rover(){
 
-            //Al inicio establecemos el ángulo de giro del rover a 0.0
-            anguloRotacionPropia=0.0;
-            anguloDiferenciaOrigen=0.0;
 
-            RAD_TO_DAG=(180/M_PI);
-            radio=0; Cx=0.0; Cz=0.0;
+
+            RAD_TO_DEG=(M_PI/180);
+            gradosRotacionCoche=0; Cx=0.0; Cz=0.0;
+            gradosRuedasDerechas=0.0;
+            gradosRuedasIzquierdas=0.0;
 
 
             //Cargamos el modelo del cubo desde un fichero ply
@@ -134,81 +233,103 @@ class rover{
             //Calculamos las normales de las caras:
             cubo.calculaNormalesCaras();
             //Cargamos la normal directriz de rover a partir de la normal del frontal del cubo que forma el chasis
-            normalDirectriz=cubo.getNormal(0);
+            vectorDireccion=cubo.getNormal(0);
+
 
             baricentro=cubo.getBaricentro(0);
             baricentro.x=0.0;
             baricentro.y=0.0;
 
-            anguloDiferenciaOrigen=atan(baricentro.x/baricentro.z);
+           // anguloDiferenciaOrigen=atan(baricentro.x/baricentro.z);
             //mostrarDirectriz();
 
-            //Definimos su nombre:
-            cilindro.setNombre("cilindro");
-            //Cargamos un perfil:
+        //### CILINDRO ###
+        //Declaramos un perfil:
+        vector<_vertex3f> perfilCompleto;
+        //Cargamos el perfil simple completo (con tapas) con los puntos:
+        perfilCompleto.push_back({0,-0.5,0});
+        perfilCompleto.push_back({0.5,-0.5,0});
+        perfilCompleto.push_back({0.5,0.5,0});
+        perfilCompleto.push_back({0,0.5,0});
+        /*Esto tb podría haberse realizado mediante la lectura de un fichero .ply */
+        //Cargamos el perfil en la figura:
+        cilindro.cargarPerfil(perfilCompleto);
+        cilindro.revoluciona(16,0,360);
 
-            //Revolucionamos de la forma que queramos:
+        semiCilindro.cargarPerfil(perfilCompleto);
+        semiCilindro.revoluciona(16,0,180);
+
+
+
         }
 
         //Función para dibujar el rover completo.
         void dibujarRover(){
 
-            cout << "baricentro x:" << baricentro.x  << " y: " << baricentro.y << " z: " << baricentro.z << endl;
+
+            //cout << "baricentro x:" << baricentro.x  << " y: " << baricentro.y << " z: " << baricentro.z << endl;
 
             glPushMatrix();
-                glTranslatef(Cx,0,Cz);
-                //glTranslated(0,0,GRADOS_RUEDA_DERECHA*AGARRE_SUELO);
-                glRotated(anguloRotacionPropia,0,1,0);
-                cout << "anguloCuerpo";
-                //glTranslated(normalDirectriz.x*1,normalDirectriz.y*1,0);
+                glTranslated(Cx,0,Cz);
+                glRotated(gradosRotacionCoche,0,1,0);
                 dibujarCuerpo();
             glPopMatrix();
+
+
         }
 
-        void mover(){
-            //Núcleo del algoritmo:
+        void rotarVectorDireccion(double grados){
 
-            //1ºRotar:
-                //No hace nada ya que se rotará segun el angulo que se coja.
-            //2ºTransladar, se calcula Cx y Cz
-            Cx=sin(anguloDiferenciaOrigen)*radio; baricentro.x=sin(anguloDiferenciaOrigen)*radio;
-            Cz=cos(anguloDiferenciaOrigen)*radio; baricentro.z=cos(anguloDiferenciaOrigen)*radio;
+            cout << "Grados" << grados;
+
+            double tmpX=0.0;
+            double tmpZ=0.0;
+
+            //Implementación de la matriz de rotación:
+            tmpX=( (cos(grados*RAD_TO_DEG)*vectorDireccion.x) + (sin(grados*RAD_TO_DEG)*vectorDireccion.z) );
+            tmpZ=( (-sin(grados*RAD_TO_DEG)*vectorDireccion.x) + (cos(grados*RAD_TO_DEG)*vectorDireccion.z)  );
+
+            vectorDireccion.x=tmpX;
+            vectorDireccion.z=tmpZ;
+
         }
+
+
 
         void desplazaAdelante(){
-            anguloDiferenciaOrigen=atan(baricentro.x/baricentro.z);
-            radio++;
-            cout << "anguloDifOrigen" << anguloDiferenciaOrigen << endl;
-            cout << "radio" << radio;
-            mover();
+            gradosRuedasDerechas++;
+            gradosRuedasIzquierdas++;
+            Cx+=vectorDireccion.x*AGARRE_SUELO;
+            Cz+=vectorDireccion.z*AGARRE_SUELO;
         }
 
         void desplazaAtras(){
-            anguloDiferenciaOrigen=atan(baricentro.x/baricentro.z);
-            radio--;
-             cout << "anguloDifOrigen" << anguloDiferenciaOrigen << endl;
-            cout << "radio" << radio;
-            mover();
+            gradosRuedasDerechas--;
+            gradosRuedasIzquierdas--;
+            Cx-=vectorDireccion.x*AGARRE_SUELO;
+            Cz-=vectorDireccion.z*AGARRE_SUELO;
         }
 
         void giraDerecha(){
-            //El movimiento se hace con el grado en el que se encuentra
-            anguloRotacionPropia--;
-             mover();
-           // cout << "ANGULO CUERPO: " << anguloCuerpo;
-            //Luego se modifica el nuevo para que rotate coja el nuevo en dibujarRover
-            //anguloCuerpo--;
+
+            gradosRuedasDerechas--;
+            gradosRuedasIzquierdas++;
+
+            gradosRotacionCoche--;
+            if(gradosRotacionCoche==360)
+                gradosRotacionCoche=0;
+            rotarVectorDireccion(-1.0);
         }
 
         void giraIzquierda(){
 
-            cout << "Angulo rotacion propia" << endl;
-            anguloRotacionPropia++;
+            gradosRuedasDerechas++;
+            gradosRuedasIzquierdas--;
 
-             mover();
-          //  mover(anguloCuerpo);
-           // cout << "ANGULO CUERPO: " << anguloCuerpo;
-           // anguloCuerpo+=45;
+            gradosRotacionCoche++;
+            if(gradosRotacionCoche==360)
+                gradosRotacionCoche=0;
+            rotarVectorDireccion(1.0);
         }
 
 

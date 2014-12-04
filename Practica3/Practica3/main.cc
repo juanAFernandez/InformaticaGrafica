@@ -32,6 +32,10 @@
 #include "suelo.h"
 #include "parametrosRover.h"
 
+//Sólo para pruebas, eliminar luego:
+//#include "Robot.h"
+
+       // Robot brazo;
 
         rover curiosity;
         suelo base(20);
@@ -39,6 +43,8 @@
         figuraRevolucionada cilindro;
         figuraRevolucionada semicilindro;
 
+        boolean animacion=true;
+        int contadorAnimacion=0;
 
 
 //###############d
@@ -291,19 +297,21 @@ void draw_objects()
     }
 
 
-    /*
+
 
     curiosity.dibujarRover();
 
     base.dibujarSuelo();
 
-    */
+    //brazo.dibujarRobot();
+
+
 
     //Pruebas:
-
+    /*
     semicilindro.dibujarAristas("todo");
     semicilindro.dibujarCaras("todo","solido",VERDE);
-
+    */
     /*
     switch(FIGURA){
 
@@ -408,31 +416,19 @@ y se llama a draw_scene(); que llama a draw_objects(); donde segun el estado
 de esas variables se dibujará una cosa u otra.
 */
 
-/*Para la práctica dos vamos a tener 6 figuras. Las cuatro a partir de la revolución de los
-cuatro perfiles de examen, una quinta con la que nosostros hacemos pruebas y como sexta y última
-el peón cargado desde el fichero .ply*/
 
-//Para dibujar la figura 1 pulsamos la techa 1
-if(toupper(Tecla1)=='1'){FIGURA=1; draw_scene();}
 
-//Para dibujar la figura 2 pulsamos la techa 2
-if(toupper(Tecla1)=='2'){FIGURA=2; draw_scene();}
-
-//Para dibujar la figura 3 pulsamos la techa 3
-if(toupper(Tecla1)=='3'){FIGURA=3; draw_scene();}
-
-//Para dibujar la figura 4 pulsamos la techa 4
-if(toupper(Tecla1)=='4'){FIGURA=4; draw_scene();}
-
-//Para dibujar la figura 5 pulsamos la techa 5
-if(toupper(Tecla1)=='5'){FIGURA=5; draw_scene();}
-
-//Para dibujar la figura 6 pulsamos la techa 6
-if(toupper(Tecla1)=='6'){FIGURA=6; draw_scene();}
+if (toupper(Tecla1)=='1') {curiosity.brazo.girarPositivo("brazo1");curiosity.brazo.girarNegativo("brazo2"); animacion=false; draw_scene();};
+if (toupper(Tecla1)=='2') {curiosity.brazo.girarNegativo("brazo1");curiosity.brazo.girarPositivo("brazo2");draw_scene();};
+if(toupper(Tecla1)=='3'){curiosity.brazo.girarPositivo("brazo2");draw_scene();}
+if(toupper(Tecla1)=='4'){curiosity.brazo.girarNegativo("brazo2");draw_scene();}
+if(toupper(Tecla1)=='5'){curiosity.brazo.girarPositivo("brazo3"); draw_scene();}
+if(toupper(Tecla1)=='6'){curiosity.brazo.girarNegativo("brazo3"); draw_scene();}
+if(toupper(Tecla1)=='7'){curiosity.brazo.girarBasePositivo(); draw_scene();}
+if(toupper(Tecla1)=='8'){curiosity.brazo.girarBaseNegativo(); draw_scene();}
 
 
 //Ahora seleccionamos el modo, VERTICES, ALAMBRE O SÓLID y el especial de 4 colores del examen.
-
 //Para dibujar el modelo sólo los VERTICES.
 if(toupper(Tecla1)=='V'){MODO_VIS=1; draw_scene();}
 
@@ -584,7 +580,8 @@ void special_keys(int Tecla1,int x,int y)
 switch (Tecla1){
 	case GLUT_KEY_LEFT:Observer_angle_y--;break;
 	case GLUT_KEY_RIGHT:Observer_angle_y++;break;
-	case GLUT_KEY_UP:Observer_angle_x--;break;
+	case GLUT_KEY_UP:Observer_angle_x--;
+         break;
 	case GLUT_KEY_DOWN:Observer_angle_x++;break;
 	case GLUT_KEY_PAGE_UP:Observer_distance*=1.2;break;
 	case GLUT_KEY_PAGE_DOWN:Observer_distance/=1.2;break;
@@ -630,9 +627,48 @@ glViewport(0,0,UI_window_width,UI_window_height);
 //***************************************************************************
 
 
+//Animación.
+void idle(void){
+
+
+if(animacion){
+        Sleep(50);
+
+
+            curiosity.desplazaAdelante();
+            curiosity.giraDerecha();
+            curiosity.giraDerecha();
+
+
+            curiosity.brazo.girarBasePositivo();
+
+            if(contadorAnimacion<25){
+                curiosity.brazo.girarPositivo("brazo1");
+            }
+            if(contadorAnimacion>40 && contadorAnimacion<70){
+                curiosity.brazo.girarNegativo("brazo1");
+                curiosity.brazo.girarPositivo("brazo2");
+            }
+
+            curiosity.brazo.girarPositivo("brazo3");
+
+
+        glutPostRedisplay();
+        cout << "Animacion paso " << contadorAnimacion << endl;
+        contadorAnimacion++;
+        if(contadorAnimacion==70)
+            contadorAnimacion=0;
+
+}
+
+}
+
+
+
 
 int main(int argc, char **argv)
 {
+
 
 
     //Definimos los perfiles para el examen dándoles vértices:
@@ -642,6 +678,7 @@ int main(int argc, char **argv)
            no sean bajados de la plataforma, parece que su codificación al guardar la información hace que no puedan
            abrirse y para lo que se va a conseguir, se ha optado por esta solución.
         */
+
 
 
 
@@ -670,13 +707,14 @@ int main(int argc, char **argv)
 
 
         //Para pruebas:
+        /*
             cilindro.cargarPerfil(perfilCompleto);
             cilindro.revoluciona(8,0,180);
 
             semicilindro.cargarPerfil(perfilCompleto);
             semicilindro.revoluciona(8,0,360);
 
-
+        */
         //Fin de pruebas
 
 
@@ -834,6 +872,7 @@ int main(int argc, char **argv)
     initialize();
 
     // inicio del bucle de eventos
+    glutIdleFunc(idle);
     glutMainLoop();
     return 0;
 }
