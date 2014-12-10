@@ -4,7 +4,7 @@
 //#include "colores.h"
 #include "figuraCargada.h"
 #include "parametrosRover.h"
-//#include "figuraRevolucionada.h"
+//#include "v.h"
 
 #include "Robot.h"
 
@@ -25,9 +25,22 @@ class rover{
         figuraRevolucionada cilindro;
         figuraRevolucionada semiCilindro;
 
+
+        double Cx;
+        double Cz;
+        int gradosRotacionCoche;
+        _vertex3f vectorDireccion;
+
+        float RAD_TO_DEG;
+        double gradosRuedasDerechas;
+        double gradosRuedasIzquierdas;
+
+        double gradosAntena;
+
         void dibujarDetalles(){
 
         //Detalles
+
 
             //Cubos rojos:
             //Derecho:
@@ -45,8 +58,8 @@ class rover{
 
             //Parachoques trasero:
             glPushMatrix();
-                glScaled(20,1,1);
                 glTranslated(0,6,-25.5);
+                glScaled(20,1,1);
                 dibujarCubo(GRIS_OSCURO);
             glPopMatrix();
 
@@ -77,6 +90,8 @@ class rover{
                 dibujarSemiCilindro(GRIS_CLARO);
             glPopMatrix();
 
+
+
             //BaseAntena
             glPushMatrix();
                 glTranslated(0,20,-20);
@@ -93,11 +108,11 @@ class rover{
 
             //Chasis metálico
             glPushMatrix();
-                //glRotated(GRADOS_GIRO_ROVER,0,1,0);
-                glTranslated(0,9.5,0);
-                dibujarRuedas();
+               glRotated(GRADOS_GIRO_ROVER,0,1,0);
+               glTranslated(0,9.5,0);
+               dibujarRuedas();
                 //Dibujar chasis gris
-                dibujarChasis(GRIS_CLARO);
+               dibujarChasis(GRIS_CLARO);
             glPopMatrix();
 
             //Brazo robótico:
@@ -115,11 +130,14 @@ class rover{
 
         //El chasis se dibuja del mismo color:
         void dibujarChasis(const GLfloat color[]){
+
+            //Parte grande del chasis:
             glPushMatrix();
                 glScaled(20,8,50);
                 dibujarCubo(color);
             glPopMatrix();
 
+            //Delantera del chasis:
             glPushMatrix();
                 glTranslated(0,-2,29);
                 glScaled(20,4,8);
@@ -166,32 +184,48 @@ class rover{
 
         void dibujarRueda(){
             int numRadios=10;
-            double grados=360./numRadios;
+            double grados=360.0/numRadios;
             for(int i=0; i<numRadios; i++){
                 glPushMatrix();
                     glRotated(grados*i,1,0,0);
                     glTranslated(0,5.5,0);
                     glScaled(1,8,1);
-                    cubo.dibujarAristas("todo");
-                    cubo.dibujarCaras("todo","solido",GRIS_OSCURO);
+                    dibujarCubo(GRIS_OSCURO);
                 glPopMatrix();
             }
         }
 
         void dibujarCubo(const GLfloat color[]){
-            cubo.dibujarCaras("todo","solido",color);
-            cubo.dibujarAristas("todo");
-            //cubo.dibujarNormales();
+            if(MODO==1) //Vertices
+                cubo.dibujarVertices("todo");
+            if(MODO==2) //Aristas
+                cubo.dibujarAristas("todo");
+            if(MODO==3){ //Solido
+                cubo.dibujarCaras("todo","solido",color);
+                cubo.dibujarAristas("todo");
+            }
         }
 
         void dibujarCilindro(const GLfloat color[]){
-            cilindro.dibujarCaras("todo","solido",color);
-            cilindro.dibujarAristas("todo");
+            if(MODO==1) //Vertices
+                cilindro.dibujarVertices("todo");
+            if(MODO==2) //Aristas
+                cilindro.dibujarAristas("todo");
+            if(MODO==3){ //Solido
+                cilindro.dibujarCaras("todo","solido",color);
+                cilindro.dibujarAristas("todo");
+            }
         }
 
         void dibujarSemiCilindro(const GLfloat color[]){
-            semiCilindro.dibujarCaras("todo","solido",color);
-            semiCilindro.dibujarAristas("todo");
+            if(MODO==1) //Vertices
+                semiCilindro.dibujarVertices("todo");
+            if(MODO==2) //Aristas
+                semiCilindro.dibujarAristas("todo");
+            if(MODO==3){ //Solido
+                semiCilindro.dibujarCaras("todo","solido",color);
+                semiCilindro.dibujarAristas("todo");
+            }
         }
 
         void mostrarVerctorDireccion(){
@@ -200,15 +234,6 @@ class rover{
         }
 
 
-        double Cx;
-        double Cz;
-        int gradosRotacionCoche;
-        _vertex3f baricentro;
-        _vertex3f vectorDireccion;
-
-        float RAD_TO_DEG;
-        double gradosRuedasDerechas;
-        double gradosRuedasIzquierdas;
 
     public: //Todas menos el contructor deberían ser privadas ??¿¿
 
@@ -225,6 +250,7 @@ class rover{
             gradosRotacionCoche=0; Cx=0.0; Cz=0.0;
             gradosRuedasDerechas=0.0;
             gradosRuedasIzquierdas=0.0;
+            gradosAntena=0.0;
 
 
             //Cargamos el modelo del cubo desde un fichero ply
@@ -235,10 +261,6 @@ class rover{
             //Cargamos la normal directriz de rover a partir de la normal del frontal del cubo que forma el chasis
             vectorDireccion=cubo.getNormal(0);
 
-
-            baricentro=cubo.getBaricentro(0);
-            baricentro.x=0.0;
-            baricentro.y=0.0;
 
            // anguloDiferenciaOrigen=atan(baricentro.x/baricentro.z);
             //mostrarDirectriz();
@@ -293,8 +315,6 @@ class rover{
             vectorDireccion.z=tmpZ;
 
         }
-
-
 
         void desplazaAdelante(){
             gradosRuedasDerechas++;

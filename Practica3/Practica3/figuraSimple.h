@@ -17,6 +17,7 @@
 //Para poder usar los colores que nosotros hemos definido:
 #include "colores.h"
 
+
 using namespace std;
 
 class figuraSimple{

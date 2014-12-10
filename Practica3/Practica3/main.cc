@@ -32,6 +32,7 @@
 #include "suelo.h"
 #include "parametrosRover.h"
 
+
 //Sólo para pruebas, eliminar luego:
 //#include "Robot.h"
 
@@ -176,185 +177,9 @@ glEnd();
 
 void draw_objects()
 {
-    /*Aquí mandaremos a dibujar todos las figuras que hayamos declarado
-    y definido al inicio del .cc para que al ser globales puedan ser accedidos
-    por todas las funciones declaradas tras ellos.
-    */
-
-    /*
-    figuraPrueba.dibujarVertices("todo");
-    figuraPrueba.dibujarCaras("todo","caras");
-    figuraPrueba.dibujarAristas("todo");
-    */
-    //Llamadas a algunas figuras básicas:
-
-    //triangulo.dibujarVertices();
-    //cubo.dibujarVertices();
-    //cubo.dibujarCaras("solido");
-    //cubo.dibujarAristas();
-
-
-    /*A través de la variable global FIGURA controlamos la figura a visualizar mientras
-    que con la variable también global MODO contolamos la forma de visualización, sólo vertices
-    aristas o módo sólido. Dentro de cada función puede llamarse de una forma u otra, así puede llamarse a
-    dibujar vértices sólo en la sección positiva del eje X. Para conocer más ver la definición de las funciones
-    en el figura.h
-    */
-
-    if(false){
-    cout << "NORMALES DIABOLICAS" << endl;
-
-
-    _vertex3f a; a.x=1; a.y=0; a.z=0;
-    _vertex3f b; b.x=0; b.y=1; b.z=0;
-    _vertex3f c; c.x=0.5; c.y=0.5; c.z=1;
-
-        glColor3fv(NEGRO);
-    glPointSize(5);
-    glBegin(GL_POINTS);
-        glVertex3f(a.x, a.y, a.z);
-        glVertex3f(b.x, b.y, b.z);
-        glVertex3f(c.x, c.y, c.z);
-    glEnd();
-
-    glBegin(GL_LINES);
-        glVertex3f(a.x,a.y,a.z);
-        glVertex3f(b.x,b.y,b.z);
-    glEnd();
-
-    glBegin(GL_LINES);
-        glVertex3f(a.x,a.y,a.z);
-        glVertex3f(c.x,c.y,c.z);
-    glEnd();
-
-    glBegin(GL_LINES);
-        glVertex3f(c.x,c.y,c.z);
-        glVertex3f(b.x,b.y,b.z);
-    glEnd();
-
-
-    _vertex3f ab;
-    _vertex3f ac;
-
-    ab.x=b.x-a.x; ab.y=b.y-a.y; ab.z=b.z-a.z;
-    cout << "ab" << ab.x << ab.y << ab.z << endl;
-    ac.x=c.x-a.x; ac.y=c.y-a.y; ac.z=c.z-a.z;
-    cout << "ac" << ac.x << ac.y << ac.z << endl;
-
-
-    //Producto vectorial:
-    _vertex3f n;
-    n.x=(ab.y*ac.z)-(ab.z*ac.y);
-    n.y=(ab.z*ac.x)-(ab.x*ac.z);
-    n.z=(ab.x*ac.y)-(ab.y*ac.x);
-
-    cout << "n" << n.x << n.y << n.z << endl;
-    n.normalize();
-
-    _vertex3f baric;
-
-    baric.x=((a.x+b.x+c.x)/3);
-    baric.y=((a.y+b.y+c.y)/3);
-    baric.z=((a.z+b.z+c.z)/3);
-
-    glBegin(GL_POINTS);
-        glVertex3f(baric.x, baric.y, baric.z);
-    glEnd();
-
-    glBegin(GL_LINES);
-        glVertex3f(baric.x,baric.y,baric.z);
-        glVertex3f(baric.x+n.x, baric.y+n.y, baric.z+n.z);
-    glEnd();
-
-
-
-    cout << "FIN" << endl;
-    }
-
-
-    if(false){
-
-    //Dibujamos la figura FIGURA en el modo MODO que tengamos seleciconado
-
-        //Sólo vértices
-        if(MODO_VIS==1)
-            vectorFiguras[FIGURA-1].dibujarVertices("todo");
-        //Sólo aristas
-        if(MODO_VIS==2)
-            vectorFiguras[FIGURA-1].dibujarAristas("todo");
-        //Modo sólido
-        if(MODO_VIS==3)
-          //  vectorFiguras[FIGURA-1].dibujarCaras("todo","solido");
-        //Modo sólido especial: vertices + aristas + caras + representación de normales.
-        if(MODO_VIS==4){
-            vectorFiguras[FIGURA-1].dibujarVertices("todo");
-            vectorFiguras[FIGURA-1].dibujarAristas("todo");
-         //   vectorFiguras[FIGURA-1].dibujarCaras("todo","ajedrez");
-            vectorFiguras[FIGURA-1].dibujaBaricentros();
-            vectorFiguras[FIGURA-1].dibujarNormales();
-            vectorFiguras[FIGURA-1].dibujarNormalesVertices();
-        }
-    }
-
-
-
 
     curiosity.dibujarRover();
-
     base.dibujarSuelo();
-
-    //brazo.dibujarRobot();
-
-
-
-    //Pruebas:
-    /*
-    semicilindro.dibujarAristas("todo");
-    semicilindro.dibujarCaras("todo","solido",VERDE);
-    */
-    /*
-    switch(FIGURA){
-
-        //Si FIGURA==1 dibujamos la figura 1 según el modo que queramos:
-        case 1:
-            //Sólo vertices
-            if(MODO==1)
-                figuraPerfilCompleto.dibujarVertices("todo");
-            //Sólo aristas
-            if(MODO==2)
-                figuraPerfilCompleto.dibujarAristas("todo");
-            //Módo sólido
-            if(MODO==3)
-                figuraPerfilCompleto.dibujarCaras("todo", "ajedrez");
-            //Modo detalle: vertices + aristas + caras + representación de normales.
-            if(MODO==4){
-                figuraPerfilCompleto.dibujarVertices("todo");
-                figuraPerfilCompleto.dibujarCaras("todo","caras");
-                figuraPerfilCompleto.dibujarAristas("todo");
-                //figuraPrueba.dibujarNormales();
-                //figuraPrueba.dibujaBaricentros();
-
-            }
-            break;
-
-        //Perfil del peón
-        case 2:
-           if(MODO==1) //Dibujar vértices
-                peon.dibujarVertices("todo");
-            if(MODO==2) //Dibujar aristas
-                peon.dibujarAristas("todo");
-            if(MODO==3) //Dibujar sólido
-                peon.dibujarCaras("solo y+","ajedrez");
-            if(MODO==4){ //Dibujar mezcla
-                peon.dibujarVertices("todo");
-                peon.dibujarCaras("todo","caras");
-                peon.dibujarAristas("todo");
-            }
-            break;
-
-
-
-    }; */
 
 
 }
@@ -430,16 +255,15 @@ if(toupper(Tecla1)=='8'){curiosity.brazo.girarBaseNegativo(); draw_scene();}
 
 //Ahora seleccionamos el modo, VERTICES, ALAMBRE O SÓLID y el especial de 4 colores del examen.
 //Para dibujar el modelo sólo los VERTICES.
-if(toupper(Tecla1)=='V'){MODO_VIS=1; draw_scene();}
+if(toupper(Tecla1)=='V'){MODO=1; draw_scene();}
 
 //Para dibujar el modelo sólo con ARISTAS.
-if(toupper(Tecla1)=='A'){MODO_VIS=2; draw_scene();}
+if(toupper(Tecla1)=='A'){MODO=2; draw_scene();}
 
 //Para dibujar el modelo sólo SÓLIDO
-if(toupper(Tecla1)=='S'){MODO_VIS=3; draw_scene();}
+if(toupper(Tecla1)=='S'){MODO=3; draw_scene();}
 
-//Para dibujar el modelo con colores especiales de examen
-if(toupper(Tecla1)=='D'){MODO_VIS=4; draw_scene();}
+
 
 //Para el control del número de revoluciones ------------------------------------------------
 
@@ -604,7 +428,7 @@ Front_plane=1;
 Back_plane=1000;
 
 // se inicia la posicion del observador, en el eje z
-Observer_distance=70*Front_plane;
+Observer_distance=150*Front_plane;
 Observer_angle_x=40;
 Observer_angle_y=-40;
 

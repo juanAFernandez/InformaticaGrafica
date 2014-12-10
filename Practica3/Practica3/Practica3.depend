@@ -10,7 +10,7 @@
 	<vector>
 	<assert.h>
 
-1417730347 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\main.cc
+1417792730 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -31,7 +31,7 @@
 1417303320 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasolida.h
 	"figuraSimple.h"
 
-1416647833 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.h
+1417791550 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurasimple.h
 	<GL/gl.h>
 	<vector>
 	"vertex.h"
@@ -43,7 +43,7 @@
 	<math.h>
 	<iostream>
 
-1417728702 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\colores.h
+1417791677 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\colores.h
 	<GL/gl.h>
 
 1417635624 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\figurarevolucionada.h
@@ -65,7 +65,7 @@
 
 1416584299 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\variablescontrol.h
 
-1417731084 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\rover.h
+1417792184 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\rover.h
 	<math.h>
 	"figuraCargada.h"
 	"parametrosRover.h"
@@ -74,8 +74,12 @@
 1417724799 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\suelo.h
 	"figuraCargada.h"
 
-1417724225 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\parametrosrover.h
+1417792492 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\parametrosrover.h
 
-1417686651 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\robot.h
+1417792668 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\robot.h
 	"figuraRevolucionada.h"
+	"variablesControl.h"
+	"parametrosRover.h"
+
+1417791629 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica3\practica3\modo.h
 

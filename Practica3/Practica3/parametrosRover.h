@@ -19,6 +19,7 @@ double AGARRE_SUELO=1;
 double X=0.0;
 double Z=0.0;
 
+double MODO=3;
 
 //Normal directriz:
 
