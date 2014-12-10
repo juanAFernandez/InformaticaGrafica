@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="Robot.h" open="1" top="0" tabpos="4">
+	<File name="Robot.h" open="1" top="0" tabpos="5">
 		<Cursor position="4711" topLine="144" />
 	</File>
 	<File name="colores.h" open="0" top="0" tabpos="5">
@@ -13,10 +13,10 @@
 	<File name="figuraCargada.h" open="0" top="0" tabpos="9">
 		<Cursor position="374" topLine="0" />
 	</File>
-	<File name="figuraRevolucionada.cc" open="1" top="0" tabpos="9">
+	<File name="figuraRevolucionada.cc" open="1" top="0" tabpos="10">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="figuraRevolucionada.h" open="1" top="0" tabpos="8">
+	<File name="figuraRevolucionada.h" open="1" top="0" tabpos="9">
 		<Cursor position="2232" topLine="0" />
 	</File>
 	<File name="figuraSimple.cc" open="0" top="0" tabpos="12">
@@ -25,7 +25,7 @@
 	<File name="figuraSimple.h" open="0" top="0" tabpos="10">
 		<Cursor position="798" topLine="0" />
 	</File>
-	<File name="figuraSolida.cc" open="1" top="0" tabpos="6">
+	<File name="figuraSolida.cc" open="1" top="0" tabpos="7">
 		<Cursor position="522" topLine="15" />
 	</File>
 	<File name="figuraSolida.h" open="0" top="0" tabpos="3">
@@ -34,22 +34,22 @@
 	<File name="file_ply_stl.h" open="0" top="0" tabpos="0">
 		<Cursor position="0" topLine="35" />
 	</File>
-	<File name="main.cc" open="1" top="1" tabpos="1">
-		<Cursor position="12762" topLine="414" />
+	<File name="main.cc" open="1" top="1" tabpos="2">
+		<Cursor position="12855" topLine="414" />
 	</File>
-	<File name="parametrosRover.h" open="1" top="0" tabpos="2">
+	<File name="parametrosRover.h" open="1" top="0" tabpos="3">
 		<Cursor position="627" topLine="0" />
 	</File>
 	<File name="primitivaCubo.h" open="0" top="0" tabpos="9">
 		<Cursor position="145" topLine="0" />
 	</File>
-	<File name="rover.h" open="1" top="0" tabpos="3">
+	<File name="rover.h" open="1" top="0" tabpos="4">
 		<Cursor position="591" topLine="82" />
 	</File>
-	<File name="suelo.h" open="1" top="0" tabpos="5">
+	<File name="suelo.h" open="1" top="0" tabpos="6">
 		<Cursor position="2687" topLine="0" />
 	</File>
-	<File name="variablesControl.h" open="1" top="0" tabpos="7">
+	<File name="variablesControl.h" open="1" top="0" tabpos="8">
 		<Cursor position="340" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
