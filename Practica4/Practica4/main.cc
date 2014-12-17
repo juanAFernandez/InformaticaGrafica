@@ -42,7 +42,8 @@
     boolean animacion=false;
     int contadorAnimacion=0;
 
-    boolean ejercicioBeethoven=true;
+    boolean ejercicioBeethoven=false;
+    boolean ejercicioTextura=true;
 
 
 
@@ -151,14 +152,16 @@ glRotatef(Observer_angle_y,0,1,0);
 
 
 
+    if(ejercicioBeethoven){
+
     //Establezco la posición de la luz 0
 
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             //glLoadIdentity();
-            glTranslatef(0,0,-Observer_distance);
-            glRotatef(Observer_angle_x,1,0,0);
-            glRotatef(Observer_angle_y,0,1,0);
+            //glTranslatef(0,0,-Observer_distance);
+            //glRotatef(Observer_angle_x,1,0,0);
+            //glRotatef(Observer_angle_y,0,1,0);
             //Definición de la posición de la luz local:
             const GLfloat posicionLuzLocal[]={8.0, 0.0, 8.0, 1.0};
 
@@ -172,6 +175,7 @@ glRotatef(Observer_angle_y,0,1,0);
             glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal);
         glPopMatrix();
 
+    }
 
 
 }
@@ -220,6 +224,7 @@ void draw_objects()
     //cilindro.dibujarNormalesVertices();
 
 
+    if(ejercicioBeethoven){
     // ## Ejercicio Beethoven con dos luces:
     beethoven.dibujarCaras("todo","solido",ROJO);
 
@@ -237,6 +242,7 @@ void draw_objects()
      cono.dibujarCaras("todo","solido",AMARILLO);
     glPopMatrix();
 
+    }
 
 
 
@@ -512,9 +518,11 @@ Observer_angle_y=0;
 // se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 // blanco=(1,1,1,1) rojo=(1,0,0,1), ...
 
-//glClearColor(1,1,1,1); //Blanco
+if(ejercicioTextura)
+    glClearColor(1,1,1,1); //Fondo blanco
 
-glClearColor(0,0,0,1); //Negro
+if(ejercicioBeethoven)
+    glClearColor(0,0,0,1); //Fondo negro
 
 // se habilita el z-bufer
 glEnable(GL_DEPTH_TEST);

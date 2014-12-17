@@ -49,7 +49,7 @@
 	"figuraSolida.h"
 	"file_ply_stl.h"
 
-1418812373 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
+1418813724 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -80,4 +80,16 @@
 
 1417724799 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\suelo.h
 	"figuraCargada.h"
+
+1386847890 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_imagen.cpp
+	<stdlib.h>
+	<string>
+	<iostream>
+	"jpg_imagen.hpp"
+	"jpg_readwrite.hpp"
+
+1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_imagen.hpp
+	<string>
+
+1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_readwrite.hpp
 

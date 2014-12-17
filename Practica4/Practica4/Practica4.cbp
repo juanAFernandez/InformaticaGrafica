@@ -48,6 +48,13 @@
 		<Unit filename="figuraSolida.h" />
 		<Unit filename="file_ply_stl.cc" />
 		<Unit filename="file_ply_stl.h" />
+		<Unit filename="jpg_imagen.cpp" />
+		<Unit filename="jpg_imagen.hpp" />
+		<Unit filename="jpg_jinclude.h" />
+		<Unit filename="jpg_memsrc.cpp" />
+		<Unit filename="jpg_memsrc.hpp" />
+		<Unit filename="jpg_readwrite.cpp" />
+		<Unit filename="jpg_readwrite.hpp" />
 		<Unit filename="main.cc" />
 		<Unit filename="parametrosRover.h" />
 		<Unit filename="primitivaCubo.h" />
