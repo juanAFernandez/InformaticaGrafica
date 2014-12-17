@@ -30,22 +30,21 @@
 #include "parametrosRover.h"
 
 
-//Sólo para pruebas, eliminar luego:
-//#include "Robot.h"
 
-       // Robot brazo;
+    rover curiosity;
+    suelo base(20);
 
-        rover curiosity;
-        suelo base(20);
-
-        figuraRevolucionada cilindro;
-        figuraRevolucionada semicilindro;
-
-        boolean animacion=false;
-        int contadorAnimacion=0;
+    figuraRevolucionada cilindro;
+    figuraRevolucionada semicilindro;
+    figuraRevolucionada cono;
 
 
-//##
+    boolean animacion=false;
+    int contadorAnimacion=0;
+
+    boolean ejercicioBeethoven=true;
+
+
 
 /*Sección de definición de figuras (el modelado). Donde esta se realiza tan sólo una vez dejando clara la
 diferencia entre el modelado (definición de sus puntos y configuración de sus aristas) y la parte de la visualización
@@ -57,6 +56,11 @@ de la que se encargará un función independiente.
 
 
 
+    //Perfil para un cono para P4 que simule la fuente de luz:
+    vector<_vertex3f>perfilCono;
+    double gradoCono=0.0;
+
+    figuraCargada beethoven;
 
     //Correspondiente a la práctica 2 ############
 
@@ -143,6 +147,33 @@ glLoadIdentity();
 glTranslatef(0,0,-Observer_distance);
 glRotatef(Observer_angle_x,1,0,0);
 glRotatef(Observer_angle_y,0,1,0);
+
+
+
+
+    //Establezco la posición de la luz 0
+
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+            //glLoadIdentity();
+            glTranslatef(0,0,-Observer_distance);
+            glRotatef(Observer_angle_x,1,0,0);
+            glRotatef(Observer_angle_y,0,1,0);
+            //Definición de la posición de la luz local:
+            const GLfloat posicionLuzLocal[]={8.0, 0.0, 8.0, 1.0};
+
+            glColor3fv(VERDE);
+            //Establecemos el grosor de los vértices (al dibujarlos)
+            glPointSize(40);
+                glBegin(GL_POINTS);
+                        glVertex3f(8.0, 0.0, 0.0);
+                glEnd();
+
+            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal);
+        glPopMatrix();
+
+
+
 }
 
 //**************************************************************************
@@ -175,8 +206,38 @@ glEnd();
 void draw_objects()
 {
 
-    curiosity.dibujarRover();
-    base.dibujarSuelo();
+
+
+
+    //curiosity.dibujarRover();
+    //base.dibujarSuelo();
+
+
+    //cilindro.dibujarCaras("todo","solido",ROJO);
+   //cilindro.dibujarCarasIluminacionPlana(ROJO);
+    //cilindro.dibujarAristas("todo");
+    //cilindro.dibujarNormales();
+    //cilindro.dibujarNormalesVertices();
+
+
+    // ## Ejercicio Beethoven con dos luces:
+    beethoven.dibujarCaras("todo","solido",ROJO);
+
+    //Cono de light 0
+    glPushMatrix();
+     glTranslated(8,0,0);
+     glRotated(-90,0,0,1);
+     cono.dibujarCaras("todo","solido",AMARILLO);
+    glPopMatrix();
+
+    //Cono de light 1
+    glPushMatrix();
+     glRotated(gradoCono,1,0,0);
+     glTranslated(0,8,0);
+     cono.dibujarCaras("todo","solido",AMARILLO);
+    glPopMatrix();
+
+
 
 
 }
@@ -399,14 +460,33 @@ void special_keys(int Tecla1,int x,int y)
 {
 
 switch (Tecla1){
-	case GLUT_KEY_LEFT:Observer_angle_y--;break;
-	case GLUT_KEY_RIGHT:Observer_angle_y++;break;
-	case GLUT_KEY_UP:Observer_angle_x--;
-         break;
-	case GLUT_KEY_DOWN:Observer_angle_x++;break;
-	case GLUT_KEY_PAGE_UP:Observer_distance*=1.2;break;
-	case GLUT_KEY_PAGE_DOWN:Observer_distance/=1.2;break;
+    //Tecla izquierda:
+	case GLUT_KEY_LEFT:
+        Observer_angle_y--;
+        break;
+    //Tecla derecha:
+	case GLUT_KEY_RIGHT:
+        Observer_angle_y++;
+        break;
+    //Tecla arriba:
+	case GLUT_KEY_UP:
+        Observer_angle_x--;
+        break;
+    //Tecla abajo:
+	case GLUT_KEY_DOWN:
+        Observer_angle_x++;
+        break;
+	case GLUT_KEY_PAGE_UP:
+        Observer_distance*=1.2;
+        break;
+	case GLUT_KEY_PAGE_DOWN:
+        Observer_distance/=1.2;
+        break;
 	}
+
+	cout << "Angulos del observador y distancia:" << endl;
+    cout << "x: " << Observer_angle_x << " y: " << Observer_angle_y << " distancia: " << Observer_distance << endl;
+
 glutPostRedisplay();
 }
 
@@ -425,13 +505,16 @@ Front_plane=1;
 Back_plane=1000;
 
 // se inicia la posicion del observador, en el eje z
-Observer_distance=150*Front_plane;
-Observer_angle_x=40;
-Observer_angle_y=-40;
+Observer_distance=24*Front_plane;
+Observer_angle_x=4;
+Observer_angle_y=0;
 
 // se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 // blanco=(1,1,1,1) rojo=(1,0,0,1), ...
-glClearColor(1,1,1,1);
+
+//glClearColor(1,1,1,1); //Blanco
+
+glClearColor(0,0,0,1); //Negro
 
 // se habilita el z-bufer
 glEnable(GL_DEPTH_TEST);
@@ -455,7 +538,10 @@ void idle(void){
 if(animacion){
         Sleep(50);
 
-
+        if(ejercicioBeethoven)
+            //Animamos el foco de luz superior
+            gradoCono++;
+        else{
             curiosity.desplazaAdelante();
             curiosity.giraDerecha();
             curiosity.giraDerecha();
@@ -473,13 +559,16 @@ if(animacion){
 
             curiosity.brazo.girarPositivo("brazo3");
 
-
+        }
         glutPostRedisplay();
+
+    /*
+
         cout << "Animacion paso " << contadorAnimacion << endl;
         contadorAnimacion++;
         if(contadorAnimacion==70)
             contadorAnimacion=0;
-
+    */
 }
 
 }
@@ -491,6 +580,8 @@ int main(int argc, char **argv)
 {
 
 
+        beethoven.leerFichero("beethoven.ply");
+
 
     //Definimos los perfiles para el examen dándoles vértices:
 
@@ -500,7 +591,11 @@ int main(int argc, char **argv)
            abrirse y para lo que se va a conseguir, se ha optado por esta solución.
         */
 
+        //Perfil del cono para la simulación de una fuente de luz:
 
+        perfilCono.push_back({0.5,-0.5,0});
+        perfilCono.push_back({0.25,0.5,0});
+        perfilCono.push_back({0,0.5,0});
 
 
         //El perfil simple completo (con tapas):
@@ -528,14 +623,17 @@ int main(int argc, char **argv)
 
 
         //Para pruebas:
-        /*
+
             cilindro.cargarPerfil(perfilCompleto);
-            cilindro.revoluciona(8,0,180);
+            cilindro.revoluciona(64,0,360);
 
             semicilindro.cargarPerfil(perfilCompleto);
             semicilindro.revoluciona(8,0,360);
 
-        */
+            cono.cargarPerfil(perfilCono);
+            cono.revoluciona(16,0,360);
+
+
         //Fin de pruebas
 
 
@@ -689,6 +787,68 @@ int main(int argc, char **argv)
     // asignación de la funcion llamada "tecla_Especial" al evento correspondiente
     glutSpecialFunc(special_keys);
 
+
+
+    //## ILUMINACIÓN ##//
+
+
+    //Los parámetros de la luz son los tres colores más el canal alfa.
+
+    const GLfloat luzAmbiente[]={0.5, 0.5, 0.5, 1.0};
+    const GLfloat luzDifusa[]={1.0, 1.0, 1.0, 0.7};
+    const GLfloat luzEspecular[]={1.0, 1.0, 0.0, 1.0};
+
+
+
+    //glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+    //glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+    //glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
+
+
+
+
+    //Hay que especificar normal por cara:
+
+//    ¿Dónde se hace el bucle for para recorrer las caras y asignarles la normal?
+//    ¿Debe ser dentro de la clase o fuera? I Don´t know
+
+
+    GLfloat ambientLight[]={0.1, 0.1, 0.1, 1.0};
+    GLfloat diffuseLight[]={0.7, 0.7, 0.7, 1.0};
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+
+
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT,ambientLight);
+
+
+
+    //Definimos una luz en el infinito:
+    const GLfloat posicionLuzInfinito[]={1.0, 1.0, 1.0, 0.0};
+
+    //Establezo el tipo de iluminación plano
+    glShadeModel(GL_FLAT);
+
+
+/*
+    const GLfloat posicionLuzLocal[]={8.0, 0.0, 0.0, 1.0};
+
+    glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal);
+*/
+
+
+    //Activamos la luz 0
+    glEnable(GL_LIGHT0);
+
+    //Activamos la iluminación definida en OpenGL
+    glEnable(GL_LIGHTING);
+
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+
+
     // funcion de inicialización
     initialize();
 
@@ -697,3 +857,4 @@ int main(int argc, char **argv)
     glutMainLoop();
     return 0;
 }
+

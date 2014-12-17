@@ -7,7 +7,7 @@
 	<math.h>
 	"file_ply_stl.h"
 
-1417303320 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.h
+1418676971 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.h
 	"figuraSimple.h"
 
 1417791550 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.h
@@ -36,7 +36,7 @@
 1416422855 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.cc
 	"figuraSimple.h"
 
-1417123171 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.cc
+1418764622 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.cc
 	"figuraSolida.h"
 
 1415738851 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\file_ply_stl.cc
@@ -49,7 +49,7 @@
 	"figuraSolida.h"
 	"file_ply_stl.h"
 
-1418243254 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
+1418812373 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -73,7 +73,7 @@
 
 1417792492 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\parametrosrover.h
 
-1417792668 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\robot.h
+1418245213 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\robot.h
 	"figuraRevolucionada.h"
 	"variablesControl.h"
 	"parametrosRover.h"

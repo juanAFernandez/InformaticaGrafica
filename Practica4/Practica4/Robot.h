@@ -317,11 +317,13 @@ void Robot::dibujarArticulacion(){
         dibujarBrazo(1.0);
 
         //Sección de examen:
+        /*
         glPushMatrix();
             glTranslated(-1,0,0); //En el extremo interior.
             //glTranslated(7,0,0); //En el extremo exterior
             dibujarCilindro(VIOLETA);
         glPopMatrix();
+        */
         //Fin de sección de examen
 
      glPushMatrix();
@@ -330,11 +332,13 @@ void Robot::dibujarArticulacion(){
                 dibujarBrazo(0.5);
 
                 //Sección examen:
+                /*
                 glPushMatrix();
                     glTranslated(10,1,0);
                     glRotated(90,0,0,1);
                     dibujarBeethoven();
                 glPopMatrix();
+                */
                 //Fin sección examen
 
     glPopMatrix();

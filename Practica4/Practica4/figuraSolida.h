@@ -70,13 +70,19 @@ class figuraSolida : public figuraSimple {
         */
         void dibujarCaras(string seccion, string modo, const GLfloat color[]);
 
+
+        void dibujarCarasIluminacionPlana(const GLfloat color[]);
+
+
         /**
         * @brief Función para dibujar las aristas (conexiones entre dos puntos)
         * @param seccion La sección que queremos dibujar
         */
         void dibujarAristas(string seccion);
 
-
+        /**
+        * @brief Funcion para dibujar las normales de los vertices.
+        */
         void dibujarNormalesVertices();
 
         void dibujarNormales();

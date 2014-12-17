@@ -134,6 +134,33 @@ void figuraSolida::dibujarCaras(string seccion, string modo, const GLfloat color
             glEnd();
 }
 
+void figuraSolida::dibujarCarasIluminacionPlana(const GLfloat color[]){
+
+            //En el tipo de iluminación con Suavizado Plano usamos una normal por cara.
+
+           //Especificación del material:
+
+            //GLfloat gray[] ={0.75, 0.75, 0.75, 1.0};
+
+           //glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, gray);
+
+            //glColor3ub(100,128,128);
+
+            //Usamos la directiva GL_TRIANGLES que necesita que se le pasen tres vectores.
+            glBegin(GL_TRIANGLES);
+
+                glColor3fv(color);
+                //Recorremos todas las caras para dibujar cada una.
+                for(unsigned i=0; i<caras.size(); i++){
+                    glNormal3f(normales[i].x, normales[i].y, normales[i].z);
+                    glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
+                    glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
+                    glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+                }
+            glEnd();
+
+}
+
 void figuraSolida::dibujarAristas(string seccion){
 
             //Configuración del color (RGB [0-1] )
