@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="Robot.h" open="0" top="0" tabpos="0">
+		<Cursor position="9754" topLine="310" />
+	</File>
+	<File name="colores.h" open="1" top="0" tabpos="4">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="figuraCargada.cc" open="0" top="0" tabpos="0">
+		<Cursor position="1468" topLine="14" />
+	</File>
+	<File name="figuraRevolucionada.cc" open="0" top="0" tabpos="3">
+		<Cursor position="10954" topLine="253" />
+	</File>
+	<File name="figuraSimple.cc" open="0" top="0" tabpos="5">
+		<Cursor position="1039" topLine="18" />
+	</File>
+	<File name="figuraSimple.h" open="0" top="0" tabpos="4">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="figuraSolida.cc" open="1" top="1" tabpos="2">
+		<Cursor position="7782" topLine="12" />
+	</File>
+	<File name="figuraSolida.h" open="1" top="0" tabpos="3">
+		<Cursor position="2330" topLine="16" />
+	</File>
+	<File name="jconfig.h" open="0" top="0" tabpos="0">
+		<Cursor position="1668" topLine="24" />
+	</File>
+	<File name="jerror.h" open="0" top="0" tabpos="0">
+		<Cursor position="14961" topLine="0" />
+	</File>
+	<File name="jpeglib.h" open="0" top="0" tabpos="0">
+		<Cursor position="928" topLine="12" />
+	</File>
+	<File name="jpg_imagen.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="565" topLine="0" />
+	</File>
+	<File name="jpg_imagen.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="12" />
+	</File>
+	<File name="jpg_jinclude.h" open="0" top="0" tabpos="6">
+		<Cursor position="708" topLine="5" />
+	</File>
+	<File name="jpg_memsrc.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="main.cc" open="1" top="0" tabpos="1">
+		<Cursor position="26095" topLine="842" />
+	</File>
+	<File name="rover.h" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="182" />
+	</File>
+</CodeBlocks_layout_file>
