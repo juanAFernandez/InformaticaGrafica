@@ -38,4 +38,9 @@
 
             fichero.close();
 
-        }
+            //Después de cargar los vértices y las caras de la figura procesamos para obtener las normales de las caras:
+            this->calculaNormalesCaras();
+
+            //También debemos procesar las normales de los vértices:
+
+}

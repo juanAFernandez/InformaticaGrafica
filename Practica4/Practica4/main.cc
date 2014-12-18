@@ -29,6 +29,13 @@
 #include "suelo.h"
 #include "parametrosRover.h"
 
+//Imágenes:
+
+//#include "jpg_imagen.hpp"
+
+//Declaramos un puntero a la imagen y cargamos en memoria esta:
+//jpg::Imagen * pimg = new jpg::Imagen("text-lata-1.jpg");
+
 
 
     rover curiosity;
@@ -39,11 +46,11 @@
     figuraRevolucionada cono;
 
 
-    boolean animacion=false;
+    boolean animacion=true;
     int contadorAnimacion=0;
 
-    boolean ejercicioBeethoven=false;
-    boolean ejercicioTextura=true;
+    boolean ejercicioBeethoven=true;
+    boolean ejercicioTextura=false;
 
 
 
@@ -59,6 +66,8 @@ de la que se encargará un función independiente.
 
     //Perfil para un cono para P4 que simule la fuente de luz:
     vector<_vertex3f>perfilCono;
+
+    int velocidadCono=2;
     double gradoCono=0.0;
 
     figuraCargada beethoven;
@@ -156,6 +165,8 @@ glRotatef(Observer_angle_y,0,1,0);
 
     //Establezco la posición de la luz 0
 
+    /*
+
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             //glLoadIdentity();
@@ -173,6 +184,40 @@ glRotatef(Observer_angle_y,0,1,0);
                 glEnd();
 
             glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal);
+        glPopMatrix();
+
+    */
+
+       const GLfloat posicionLuzLocal1[]={8.0, 0.0, 0.0, 1.0};
+
+       //Cono de light 1
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+            glLoadIdentity();
+
+            glTranslatef(0,0,-Observer_distance);
+            glRotatef(Observer_angle_x,1,0,0);
+            glRotatef(Observer_angle_y,0,1,0);
+
+            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal1);
+        glPopMatrix();
+
+
+        const GLfloat posicionLuzLocal2[]={0.0, 8.0, 0.0, 1.0};
+
+       //Cono de light 2
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+            glLoadIdentity();
+
+
+            glTranslatef(0,0,-Observer_distance);
+            glRotatef(Observer_angle_x,1,0,0);
+            glRotatef(Observer_angle_y,0,1,0);
+
+            glRotated(gradoCono,1,0,0);
+
+            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
         glPopMatrix();
 
     }
@@ -226,21 +271,32 @@ void draw_objects()
 
     if(ejercicioBeethoven){
     // ## Ejercicio Beethoven con dos luces:
-    beethoven.dibujarCaras("todo","solido",ROJO);
+    //beethoven.dibujarCaras("todo","solido",ROJO);
+
+    glEnable(GL_LIGHTING);
+    beethoven.dibujarCarasIluminacionPlana(ROJO);
+    glDisable(GL_LIGHTING);
+
 
     //Cono de light 0
+
     glPushMatrix();
      glTranslated(8,0,0);
      glRotated(-90,0,0,1);
      cono.dibujarCaras("todo","solido",AMARILLO);
+     cono.dibujarAristas("todo");
     glPopMatrix();
+
 
     //Cono de light 1
     glPushMatrix();
      glRotated(gradoCono,1,0,0);
      glTranslated(0,8,0);
      cono.dibujarCaras("todo","solido",AMARILLO);
+     cono.dibujarAristas("todo");
     glPopMatrix();
+
+
 
     }
 
@@ -548,7 +604,7 @@ if(animacion){
 
         if(ejercicioBeethoven)
             //Animamos el foco de luz superior
-            gradoCono++;
+            gradoCono+=velocidadCono;
         else{
             curiosity.desplazaAdelante();
             curiosity.giraDerecha();
@@ -799,63 +855,49 @@ int main(int argc, char **argv)
 
     //## ILUMINACIÓN ##//
 
+    GLfloat new_model_ambient[]={0,0,0,1};
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, new_model_ambient);
+    /*Detección:
+    Al habilitar sólo la componente difusa en la iluminación y tener una luz frente al objeto
+    notamos que al girar el objeto y dejar el foco de luz detras del objeto el objeto sigue viéndose. Esto sucede porque
+    por defecto OpenGL establece la componente difusa a 0.2 0.2 0.2. Por eso rectificamos esto para ver exactaente donde y como
+    incide la luz.
+    */
+
 
     //Los parámetros de la luz son los tres colores más el canal alfa.
 
-    const GLfloat luzAmbiente[]={0.5, 0.5, 0.5, 1.0};
-    const GLfloat luzDifusa[]={1.0, 1.0, 1.0, 0.7};
-    const GLfloat luzEspecular[]={1.0, 1.0, 0.0, 1.0};
+    const GLfloat luzAmbiente[]={1, 1, 1, 1.0};
+    const GLfloat luzDifusa[]={1, 1, 1, 1.0};
+    const GLfloat luzEspecular[]={0, 0, 0, 1.0};
 
 
+    //Aplicamos la componente difusa a la luz número 0
+    glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
 
-    //glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
-    //glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
-    //glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
-
-
-
-
-    //Hay que especificar normal por cara:
-
-//    ¿Dónde se hace el bucle for para recorrer las caras y asignarles la normal?
-//    ¿Debe ser dentro de la clase o fuera? I Don´t know
-
-
-    GLfloat ambientLight[]={0.1, 0.1, 0.1, 1.0};
-    GLfloat diffuseLight[]={0.7, 0.7, 0.7, 1.0};
-
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-
-
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT,ambientLight);
-
-
-
-    //Definimos una luz en el infinito:
-    const GLfloat posicionLuzInfinito[]={1.0, 1.0, 1.0, 0.0};
+    //Aplicamos la componente difusa a la luz número 1
+    glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
 
     //Establezo el tipo de iluminación plano
     glShadeModel(GL_FLAT);
 
-
-/*
-    const GLfloat posicionLuzLocal[]={8.0, 0.0, 0.0, 1.0};
-
-    glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal);
-*/
+    //Rectificamos el valor por defecto de la luz ambiente:
 
 
-    //Activamos la luz 0
+    //Activamos la luz 0 (IZQUIERDA FIJA)
     glEnable(GL_LIGHT0);
 
-    //Activamos la iluminación definida en OpenGL
-    glEnable(GL_LIGHTING);
+    //Activamos la luz 1 (SUPERIOR ROTATORIA)
+    glEnable(GL_LIGHT1);
 
-    glEnable(GL_COLOR_MATERIAL);
-    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-
-
+    /*La operación de activación de iluminación general glEnable(GL_LIGHTING) y la posterior de desactivación glDisable(GL_LIGHTING)
+    debe de hacerse sólo cuando se quiera dibujar un objeto al que queramos que se le aplique la iluminación. Así podremos tener
+    los ejes sin iluminación (con su coloración normal) y los conos mientras que otro modelo como el beethoven sea aplicado por la
+    ilumación.*/
 
     // funcion de inicialización
     initialize();

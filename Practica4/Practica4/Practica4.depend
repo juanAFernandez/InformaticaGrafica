@@ -1,10 +1,9 @@
 # depslib dependency file v1.0
-1417635729 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.cc
-	"figuraRevolucionada.h"
+1418924502 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figuracargada.cc
+	"figuraCargada.h"
 
-1417635624 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.h
+1416647148 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figuracargada.h
 	"figuraSolida.h"
-	<math.h>
 	"file_ply_stl.h"
 
 1418676971 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.h
@@ -33,23 +32,77 @@
 	<vector>
 	<assert.h>
 
+1418922383 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.cc
+	"figuraRevolucionada.h"
+
+1417635624 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.h
+	"figuraSolida.h"
+	<math.h>
+	"file_ply_stl.h"
+
 1416422855 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.cc
 	"figuraSimple.h"
 
-1418764622 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.cc
+1418941463 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.cc
 	"figuraSolida.h"
+	"materiales.h"
 
 1415738851 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\file_ply_stl.cc
 	"file_ply_stl.h"
 
-1416152783 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figuracargada.cc
-	"figuraCargada.h"
+1418893811 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_imagen.cpp
+	<stdlib.h>
+	<string>
+	<iostream>
+	"jpg_imagen.hpp"
+	"jpg_readwrite.hpp"
 
-1416647148 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figuracargada.h
-	"figuraSolida.h"
-	"file_ply_stl.h"
+1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_imagen.hpp
+	<string>
 
-1418813724 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
+1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_readwrite.hpp
+
+1386847890 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_memsrc.cpp
+	"jpg_jinclude.h"
+	"jpeglib.h"
+	"jerror.h"
+
+1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_jinclude.h
+	"jconfig.h"
+	<stddef.h>
+	<stdlib.h>
+	<sys/types.h>
+	<stdio.h>
+	<strings.h>
+	<string.h>
+
+1418890775 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jconfig.h
+
+1418890827 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpeglib.h
+	"jconfig.h"
+	"jmorecfg.h"
+	"jpegint.h"
+	"jerror.h"
+
+1418890881 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jmorecfg.h
+
+1418890983 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jerror.h
+
+1418894309 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_readwrite.cpp
+	"jpg_readwrite.hpp"
+	<stdio.h>
+	<iostream>
+	<string.h>
+	<stdlib.h>
+	"jpeglib.h"
+	<iostream>
+	<fstream>
+	"jpg_memsrc.hpp"
+	<setjmp.h>
+
+1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_memsrc.hpp
+
+1418941765 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -81,15 +134,9 @@
 1417724799 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\suelo.h
 	"figuraCargada.h"
 
-1386847890 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_imagen.cpp
-	<stdlib.h>
-	<string>
-	<iostream>
-	"jpg_imagen.hpp"
-	"jpg_readwrite.hpp"
+1418939929 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\material.h
+	<GL/gl.h>
 
-1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_imagen.hpp
-	<string>
-
-1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_readwrite.hpp
+1418941560 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\materiales.h
+	"material.h"
 

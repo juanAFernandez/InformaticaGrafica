@@ -35,6 +35,7 @@
 			<Add library="opengl32" />
 			<Add library="glu32" />
 			<Add library="gdi32" />
+			<Add library="..\libreria libjpeg.dll\libjpeg.dll" />
 		</Linker>
 		<Unit filename="Robot.h" />
 		<Unit filename="colores.h" />
@@ -48,6 +49,10 @@
 		<Unit filename="figuraSolida.h" />
 		<Unit filename="file_ply_stl.cc" />
 		<Unit filename="file_ply_stl.h" />
+		<Unit filename="jconfig.h" />
+		<Unit filename="jerror.h" />
+		<Unit filename="jmorecfg.h" />
+		<Unit filename="jpeglib.h" />
 		<Unit filename="jpg_imagen.cpp" />
 		<Unit filename="jpg_imagen.hpp" />
 		<Unit filename="jpg_jinclude.h" />
@@ -60,6 +65,7 @@
 		<Unit filename="primitivaCubo.h" />
 		<Unit filename="rover.h" />
 		<Unit filename="suelo.h" />
+		<Unit filename="text-lata-1.jpg" />
 		<Unit filename="variablesControl.h" />
 		<Unit filename="vertex.h" />
 		<Extensions>

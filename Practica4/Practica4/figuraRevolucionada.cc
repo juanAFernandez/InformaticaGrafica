@@ -48,7 +48,7 @@ void figuraRevolucionada::generaCarasCentral(int numRev, int numVP, double grado
                 }
             }
 
-            cout << "Generadas " << caras.size() << " caras." << endl;
+            //cout << "Generadas " << caras.size() << " caras." << endl;
 
 
             //### Generando las caras IMPAR:
@@ -63,7 +63,7 @@ void figuraRevolucionada::generaCarasCentral(int numRev, int numVP, double grado
                     setCaraManual(verticeA,verticeB,verticeC);
 
                 }
-            cout << "Generadas " << caras.size() << " caras." << endl;
+            //cout << "Generadas " << caras.size() << " caras." << endl;
             //eliminarUltimaCara();
             //eliminarUltimaCara();
           //  if(DEBUGG){
@@ -232,7 +232,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
                 float gradosPerfilActual, gradosPorcion;
 
                 if(gradosInicial==0.0 && gradosFinal==360.0){
-                    cout << "All right!";
+                   // cout << "All right!";
                     gradosPorcion=gradosFinal/numRev;
                     gradosPerfilActual=gradosPorcion;
                     for(int i=0; i<perfil.size(); i++)
@@ -265,7 +265,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
 
 
 
-                            cout << "gradosPerfilActual: " << gradosPerfilActual << endl;
+                            cout << "gradoPerfilActual: " << gradosPerfilActual << endl;
 
 
                         nuevoVertice.x=fabs(radio)*cos(gradosARadianes(gradosPerfilActual));
@@ -331,7 +331,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
                     if(tapaSuperior)
                         posTi=vertices.size()-2;
 
-                    cout << "posTi" << posTi << endl;
+                 //   cout << "posTi" << posTi << endl;
 
                     //2ºProcesamos las caras  de la tapa inferior, usando ese valor.
                         //llamada a la función procesa tapas inferiores.
@@ -345,7 +345,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
                     //también estaría en la última posición en el caso de existir por lo que entonces:
                     posTs=vertices.size()-1;
 
-                    cout << "posTs" << posTs << endl;
+                 //   cout << "posTs" << posTs << endl;
 
                     //2ºProcesamos las caras de la tapa superior
                         generaCarasTapaSuperior(numRev,posTs,nVPST,nVST,gradosInicial,gradosFinal);
