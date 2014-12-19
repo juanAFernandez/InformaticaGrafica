@@ -18,6 +18,11 @@
 #include <ctype.h>
 #include <iostream>
 
+// ## Extra para texto en el viewport ## //
+//#include "display.h"
+
+
+
 #include "figuraCargada.h"
 
 //También incluimos figuraRevolucionada.h (epicentro de esta práctica)
@@ -38,7 +43,9 @@
 
 
 
+// Texto:
 
+//Display display("Despliegue de texto");
 
 //Imágenes:
 
@@ -362,6 +369,10 @@ draw_axis();
 //Función que en última instancia manda a dibujar los objetos.
 draw_objects();
 
+//Dibujo de texto
+#define ORANGE          1.0f, 0.7f, 0.0f
+
+//display.displayText("Esto es un titulo", 15, 25, Window_width, Window_height, ORANGE);
 
 glutSwapBuffers();
 }

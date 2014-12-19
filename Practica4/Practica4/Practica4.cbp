@@ -37,8 +37,15 @@
 			<Add library="gdi32" />
 			<Add library="..\libreria libjpeg.dll\libjpeg.dll" />
 		</Linker>
+		<Unit filename="FreeImage.dll" />
+		<Unit filename="FreeImage.h" />
+		<Unit filename="FreeImage.lib" />
 		<Unit filename="Robot.h" />
+		<Unit filename="TextureManager.cpp" />
+		<Unit filename="TextureManager.h" />
 		<Unit filename="colores.h" />
+		<Unit filename="display.cpp" />
+		<Unit filename="display.h" />
 		<Unit filename="figuraCargada.cc" />
 		<Unit filename="figuraCargada.h" />
 		<Unit filename="figuraRevolucionada.cc" />
@@ -61,6 +68,8 @@
 		<Unit filename="jpg_readwrite.cpp" />
 		<Unit filename="jpg_readwrite.hpp" />
 		<Unit filename="main.cc" />
+		<Unit filename="material.h" />
+		<Unit filename="materiales.h" />
 		<Unit filename="parametrosRover.h" />
 		<Unit filename="primitivaCubo.h" />
 		<Unit filename="rover.h" />
