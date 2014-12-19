@@ -102,7 +102,7 @@
 
 1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_memsrc.hpp
 
-1418941765 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
+1418979251 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -115,6 +115,7 @@
 	"rover.h"
 	"suelo.h"
 	"parametrosRover.h"
+	"TextureManager.h"
 
 1416584299 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\variablescontrol.h
 
@@ -139,4 +140,17 @@
 
 1418941560 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\materiales.h
 	"material.h"
+
+1418976634 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\texturemanager.h
+	<windows.h>
+	<gl/gl.h>
+	"FreeImage.h"
+	<map>
+
+1281639710 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\freeimage.h
+	<wchar.h>
+	<inttypes.h>
+
+1418976634 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\texturemanager.cpp
+	"TextureManager.h"
 

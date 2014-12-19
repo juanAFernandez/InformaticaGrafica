@@ -29,6 +29,17 @@
 #include "suelo.h"
 #include "parametrosRover.h"
 
+#include "TextureManager.h"
+
+    //TextureManager texLoader;
+     unsigned int texID;
+
+
+
+
+
+
+
 //Imágenes:
 
 //#include "jpg_imagen.hpp"
@@ -46,11 +57,11 @@
     figuraRevolucionada cono;
 
 
-    boolean animacion=true;
+    boolean animacion=false;
     int contadorAnimacion=0;
 
-    boolean ejercicioBeethoven=true;
-    boolean ejercicioTextura=false;
+    boolean ejercicioBeethoven=false;
+    boolean ejercicioTextura=true;
 
 
 
@@ -295,11 +306,42 @@ void draw_objects()
      cono.dibujarCaras("todo","solido",AMARILLO);
      cono.dibujarAristas("todo");
     glPopMatrix();
+    }
 
+    if(ejercicioTextura){
 
+    glEnable(GL_TEXTURE_2D);
+
+    if(TextureManager::Inst()->LoadTexture("text-lata-1.jpg",texID)){
+        cout << "All its good" ;
 
     }
 
+    TextureManager::Inst()->BindTexture(texID);
+
+    glBindTexture(GL_TEXTURE_2D, texID);
+    glBegin(GL_QUADS);
+    {
+
+
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex3f(-0.5f, -0.5f, 0.0f);
+
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(0.5f, -0.5f, 0.0f);
+
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f(0.5f, 0.5f, 0.0f);
+
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f(-0.5f, 0.5f, 0.0f);
+
+    }
+
+	glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+    }
 
 
 }
@@ -898,6 +940,24 @@ int main(int argc, char **argv)
     debe de hacerse sólo cuando se quiera dibujar un objeto al que queramos que se le aplique la iluminación. Así podremos tener
     los ejes sin iluminación (con su coloración normal) y los conos mientras que otro modelo como el beethoven sea aplicado por la
     ilumación.*/
+
+    // ## FIN ILUMINACIÓN ## //
+
+
+
+
+
+    // ## TEXTURAS ## //
+
+    //Clase para la carga de texturas
+
+
+    //texLoader.BindTexture(texID);
+
+
+    // ## FIN TEXTURAS ## //
+
+
 
     // funcion de inicialización
     initialize();
