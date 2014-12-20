@@ -34,10 +34,43 @@
 #include "suelo.h"
 #include "parametrosRover.h"
 
-#include "TextureManager.h"
+//#include "TextureManager.h"
 
     //TextureManager texLoader;
-     unsigned int texID;
+
+
+
+
+/*  Create checkerboard texture  */
+#define checkImageWidth 64
+#define checkImageHeight 64
+static GLubyte checkImage[checkImageHeight][checkImageWidth][4];
+
+static GLuint texName;
+
+void makeCheckImage(void)
+{
+   int i, j, c;
+
+   for (i = 0; i < checkImageHeight; i++) {
+      for (j = 0; j < checkImageWidth; j++) {
+         c = ((((i&0x8)==0)^((j&0x8))==0))*255;
+         checkImage[i][j][0] = (GLubyte) c;
+         checkImage[i][j][1] = (GLubyte) c;
+         checkImage[i][j][2] = (GLubyte) c;
+         checkImage[i][j][3] = (GLubyte) 255;
+      }
+   }
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -315,40 +348,49 @@ void draw_objects()
     glPopMatrix();
     }
 
+
+    // ## APLICACIÓN DE TEXTURA ## //
+
     if(ejercicioTextura){
 
-    glEnable(GL_TEXTURE_2D);
 
-    if(TextureManager::Inst()->LoadTexture("text-lata-1.jpg",texID)){
-        cout << "All its good" ;
+    makeCheckImage();
+    //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    glGenTextures(1, &texName);
+    glBindTexture(GL_TEXTURE_2D, texName);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, checkImageWidth, checkImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+
+
+
+   glEnable(GL_TEXTURE_2D);
+
+   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
+   //Enlazado con la imagen para asociar a coordenadas:
+   glBindTexture(GL_TEXTURE_2D, texName);
+
+   glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0); glVertex3f(-2.0, -2.0, 0.0);
+    glTexCoord2f(0.0, 1.0); glVertex3f(-2.0, 2.0, 0.0);
+    glTexCoord2f(1.0, 1.0); glVertex3f(2.0, 2.0, 0.0);
+    glTexCoord2f(1.0, 0.0); glVertex3f(2.0, -2.0, 0.0);
+
+   glEnd();
+
+
+   glDisable(GL_TEXTURE_2D);
+
+
+
 
     }
 
-    TextureManager::Inst()->BindTexture(texID);
-
-    glBindTexture(GL_TEXTURE_2D, texID);
-    glBegin(GL_QUADS);
-    {
-
-
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(-0.5f, -0.5f, 0.0f);
-
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex3f(0.5f, -0.5f, 0.0f);
-
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f(0.5f, 0.5f, 0.0f);
-
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(-0.5f, 0.5f, 0.0f);
-
-    }
-
-	glEnd();
-    glDisable(GL_TEXTURE_2D);
-
-    }
+    // ## FIN APLICACIÓN DE TEXTURA ## //
 
 
 }
@@ -960,7 +1002,9 @@ int main(int argc, char **argv)
 
     // ## TEXTURAS ## //
 
-    //Clase para la carga de texturas
+
+
+
 
 
     //texLoader.BindTexture(texID);

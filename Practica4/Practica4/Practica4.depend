@@ -102,7 +102,7 @@
 
 1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_memsrc.hpp
 
-1418987559 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
+1419003484 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -141,20 +141,23 @@
 1418941560 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\materiales.h
 	"material.h"
 
-1418976634 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\texturemanager.h
+1419003236 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\texturemanager.h
 	<windows.h>
 	<gl/gl.h>
 	"FreeImage.h"
 	<map>
+	<GL/glut.h>
 
 1281639710 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\freeimage.h
 	<wchar.h>
 	<inttypes.h>
 
-1418976634 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\texturemanager.cpp
+1419006740 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\texturemanager.cpp
 	"TextureManager.h"
+	<stdio.h>
+	<iostream>
 
-1418988580 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\display.cpp
+1418988670 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\display.cpp
 	"display.h"
 
 1418988571 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\display.h
