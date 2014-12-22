@@ -39,6 +39,8 @@
     //TextureManager texLoader;
 
 
+#include "FreeImage.h"
+
 
 
 /*  Create checkerboard texture  */
@@ -352,6 +354,7 @@ void draw_objects()
     // ## APLICACIÓN DE TEXTURA ## //
 
     if(ejercicioTextura){
+
 
 
     makeCheckImage();
