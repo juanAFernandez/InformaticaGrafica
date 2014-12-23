@@ -41,10 +41,11 @@
 		<Unit filename="FreeImage.h" />
 		<Unit filename="FreeImage.lib" />
 		<Unit filename="Robot.h" />
+		<Unit filename="TextureLoader.cpp" />
+		<Unit filename="TextureLoader.h" />
 		<Unit filename="TextureManager.cpp" />
 		<Unit filename="TextureManager.h" />
 		<Unit filename="colores.h" />
-		<Unit filename="display.cpp" />
 		<Unit filename="display.h" />
 		<Unit filename="figuraCargada.cc" />
 		<Unit filename="figuraCargada.h" />
@@ -71,9 +72,12 @@
 		<Unit filename="material.h" />
 		<Unit filename="materiales.h" />
 		<Unit filename="parametrosRover.h" />
+		<Unit filename="perfil.cpp" />
+		<Unit filename="perfil.h" />
 		<Unit filename="primitivaCubo.h" />
 		<Unit filename="rover.h" />
 		<Unit filename="suelo.h" />
+		<Unit filename="text-lata-1.bmp" />
 		<Unit filename="text-lata-1.jpg" />
 		<Unit filename="variablesControl.h" />
 		<Unit filename="vertex.h" />

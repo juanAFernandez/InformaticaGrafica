@@ -265,7 +265,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
 
 
 
-                            cout << "gradoPerfilActual: " << gradosPerfilActual << endl;
+                          //  cout << "gradoPerfilActual: " << gradosPerfilActual << endl;
 
 
                         nuevoVertice.x=fabs(radio)*cos(gradosARadianes(gradosPerfilActual));

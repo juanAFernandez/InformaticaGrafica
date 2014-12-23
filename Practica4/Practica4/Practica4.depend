@@ -9,7 +9,7 @@
 1418676971 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.h
 	"figuraSimple.h"
 
-1417791550 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.h
+1419352392 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.h
 	<GL/gl.h>
 	<vector>
 	"vertex.h"
@@ -32,7 +32,7 @@
 	<vector>
 	<assert.h>
 
-1418922383 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.cc
+1419352278 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.cc
 	"figuraRevolucionada.h"
 
 1417635624 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.h
@@ -40,7 +40,7 @@
 	<math.h>
 	"file_ply_stl.h"
 
-1416422855 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.cc
+1419352581 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.cc
 	"figuraSimple.h"
 
 1418941463 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.cc
@@ -102,7 +102,7 @@
 
 1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_memsrc.hpp
 
-1419349187 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
+1419374011 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -111,6 +111,7 @@
 	<iostream>
 	"figuraCargada.h"
 	"figuraRevolucionada.h"
+	"perfil.h"
 	"variablesControl.h"
 	"rover.h"
 	"suelo.h"
@@ -191,4 +192,10 @@
 1419268349 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\textureloader.h
 	<stdio.h>
 	<assert.h>
+
+1419350959 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\perfil.cpp
+	"perfil.h"
+
+1419352444 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\perfil.h
+	"figuraSimple.h"
 

@@ -1,7 +1,7 @@
 #include "figuraSimple.h"
 
 figuraSimple::figuraSimple(string nuevoNombre){
-    nombreFigura=nombreFigura;
+    nombreFigura=nuevoNombre;
 }
 
 void figuraSimple::setVerticeManual(GLfloat x, GLfloat y, GLfloat z){

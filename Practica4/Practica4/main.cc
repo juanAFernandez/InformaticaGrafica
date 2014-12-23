@@ -25,10 +25,14 @@
 
 #include "figuraCargada.h"
 
+
 //También incluimos figuraRevolucionada.h (epicentro de esta práctica)
 #include "figuraRevolucionada.h"
 
+#include "perfil.h"
+
 #include "variablesControl.h"
+
 
 #include "rover.h"
 #include "suelo.h"
@@ -80,7 +84,7 @@ void makeCheckImage(void)
 
 
 
-
+Perfil perfilSinTapasPrueba("perfilSinTapas");
 
 
 // Texto:
@@ -412,6 +416,8 @@ void draw_objects()
         glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
         glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
 
+
+
     glEnd();
 
 
@@ -520,10 +526,13 @@ void draw_objects()
 
     // ## FIN APLICACIÓN DE TEXTURA ## //
 
+    perfilSinTapasPrueba.dibujar();
+    //perfilSinTapasPrueba.muestraVertices();
+
     ejemploCubo.dibujarCaras("todo","solido",VERDE);
     ejemploCubo.dibujarAristas("todo");
-    cout << ejemploCubo.numeroCaras();
-    cout << ejemploCubo.numeroVertices();
+    //cout << ejemploCubo.numeroCaras();
+    //cout << ejemploCubo.numeroVertices();
 
 
 }
@@ -890,6 +899,9 @@ int main(int argc, char **argv)
         perfilCono.push_back({0,0.5,0});
 
 
+
+
+
         //El perfil simple completo (con tapas):
         perfilCompleto.push_back({0,-1,0});
         perfilCompleto.push_back({1,-1,0});
@@ -909,6 +921,11 @@ int main(int argc, char **argv)
         //El perfil simple sin tapas:
         perfilSinTapas.push_back({1,-1,0});
         perfilSinTapas.push_back({1,1,0});
+
+
+
+        perfilSinTapasPrueba.setVerticeManual(1,-1,0);
+        perfilSinTapasPrueba.setVerticeManual(1,1,0);
 
 
     //Inicializamos las figuras del tipo "figuraRevolucionada" con estos perfiles y les damos la revolución general mínima:
@@ -1143,6 +1160,7 @@ int main(int argc, char **argv)
     loadTextureFromFile( "./text-lata-1.bmp" );
 
         /*
+        cout << "Proceso de imagen" << endl;
         cout << "Proceso de imagen" << endl;
         //1ºExtraemos el formato del que es la imagen:
         FREE_IMAGE_FORMAT formatoImagen = FIF_UNKNOWN;
