@@ -102,7 +102,7 @@
 
 1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_memsrc.hpp
 
-1419003484 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
+1419349187 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -115,7 +115,8 @@
 	"rover.h"
 	"suelo.h"
 	"parametrosRover.h"
-	"TextureManager.h"
+	"FreeImage.h"
+	"TextureLoader.h"
 
 1416584299 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\variablescontrol.h
 
@@ -152,7 +153,7 @@
 	<wchar.h>
 	<inttypes.h>
 
-1419238884 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\texturemanager.cpp
+1419239286 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\texturemanager.cpp
 	"TextureManager.h"
 	<stdio.h>
 	<iostream>
@@ -165,4 +166,29 @@
 	<string.h>
 	<GL/glut.h>
 	<GL/glu.h>
+
+1419249183 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\loadbmp.cpp
+	<stdio.h>
+	<stdlib.h>
+
+1419249183 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\loadbmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1419249183 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\loadbmp.h
+	<stdio.h>
+	<stdlib.h>
+
+1419249183 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\loadbmp.cpp
+	<stdio.h>
+	<stdlib.h>
+
+1419268274 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\textureloader.cpp
+	"TextureLoader.h"
+	<windows.h>
+	"GL/gl.h"
+
+1419268349 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\textureloader.h
+	<stdio.h>
+	<assert.h>
 

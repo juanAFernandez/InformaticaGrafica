@@ -40,7 +40,10 @@
 
 
 #include "FreeImage.h"
+//(http://freeimage.sourceforge.net/)
+#include "TextureLoader.h"
 
+//#include "loadBMP.cpp"
 
 
 /*  Create checkerboard texture  */
@@ -49,6 +52,8 @@
 static GLubyte checkImage[checkImageHeight][checkImageWidth][4];
 
 static GLuint texName;
+
+static GLuint identificadorImagen;
 
 void makeCheckImage(void)
 {
@@ -98,12 +103,14 @@ void makeCheckImage(void)
     figuraRevolucionada semicilindro;
     figuraRevolucionada cono;
 
+    figuraRevolucionada ejemploCubo("ejemploCubo");
+
 
     boolean animacion=false;
     int contadorAnimacion=0;
 
     boolean ejercicioBeethoven=false;
-    boolean ejercicioTextura=true;
+    boolean ejercicioTextura=false;
 
 
 
@@ -305,6 +312,37 @@ glEnd();
 // Funcion que dibuja los objetos
 //***************************************************************************
 
+/*
+* Read a texture map from a BMP bitmap file.
+*/
+void loadTextureFromFile(char *filename)
+{
+   glClearColor (0.0, 0.0, 0.0, 0.0);
+   glShadeModel(GL_FLAT);
+   glEnable(GL_DEPTH_TEST);
+
+   RgbImage theTexMap( filename );
+
+   // Pixel alignment: each row is word aligned (aligned to a 4 byte boundary)
+   //    Therefore, no need to call glPixelStore( GL_UNPACK_ALIGNMENT, ... );
+
+
+    glGenTextures(1, &texName);                  // Create The Texture
+        glBindTexture(GL_TEXTURE_2D, texName);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+        // Typical Texture Generation Using Data From The Bitmap
+
+
+    //glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+    //glTexImage2D(GL_TEXTURE_2D, 0, 3, theTexMap.GetNumCols(), theTexMap.GetNumRows(), 0, GL_RGB, GL_UNSIGNED_BYTE, theTexMap.ImageData() );
+    gluBuild2DMipmaps(GL_TEXTURE_2D, 3,theTexMap.GetNumCols(), theTexMap.GetNumRows(), GL_RGB, GL_UNSIGNED_BYTE, theTexMap.ImageData() );
+
+}
+
 void draw_objects()
 {
 
@@ -355,9 +393,94 @@ void draw_objects()
 
     if(ejercicioTextura){
 
+   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   //glEnable(GL_TEXTURE_2D);
+   //
 
 
-    makeCheckImage();
+   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texName);
+
+
+
+   glBegin(GL_QUADS);
+        glColor3f(1.0f,1.0f,1.0f); //cyan
+        // Front Face
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
+        glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
+        glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
+
+    glEnd();
+
+
+   glFlush();
+   glDisable(GL_TEXTURE_2D);
+
+
+
+
+
+
+
+    // ## TEXTURAS [USO]## //
+
+    /*
+
+
+    //Carga la imagen:
+    FIBITMAP *bitmap = FreeImage_Load(FIF_BMP, "text-lata-1.bmp", BMP_DEFAULT);
+    if(bitmap){
+        cout << "Se hac caragado";
+    }
+
+
+    FIBITMAP *pImage = FreeImage_ConvertTo32Bits(bitmap);
+	unsigned width = FreeImage_GetWidth(bitmap);
+    unsigned height = FreeImage_GetHeight(bitmap);
+
+    cout << width << "x" << height << endl;
+
+
+    //makeCheckImage();
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    glGenTextures(1, &texName);
+    glBindTexture(GL_TEXTURE_2D, texName);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)FreeImage_GetBits(pImage));
+
+    FreeImage_Unload(bitmap);
+
+   glEnable(GL_TEXTURE_2D);
+
+   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
+   //Enlazado con la imagen para asociar a coordenadas:
+   glBindTexture(GL_TEXTURE_2D, texName);
+
+   glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0); glVertex3f(-2.0, -2.0, 0.0);
+    glTexCoord2f(0.0, 1.0); glVertex3f(-2.0, 2.0, 0.0);
+    glTexCoord2f(1.0, 1.0); glVertex3f(2.0, 2.0, 0.0);
+    glTexCoord2f(1.0, 0.0); glVertex3f(2.0, -2.0, 0.0);
+
+   glEnd();
+
+
+   glDisable(GL_TEXTURE_2D);
+
+    */
+
+    /*
+        makeCheckImage();
     //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
     glGenTextures(1, &texName);
@@ -388,12 +511,19 @@ void draw_objects()
 
    glDisable(GL_TEXTURE_2D);
 
+    */
+
 
 
 
     }
 
     // ## FIN APLICACIÓN DE TEXTURA ## //
+
+    ejemploCubo.dibujarCaras("todo","solido",VERDE);
+    ejemploCubo.dibujarAristas("todo");
+    cout << ejemploCubo.numeroCaras();
+    cout << ejemploCubo.numeroVertices();
 
 
 }
@@ -644,8 +774,8 @@ switch (Tecla1){
         break;
 	}
 
-	cout << "Angulos del observador y distancia:" << endl;
-    cout << "x: " << Observer_angle_x << " y: " << Observer_angle_y << " distancia: " << Observer_distance << endl;
+	//cout << "Angulos del observador y distancia:" << endl;
+    //cout << "x: " << Observer_angle_x << " y: " << Observer_angle_y << " distancia: " << Observer_distance << endl;
 
 glutPostRedisplay();
 }
@@ -794,6 +924,11 @@ int main(int argc, char **argv)
 
             cono.cargarPerfil(perfilCono);
             cono.revoluciona(16,0,360);
+
+
+            ejemploCubo.cargarPerfil(perfilSinTapas);
+            ejemploCubo.revoluciona(4,0,360);
+            ejemploCubo.muestraVertices();
 
 
         //Fin de pruebas
@@ -1003,14 +1138,58 @@ int main(int argc, char **argv)
 
 
 
-    // ## TEXTURAS ## //
+    // ## TEXTURAS [INICIALIZACIÓN]## //
+
+    loadTextureFromFile( "./text-lata-1.bmp" );
+
+        /*
+        cout << "Proceso de imagen" << endl;
+        //1ºExtraemos el formato del que es la imagen:
+        FREE_IMAGE_FORMAT formatoImagen = FIF_UNKNOWN;
+        formatoImagen=FreeImage_GetFileType("text-lata-1.jpg",0);
+        FIBITMAP *dib(0);
+
+        if(formatoImagen==FIF_UNKNOWN)
+            cout << "Ha ocurrido un problema";
+
+         // check that the plugin has reading capabilities ...
+        if((formatoImagen != FIF_UNKNOWN) && FreeImage_FIFSupportsReading(formatoImagen)){
+            // ok, let's load the file
+            dib = FreeImage_Load(formatoImagen, "text-lata-1.bmp");
+
+            cout << "todo bien" << endl;
+        }
+
+        //Obtenemos los datos de la imagen
+        BYTE* bits = FreeImage_GetBits(dib); //Cargando los datos de la imgen
+        unsigned int width = FreeImage_GetWidth(dib);
+        unsigned int height = FreeImage_GetHeight(dib);
+
+        if((bits != 0) && (width != 0) && (height != 0))
+            cout << "La imagen mide " << width << " x " << height << endl;
+        else{
+            cout << "Ha ocurrido un error" << endl;
+            }
 
 
 
 
+        //La siguiente función nombra y crea un objeto de tipo textura para una imagen de textura
+        glGenTextures(1, &identificadorImagen);
+        glBindTexture(GL_TEXTURE_2D, identificadorImagen);
 
 
-    //texLoader.BindTexture(texID);
+       glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+     //   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+     //   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        // parametros de aplicacion de la textura
+        //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &bits);
+
+        */
+
 
 
     // ## FIN TEXTURAS ## //
