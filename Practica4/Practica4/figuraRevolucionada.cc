@@ -150,7 +150,7 @@ void figuraRevolucionada::cargarPerfil(vector <_vertex3f> vectorPerfil){
 void figuraRevolucionada::muestraPerfil(){
     cout << "Vertices del perfil de la figura " << nombreFigura << " :" << endl;
     for(int i=0; i<perfil.size(); i++)
-        cout << "Vertice n." << i << " [" << perfil[i].x << " " << perfil[i].y << " " << perfil[i].z << "]" << endl;
+        cout << "Vertice n." << i << " [" << perfil[i].x << " , " << perfil[i].y << " , " << perfil[i].z << "]" << endl;
 }
 
 void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gradosFinal){
@@ -190,7 +190,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
 
             //Mostramos el perfil.
 
-            muestraPerfil();
+            //muestraPerfil();
 
             //Declaramos un par de vértices temporales.
             _vertex3f verticeTapaSuperior, verticeTapaInferior;
@@ -212,7 +212,7 @@ void figuraRevolucionada::revoluciona(int numRev, float gradosInicial, float gra
             //Guardamos en una variable el número de vértices del perfil sin tapas. nVPST
             int nVPST=perfil.size();
 
-            muestraPerfil();
+            //muestraPerfil();
 
 
             // ##3## Revolucionamos los vectores del perfil sin los vértices tapas (si los hubiera). Que sería la sección central sólo.

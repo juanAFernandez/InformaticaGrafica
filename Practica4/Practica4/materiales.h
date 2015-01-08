@@ -19,7 +19,7 @@
     material plasticoNegro(0.0, 0.0, 0.0, 0.01, 0.01, 0.01, 0.50, 0.50, 0.50);
     material plasticoCyan(0.0, 0.1, 0.06, 0.0, 0.50980392, 0.50980392, 0.50196078, 0.50196078, 0.50196078);
     material plasticoVerde(0.0, 0.0, 0.0, 0.1, 0.35, 0.1, 0.45, 0.55, 0.45);
-    material plasticoRojo(0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.7, 0.6, 0.6);
+    material plasticoRojo(0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 1, 0.6, 0.6);
     material plasticoBlanco(0.0, 0.0, 0.0, 0.55, 0.55, 0.55, 0.70, 0.70, 0.70);
     material plasticoAmarillo(0.0, 0.0, 0.0, 0.5, 0.5, 0.0, 0.60, 0.60, 0.50);
     material cauchoNegro(0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.4, 0.4, 0.4);

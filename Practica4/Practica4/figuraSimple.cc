@@ -26,9 +26,9 @@ void figuraSimple::dibujarVertices(string seccion){
 
 
             //Establecemos el color de los vértices
-            glColor3fv(NEGRO);
+            glColor3fv(GRIS_CLARO);
             //Establecemos el grosor de los vértices (al dibujarlos)
-            glPointSize(5);
+            glPointSize(3);
 
             //Si el parametro es "todo" se dibujan todos los vertices del modelo.
             if(seccion=="todo"){

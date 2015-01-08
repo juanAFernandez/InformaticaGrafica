@@ -10,6 +10,9 @@
 
 //Al heredar de figuraSimple necesita conocerla:
 #include "figuraSimple.h"
+#include "material.h"
+
+
 //Al incluir figuraSimple.h estamos incluyendo todos los include de la primera.
 
 
@@ -18,12 +21,15 @@ class figuraSolida : public figuraSimple {
 
     protected:
 
-        //Las figuras solidas necesitan un vector de caras con el que darle la topología (conexión entre
-        // vértices) al objeto.
         vector<_vertex3i> caras;
         vector<_vertex3f> normales;
         vector<_vertex3f> normalesVertices;
         vector<_vertex3f> baricentros;
+
+        //Textura:
+
+        GLuint texName; //Textura
+        vector<_vertex2f> cTs; //Coordenadas de textura
 
     private:
 
@@ -71,7 +77,9 @@ class figuraSolida : public figuraSimple {
         void dibujarCaras(string seccion, string modo, const GLfloat color[]);
 
 
-        void dibujarCarasIluminacionPlana(const GLfloat color[]);
+        void dibujarCarasIluminacionPlana(material materialParaAplicar);
+
+        void dibujarCarasIluminacionSuave(material materialParaAplicar);
 
 
         /**
@@ -97,11 +105,6 @@ class figuraSolida : public figuraSimple {
         void muestraNormales();
 
 
-        void prueba(GLfloat color){
-            cout << "All right!";
-        }
-
-
 
         _vertex3f getNormal(int pos){
 
@@ -111,6 +114,82 @@ class figuraSolida : public figuraSimple {
 
         _vertex3f getBaricentro(int pos){
             return baricentros[pos];
+        }
+
+
+        void generaCoordenadasTextura(int numRevoluciones, int numVerticesPerfil, int numVerticesTotal){
+
+            cout << numVerticesPerfil << numVerticesTotal;
+
+            //Inicialización de las primeras coordenadas de textura del extremos inf. y sup. de la parte derecha de la imagen.
+
+            cTs.push_back({1,0});
+            cTs.push_back({1,1});
+
+
+            float razon=(float)1/numRevoluciones;
+
+
+            _vertex2f tmp;
+
+            for(int i=numVerticesPerfil; i<=numVerticesTotal-1; i+=2){
+                tmp.x=(cTs[i-2].x-razon); tmp.y=cTs[i-2].y;
+                cTs.push_back(tmp);
+                tmp.x=(cTs[i-1].x-razon); tmp.y=cTs[i-1].y;
+                cTs.push_back(tmp);
+            }
+
+            cout << "Generadas " << cTs.size() << "coordenadas";
+        }
+
+
+
+
+
+
+
+        void muestraCoordenadasTextura(){
+
+            cout << endl;
+            cout << "Coordenadas de textura para la figura " << nombreFigura << endl;
+            for(int i=0; i<cTs.size(); i++){
+                cout << "Coordenada de Textura " << i <<  ": (" << cTs[i].x << "," << cTs[i].y << ")" << endl;
+
+            }
+
+
+        }
+
+
+        void dibujarTextura(GLuint texName){
+
+
+
+             glEnable(GL_TEXTURE_2D);
+             glBindTexture(GL_TEXTURE_2D, texName);
+
+
+
+        glBegin(GL_TRIANGLES);
+        glColor3f(1.0f,1.0f,1.0f);
+        for(int i=0; i<caras.size(); i++){
+            glTexCoord2f(cTs[caras[i]._0].x, cTs[caras[i]._0].y);
+            glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
+            glTexCoord2f(cTs[caras[i]._1].x, cTs[caras[i]._1].y);
+            glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
+            glTexCoord2f(cTs[caras[i]._2].x, cTs[caras[i]._2].y);
+            glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+
+        }
+
+
+    glEnd();
+
+
+   glFlush();
+   glDisable(GL_TEXTURE_2D);
+
+
         }
 
 

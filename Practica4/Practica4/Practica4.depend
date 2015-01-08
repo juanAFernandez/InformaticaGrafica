@@ -6,10 +6,11 @@
 	"figuraSolida.h"
 	"file_ply_stl.h"
 
-1418676971 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.h
+1420737354 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.h
 	"figuraSimple.h"
+	"material.h"
 
-1419352392 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.h
+1419779599 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.h
 	<GL/gl.h>
 	<vector>
 	"vertex.h"
@@ -32,20 +33,19 @@
 	<vector>
 	<assert.h>
 
-1419352278 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.cc
+1420651458 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.cc
 	"figuraRevolucionada.h"
 
-1417635624 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.h
+1420660756 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurarevolucionada.h
 	"figuraSolida.h"
 	<math.h>
 	"file_ply_stl.h"
 
-1419352581 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.cc
+1419763472 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasimple.cc
 	"figuraSimple.h"
 
-1418941463 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.cc
+1420650678 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\figurasolida.cc
 	"figuraSolida.h"
-	"materiales.h"
 
 1415738851 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\file_ply_stl.cc
 	"file_ply_stl.h"
@@ -102,7 +102,7 @@
 
 1386847890 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\jpg_memsrc.hpp
 
-1419374011 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
+1420741131 source:c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\main.cc
 	"stdlib.h"
 	"stdio.h"
 	<windows.h>
@@ -118,8 +118,9 @@
 	"parametrosRover.h"
 	"FreeImage.h"
 	"TextureLoader.h"
+	"materiales.h"
 
-1416584299 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\variablescontrol.h
+1419713032 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\variablescontrol.h
 
 1417792184 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\rover.h
 	<math.h>
@@ -127,7 +128,7 @@
 	"parametrosRover.h"
 	"Robot.h"
 
-1417792492 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\parametrosrover.h
+1419763871 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\parametrosrover.h
 
 1418245213 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\robot.h
 	"figuraRevolucionada.h"
@@ -140,7 +141,7 @@
 1418939929 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\material.h
 	<GL/gl.h>
 
-1418941560 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\materiales.h
+1420739979 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\materiales.h
 	"material.h"
 
 1419003236 c:\users\juan\desktop\informaticagrafica1415\informaticagrafica\practica4\practica4\texturemanager.h

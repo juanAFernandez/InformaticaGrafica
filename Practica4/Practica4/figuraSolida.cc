@@ -1,5 +1,4 @@
 #include "figuraSolida.h"
-#include "materiales.h"
 
 int figuraSolida::numeroCaras(){
     return caras.size();
@@ -135,11 +134,17 @@ void figuraSolida::dibujarCaras(string seccion, string modo, const GLfloat color
             glEnd();
 }
 
-void figuraSolida::dibujarCarasIluminacionPlana(const GLfloat color[]){
+void figuraSolida::dibujarCarasIluminacionPlana(material materialParaAplicar){
 
             //En el tipo de iluminación con Suavizado Plano usamos una normal por cara.
 
-            plasticoVerde.activar();
+            //Debemos de asegurarnos de que tanto el vector de normales como el de vértices tiene contenido.
+
+            if(normales.empty() && vertices.empty()){
+                cout << "##Error## No se puede dibujar con iluminación plana " << endl;
+            }
+
+            materialParaAplicar.activar();
 
             glBegin(GL_TRIANGLES);
                 for(unsigned i=0; i<caras.size(); i++){
@@ -152,10 +157,13 @@ void figuraSolida::dibujarCarasIluminacionPlana(const GLfloat color[]){
 
 }
 
+void figuraSolida::dibujarCarasIluminacionSuave(material materialParaAplicar){
+}
+
 void figuraSolida::dibujarAristas(string seccion){
 
             //Configuración del color (RGB [0-1] )
-            glColor3fv(NEGRO);
+            glColor3fv(GRIS_CLARO);
 
             //Configuración del grosor de las lineas, por si queremos que se vean más gruesas.
             glLineWidth(0.5);
@@ -371,6 +379,7 @@ void figuraSolida::dibujarNormales(){
 
     if(!baricentros.empty() && !normales.empty()){
             //Teniendo la normal y el baricentro, ¿Cómo dibujo una linea que salga de la caras?
+            glColor3fv(ROJO);
             glBegin(GL_LINES);
                 for(unsigned int i=0; i<caras.size(); i++){
                     glVertex3f(baricentros[i].x,baricentros[i].y,baricentros[i].z);

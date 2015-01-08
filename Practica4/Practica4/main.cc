@@ -47,6 +47,8 @@
 //(http://freeimage.sourceforge.net/)
 #include "TextureLoader.h"
 
+#include "materiales.h"
+
 //#include "loadBMP.cpp"
 
 
@@ -55,7 +57,10 @@
 #define checkImageHeight 64
 static GLubyte checkImage[checkImageHeight][checkImageWidth][4];
 
-static GLuint texName;
+//static GLuint texName;
+
+static GLuint texturaLata;
+static GLuint texturaMadera;
 
 static GLuint identificadorImagen;
 
@@ -136,6 +141,8 @@ de la que se encargará un función independiente.
 
     figuraCargada beethoven;
 
+
+
     //Correspondiente a la práctica 2 ############
 
     //Introducimos vertices a un perfil para que a partir de ellos e genere la figura
@@ -143,6 +150,19 @@ de la que se encargará un función independiente.
 
     //La figura del peon (cuyo perfil será cargado desde un .ply)
     figuraRevolucionada peon("peon");
+
+
+    //Peonees del escenario 2
+    figuraRevolucionada peonA("peonA");
+    figuraRevolucionada peonB("peonB");
+    figuraRevolucionada peonC("peonC");
+
+    figuraRevolucionada cuerpoLata("cuerpoLata");
+    figuraRevolucionada culoLata("culoLata");
+    figuraRevolucionada bocaLata("bocaLata");
+
+
+
 
     //Una figura extra con la que probar cosas.
     figuraRevolucionada figuraPrueba("figura de prueba");
@@ -225,7 +245,7 @@ glRotatef(Observer_angle_y,0,1,0);
 
 
 
-    if(ejercicioBeethoven){
+    if(EJERCICIO==1){
 
     //Establezco la posición de la luz 0
 
@@ -252,9 +272,11 @@ glRotatef(Observer_angle_y,0,1,0);
 
     */
 
+       //Ajuste de luz a movimiento de cámara:
+
        const GLfloat posicionLuzLocal1[]={8.0, 0.0, 0.0, 1.0};
 
-       //Cono de light 1
+       //Cono de light 1 //FIJO
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             glLoadIdentity();
@@ -269,7 +291,7 @@ glRotatef(Observer_angle_y,0,1,0);
 
         const GLfloat posicionLuzLocal2[]={0.0, 8.0, 0.0, 1.0};
 
-       //Cono de light 2
+       //Cono de light 2 //MOVIL
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             glLoadIdentity();
@@ -284,9 +306,30 @@ glRotatef(Observer_angle_y,0,1,0);
             glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
         glPopMatrix();
 
+
+
     }
 
+    if(EJERCICIO==2){
+         const GLfloat posicionLuzLocal2[]={0.0, 8.0, 0.0, 1.0};
 
+       //Cono de light 2 //MOVIL
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+            glLoadIdentity();
+
+
+            glTranslatef(0,0,-Observer_distance);
+            glRotatef(Observer_angle_x,1,0,0);
+            glRotatef(Observer_angle_y,0,1,0);
+
+            glRotated(gradoCono,1,0,0);
+
+            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
+        glPopMatrix();
+
+
+    }
 }
 
 //**************************************************************************
@@ -312,14 +355,12 @@ glEnd();
 }
 
 
-//**************************************************************************
-// Funcion que dibuja los objetos
-//***************************************************************************
 
 /*
-* Read a texture map from a BMP bitmap file.
+* Lee una textura desde una imagen en formato BMP
 */
-void loadTextureFromFile(char *filename)
+/*
+void cargarTextura(char *filename)
 {
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel(GL_FLAT);
@@ -331,14 +372,43 @@ void loadTextureFromFile(char *filename)
    //    Therefore, no need to call glPixelStore( GL_UNPACK_ALIGNMENT, ... );
 
 
-    glGenTextures(1, &texName);                  // Create The Texture
-        glBindTexture(GL_TEXTURE_2D, texName);
+   glGenTextures(1, &texName);                  // Create The Texture
+   glBindTexture(GL_TEXTURE_2D, texName);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-        // Typical Texture Generation Using Data From The Bitmap
+   // Typical Texture Generation Using Data From The Bitmap
+
+
+    //glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+    //glTexImage2D(GL_TEXTURE_2D, 0, 3, theTexMap.GetNumCols(), theTexMap.GetNumRows(), 0, GL_RGB, GL_UNSIGNED_BYTE, theTexMap.ImageData() );
+    gluBuild2DMipmaps(GL_TEXTURE_2D, 3,theTexMap.GetNumCols(), theTexMap.GetNumRows(), GL_RGB, GL_UNSIGNED_BYTE, theTexMap.ImageData() );
+    cout << "Imagen cargada! " << theTexMap.GetNumRows() << "x" << theTexMap.GetNumCols() << endl;
+}
+*/
+void cargarTextura(GLuint &nombreTextura, char *filename){
+
+   //Debemos parasr el primer parámetro por referencia para que no se pierda su modificación.
+   glClearColor (0.0, 0.0, 0.0, 0.0);
+   glShadeModel(GL_FLAT);
+   glEnable(GL_DEPTH_TEST);
+
+   RgbImage theTexMap( filename );
+
+   // Pixel alignment: each row is word aligned (aligned to a 4 byte boundary)
+   //    Therefore, no need to call glPixelStore( GL_UNPACK_ALIGNMENT, ... );
+
+
+   glGenTextures(1, &nombreTextura);                  // Create The Texture
+   glBindTexture(GL_TEXTURE_2D, nombreTextura);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+   // Typical Texture Generation Using Data From The Bitmap
 
 
     //glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
@@ -346,6 +416,10 @@ void loadTextureFromFile(char *filename)
     gluBuild2DMipmaps(GL_TEXTURE_2D, 3,theTexMap.GetNumCols(), theTexMap.GetNumRows(), GL_RGB, GL_UNSIGNED_BYTE, theTexMap.ImageData() );
 
 }
+
+//**************************************************************************
+// Funcion que dibuja los objetos
+//***************************************************************************
 
 void draw_objects()
 {
@@ -364,24 +438,55 @@ void draw_objects()
     //cilindro.dibujarNormalesVertices();
 
 
-    if(ejercicioBeethoven){
-    // ## Ejercicio Beethoven con dos luces:
-    //beethoven.dibujarCaras("todo","solido",ROJO);
+    if(EJERCICIO==1){ // ## Beethoven con dos luces ## //
 
-    glEnable(GL_LIGHTING);
-    beethoven.dibujarCarasIluminacionPlana(ROJO);
-    glDisable(GL_LIGHTING);
 
+        //Modo sólo vértices
+        if(MODO==1){
+            beethoven.dibujarVertices("todo");
+        }
+
+        //Modo sólo aristas
+        if(MODO==2){
+            beethoven.dibujarAristas("todo");
+        }
+
+        //Modo sólido. Sólido más aristas.
+        if(MODO==3){
+            beethoven.dibujarCaras("todo","solido",VERDE);
+            beethoven.dibujarAristas("todo");
+        }
+
+        //Mondo normales. Sólido, aristas más normales.
+        if(MODO==6){
+            beethoven.dibujarCaras("todo","solido",VERDE);
+            beethoven.dibujarAristas("todo");
+            beethoven.dibujarNormales();
+        }
+
+        //Modo sólido con iluminación PLANA
+        if(MODO==4){
+            glEnable(GL_LIGHTING); //Activo la iluminación.
+            beethoven.dibujarCarasIluminacionPlana(plasticoVerde);
+            glDisable(GL_LIGHTING); //Desactivo la iluminación.
+
+        }
+
+        if(MODO==5){
+            glEnable(GL_LIGHTING);
+            beethoven.dibujarCarasIluminacionSuave(plasticoVerde);
+            glDisable(GL_LIGHTING);
+        }
+
+    if(MODO==4 || MODO==5){
 
     //Cono de light 0
-
     glPushMatrix();
      glTranslated(8,0,0);
      glRotated(-90,0,0,1);
      cono.dibujarCaras("todo","solido",AMARILLO);
      cono.dibujarAristas("todo");
     glPopMatrix();
-
 
     //Cono de light 1
     glPushMatrix();
@@ -390,7 +495,135 @@ void draw_objects()
      cono.dibujarCaras("todo","solido",AMARILLO);
      cono.dibujarAristas("todo");
     glPopMatrix();
+
     }
+
+    }
+
+
+
+    if(EJERCICIO==2){ // ## Lata CocaCola y peones con distintos materiales con una luz ## //
+
+
+        /*
+
+        //ejemploCubo.dibujarTextura(texName);
+        ejemploCubo.dibujarTextura(texturaMadera);
+        //ejemploCubo.muestraCoordenadasTextura();
+
+        glPushMatrix();
+            glTranslated(3,0,0);
+            peonA.dibujarVertices("todo");
+            peonA.dibujarAristas("todo");
+        glPopMatrix();
+
+        */
+
+        /*
+        if(MODO==4){
+            glEnable(GL_LIGHTING); //Activo la iluminación.
+            glPushMatrix();
+                glScaled(4,4,4);
+                //cuerpoLata.dibujarCarasIluminacionPlana(plasticoRojo);
+                peonB.dibujarCarasIluminacionPlana(plasticoVerde);
+                //peonB.dibujarNormales();
+            glPopMatrix();
+            glDisable(GL_LIGHTING); //Desactivo la iluminación.
+
+        }
+        */
+
+    /*
+    if(MODO==4 || MODO==5){
+
+    //Cono de light 1
+    glPushMatrix();
+     glRotated(gradoCono,1,0,0);
+     glTranslated(0,8,0);
+     cono.dibujarCaras("todo","solido",AMARILLO);
+     cono.dibujarAristas("todo");
+    glPopMatrix();
+
+    } */
+
+
+
+      glEnable(GL_LIGHTING);
+
+        //Para que la textura se combine con el color del objeto
+      //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
+
+         //Lata (con sus tres partes):
+         glPushMatrix();
+            glScaled(2,2,2);
+            //glTranslated(0,2,0);
+            //cuerpoLata.dibujarPerfil();
+            cuerpoLata.dibujarCarasIluminacionPlana(plasticoVerde);
+            //cuerpoLata.dibujarNormales();
+            //cuerpoLata.dibujarTextura(texturaLata);
+
+            //cuerpoLata.dibujarNormales();
+            //bocaLata.dibujarPerfil();
+            //bocaLata.dibujarAristas("todo");
+            //bocaLata.dibujarCaras("todo","solido", ROJO);
+
+            //bocaLata.dibujarCarasIluminacionPlana(chrome);
+
+            //culoLata.dibujarPerfil();
+            //culoLata.dibujarAristas("todo");
+            //culoLata.dibujarCaras("todo","solido", ROJO);
+
+            //culoLata.dibujarCarasIluminacionPlana(chrome);
+
+            //culoLata.dibujarNormales();
+        glPopMatrix();
+
+
+
+
+        glPushMatrix();
+            glTranslated(3,2,0);
+            //peonA.dibujarPerfil();
+            //peonA.dibujarNormales();
+            //peonA.dibujarAristas("todo");
+            //peonA.dibujarTextura(texturaMadera);
+            peonA.dibujarCarasIluminacionPlana(plasticoAmarillo);
+            //peonA.dibujarNormales();
+        glPopMatrix();
+
+        glPushMatrix();
+            glTranslated(6,2,0);
+            //peonB.dibujarPerfil();
+            peonB.dibujarCarasIluminacionPlana(plasticoVerde);
+        glPopMatrix();
+
+        glPushMatrix();
+            glTranslated(9,2,0);
+            //peonC.dibujarPerfil();
+            peonC.dibujarCarasIluminacionPlana(plasticoRojo);
+        glPopMatrix();
+
+
+        glDisable(GL_LIGHTING);
+
+
+
+
+
+    }
+
+    if(EJERCICIO==3){ // ## Cubo en el que se aplica una imagen con un texto. ## //
+
+    }
+
+    if(EJERCICIO==4){ /* ## Escena práctica 3 con iluminación superior rotatoria e iluminación en faros del curiosity.
+                            Además de una imagen de tierra en el suelo o de un mosaico con todas las imágenes. ## */
+
+    }
+
+
+
+    //Independientemente del modo de visualización los conos siempre se ven    }
 
 
     // ## APLICACIÓN DE TEXTURA ## //
@@ -401,7 +634,7 @@ void draw_objects()
    //glEnable(GL_TEXTURE_2D);
    //
 
-
+    /*
    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texName);
@@ -425,6 +658,8 @@ void draw_objects()
    glDisable(GL_TEXTURE_2D);
 
 
+
+    */
 
 
 
@@ -526,13 +761,31 @@ void draw_objects()
 
     // ## FIN APLICACIÓN DE TEXTURA ## //
 
-    perfilSinTapasPrueba.dibujar();
+    //perfilSinTapasPrueba.dibujar();
+
+
     //perfilSinTapasPrueba.muestraVertices();
 
-    ejemploCubo.dibujarCaras("todo","solido",VERDE);
-    ejemploCubo.dibujarAristas("todo");
+   // ejemploCubo.dibujarCaras("todo","solido",VERDE);
+    //ejemploCubo.dibujarAristas("todo");
+
+    //ejemploCubo.dibujarTextura();
+    //ejemploCubo.dibujarNormales();
+
+   // peon.dibujarCaras("todo","solido",ROJO);
+   // peon.dibujarAristas("todo");
+   // peon.dibujarNormales();
+
+
+
+
+    //ejemploCubo.muestraCaras();
+
+   // ejemploCubo.muestraCoordenadasTextura();
+
     //cout << ejemploCubo.numeroCaras();
     //cout << ejemploCubo.numeroVertices();
+
 
 
 }
@@ -579,6 +832,112 @@ glutPostRedisplay();
 }
 
 
+
+void ajusteEscena(int escena){
+
+    //Parámetros de iluminación, son los tres colores más el canal alfa.
+    GLfloat luzAmbiente[4];
+    GLfloat luzDifusa[4];
+    GLfloat luzEspecular[4];
+
+    //Parámetros de posición de luces:
+
+
+    if(escena==1){
+
+        glClearColor(0,0,0,1); //Fondo blanco
+
+
+
+        //Especificamos las características de las luces:
+        luzAmbiente={1, 1, 1, 1.0};
+        luzDifusa={1, 1, 1, 1.0};
+        luzEspecular={0, 0, 0, 1.0};
+
+
+        //Aplicamos las tres componentes a la luz número 0
+        glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+        glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
+
+        //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
+        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+
+        //Activamos dos luces:
+
+        //Activamos la luz 0 (DERECHA FIJA)
+        glEnable(GL_LIGHT0);
+        //Activamos la luz 1 (SUPERIOR ROTATORIA)
+        glEnable(GL_LIGHT1);
+
+/*
+
+        const GLfloat posicionLuzLocal1[]={8.0, 0.0, 0.0, 1.0};
+
+       //Cono de light 1
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+            glLoadIdentity();
+
+            glTranslatef(0,0,-Observer_distance);
+            glRotatef(Observer_angle_x,1,0,0);
+            glRotatef(Observer_angle_y,0,1,0);
+
+            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal1);
+        glPopMatrix();
+
+
+        const GLfloat posicionLuzLocal2[]={0.0, 8.0, 0.0, 1.0};
+
+       //Cono de light 2
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+            glLoadIdentity();
+
+
+            glTranslatef(0,0,-Observer_distance);
+            glRotatef(Observer_angle_x,1,0,0);
+            glRotatef(Observer_angle_y,0,1,0);
+
+            glRotated(gradoCono,1,0,0);
+
+            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
+        glPopMatrix();
+
+*/
+
+    }
+
+
+    if(escena==2){
+
+        glClearColor(0,0,0,1); //Fondo blanco
+
+        //Especificamos las características de las luces:
+        luzAmbiente={1, 1, 1, 1.0};
+        luzDifusa={1, 1, 1, 1.0};
+        luzEspecular={0, 0, 0, 1.0};
+
+
+
+        //Aplicamos las tres componentes a la luz número 0
+        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+
+        //Activamos una sola luz general:
+
+        glDisable(GL_LIGHT0);
+        glEnable(GL_LIGHT1);
+
+    }
+
+
+}
+
+
 //***************************************************************************
 // Funcion llamada cuando se pulsa sobre una tecla normal
 //
@@ -590,57 +949,46 @@ glutPostRedisplay();
 
 void normal_keys(unsigned char Tecla1,int x,int y){
 
+//## CONTROL DE INTERACCIÓN POR TECLADO ##//
+
+
 //Para salir del programa:
 if(toupper(Tecla1)=='Q') exit(0);
 
-/*Cada vez que se presiona una tecla se modifica algunad de las variables globales
-y se llama a draw_scene(); que llama a draw_objects(); donde segun el estado
-de esas variables se dibujará una cosa u otra.
-*/
+//Control del ejercicio seleccionado:
+//## 1: Beethoven para iluminacion (plana/suave) con dos focos, uno giratorio y otro fijo.
+if(toupper(Tecla1)=='1'){EJERCICIO=1; ajusteEscena(1); draw_scene(); cout << "Seleccionada escena 1:  Beethoven con dos focos" << endl;}
+//## 2: EJERCICIO CENTRAL--> Lata más tres peones.
+if(toupper(Tecla1)=='2'){EJERCICIO=2; ajusteEscena(2); draw_scene(); cout << "Seleccionada escena 2:  Lata más tres peones de distintos materiales" << endl;}
 
 
 
-if (toupper(Tecla1)=='1') {curiosity.brazo.girarPositivo("brazo1");curiosity.brazo.girarNegativo("brazo2"); animacion=false; draw_scene();};
-if (toupper(Tecla1)=='2') {curiosity.brazo.girarNegativo("brazo1");curiosity.brazo.girarPositivo("brazo2");draw_scene();};
-if(toupper(Tecla1)=='3'){curiosity.brazo.girarPositivo("brazo2");draw_scene();}
-if(toupper(Tecla1)=='4'){curiosity.brazo.girarNegativo("brazo2");draw_scene();}
-if(toupper(Tecla1)=='5'){curiosity.brazo.girarPositivo("brazo3"); draw_scene();}
-if(toupper(Tecla1)=='6'){curiosity.brazo.girarNegativo("brazo3"); draw_scene();}
-if(toupper(Tecla1)=='7'){curiosity.brazo.girarBasePositivo(); draw_scene();}
-if(toupper(Tecla1)=='8'){curiosity.brazo.girarBaseNegativo(); draw_scene();}
 
-
-//Ahora seleccionamos el modo, VERTICES, ALAMBRE O SÓLID y el especial de 4 colores del examen.
-//Para dibujar el modelo sólo los VERTICES.
+//Control del modo de VSUALIZACIÓN:
+//Para dibujar la escena con sólo los VERTICES.
 if(toupper(Tecla1)=='V'){MODO=1; draw_scene();}
-
-//Para dibujar el modelo sólo con ARISTAS.
+//Para dibujar la escena con sólo con ARISTAS.
 if(toupper(Tecla1)=='A'){MODO=2; draw_scene();}
-
-//Para dibujar el modelo sólo SÓLIDO
+//Para dibujar la escena en modo SÓLIDO
 if(toupper(Tecla1)=='S'){MODO=3; draw_scene();}
+//Para dibujar la escena en modo SÓLIDO con las normales disponibles dibujadas.
+if(toupper(Tecla1)=='N'){MODO=6; draw_scene();}
+//Para dibujar la escena en modo SÓLIDO con ILUMINACIÓN PLANA (CARAS)
+if(toupper(Tecla1)=='Z'){MODO=4; draw_scene();}
+//Para dibujar la escena en modo SÓLIDO con ILUMINACIÓN SUAVE (VÉRTICES)
+if(toupper(Tecla1)=='X'){MODO=5; draw_scene();}
 
-
-
-//Para el control del número de revoluciones ------------------------------------------------
-
-//Pulsar la tecla + aumenta el número y vuelve a dibujar
-if(Tecla1=='+'){
-    //###Aumentamos el número de revoluciones:
-    REVOLUCIONES++;
-
-        //Eliminamos el contenido de vertices y caras ya que hay que generarlos de nuevo:
-        for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].vaciaFigura();
-
-        //Volvemos a realizar la revolución en todas las figuras:
-        for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
-
-        //Llamamos a dibujar escena donde se decide que y como dibujar
-        draw_scene();
+//Activación de la animación:
+if(toupper(Tecla1)=='M'){
+    if(animacion==false)
+        animacion=true;
+    else if(animacion==true)
+        animacion=false;
+    draw_scene();
 }
-//Control de parámetros del rover
+
+//## Control MOVIMIENTO del Curiosity ##
+//Mov. adelante
 if(toupper(Tecla1)=='T'){
     //###Aumentamos el número de revoluciones:
    // GRADOS_RUEDA_DERECHA++;
@@ -654,7 +1002,7 @@ if(toupper(Tecla1)=='T'){
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
 }
-//Control de parámetros del rover
+//Mov. atrás
 if(toupper(Tecla1)=='G'){
     //###Aumentamos el número de revoluciones:
     //GRADOS_RUEDA_DERECHA--;
@@ -665,7 +1013,7 @@ if(toupper(Tecla1)=='G'){
 
     draw_scene();
 }
-//Control de parámetros del rover
+//Mov. giro derecha
 if(toupper(Tecla1)=='H'){
     //###Aumentamos el número de revoluciones:
  //   GRADOS_GIRO_ROVER--;
@@ -675,7 +1023,7 @@ if(toupper(Tecla1)=='H'){
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
 }
-//Control de parámetros del rover
+//Mov. giro izquierda
 if(toupper(Tecla1)=='F'){
     //###Aumentamos el número de revoluciones:
   //  GRADOS_GIRO_ROVER++;
@@ -686,62 +1034,17 @@ if(toupper(Tecla1)=='F'){
     draw_scene();
 }
 
-//Pulsar la tecla - reduce  el número y vuelve a dibujar
-if(Tecla1=='-'){
-    //###Disminuimos el número de revoluciones:
-    if(REVOLUCIONES>3){ //No permitiremos realizar el proceso con menos de tres revoluciones.
-        REVOLUCIONES--;
+//Control de brazo robótico del Curiosity
+if (toupper(Tecla1)=='Y') {curiosity.brazo.girarPositivo("brazo1");curiosity.brazo.girarNegativo("brazo2"); animacion=false; draw_scene();};
+if (toupper(Tecla1)=='U') {curiosity.brazo.girarNegativo("brazo1");curiosity.brazo.girarPositivo("brazo2");draw_scene();};
+if(toupper(Tecla1)=='I'){curiosity.brazo.girarPositivo("brazo2");draw_scene();}
+if(toupper(Tecla1)=='O'){curiosity.brazo.girarNegativo("brazo2");draw_scene();}
+if(toupper(Tecla1)=='P'){curiosity.brazo.girarPositivo("brazo3"); draw_scene();}
+if(toupper(Tecla1)=='J'){curiosity.brazo.girarNegativo("brazo3"); draw_scene();}
+if(toupper(Tecla1)=='K'){curiosity.brazo.girarBasePositivo(); draw_scene();}
+if(toupper(Tecla1)=='L'){curiosity.brazo.girarBaseNegativo(); draw_scene();}
 
-        //Eliminamos el contenido de vertices y caras ya que hay que generarlos de nuevo:
-        for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].vaciaFigura();
 
-        //Volvemos a realizar la revolución en todas las figuras:
-        for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
-
-        //Llamamos a dibujar escena donde se decide que y como dibujar
-        draw_scene();
-    }
-}
-
-//Pulsar la tecla * aumenta los grados de revolución hasta 360.0 de máximo
-if(Tecla1=='*'){
-
-    //if(GRADOS<=360.0){ //No permitiremos subir más de 360 grados
-      //  GRADOS++;
-
-        //Eliminamos el contenido de vertices y caras ya que hay que generarlos de nuevo:
-        for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].vaciaFigura();
-
-        //Volvemos a realizar la revolución en todas las figuras:
-        for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
-
-        //Llamamos a dibujar escena donde se decide que y como dibujar
-        draw_scene();
-    //}
-}
-
-//Pulsar la tecla _ reduce los grados de revolución hasta 0.0 de mínimo
-if(Tecla1=='_'){
-
-   // if(GRADOS>=0.0){ //No permitiremos bajar de 0 grados.
-     //   GRADOS--;
-
-        //Eliminamos el contenido de vertices y caras ya que hay que generarlos de nuevo:
-        for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].vaciaFigura();
-
-        //Volvemos a realizar la revolución en todas las figuras:
-        for(int i=0; i<NUM_FIGURAS; i++)
-            vectorFiguras[i].revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
-
-        //Llamamos a dibujar escena donde se decide que y como dibujar
-        draw_scene();
-    //}
-}
 
 }
 
@@ -811,10 +1114,12 @@ Observer_angle_y=0;
 // se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 // blanco=(1,1,1,1) rojo=(1,0,0,1), ...
 
-if(ejercicioTextura)
-    glClearColor(1,1,1,1); //Fondo blanco
+//if(ejercicioTextura)
+    //glClearColor(1,1,1,1); //Fondo blanco
 
-if(ejercicioBeethoven)
+//if(EJERCICIO==1)
+
+    //Para esta práctica el fondo de todos los escenarios será negro
     glClearColor(0,0,0,1); //Fondo negro
 
 // se habilita el z-bufer
@@ -839,10 +1144,15 @@ void idle(void){
 if(animacion){
         Sleep(50);
 
-        if(ejercicioBeethoven)
-            //Animamos el foco de luz superior
+        if(EJERCICIO==1){
+            //Animamos el foco de luz superior.
             gradoCono+=velocidadCono;
-        else{
+            //Giramos toda la escena hacia la derecha.
+            Observer_angle_y++;
+        }else if(EJERCICIO==2){
+            //Animamos el foco de luz superior.
+            gradoCono+=velocidadCono;
+        }else{
             curiosity.desplazaAdelante();
             curiosity.giraDerecha();
             curiosity.giraDerecha();
@@ -879,6 +1189,11 @@ if(animacion){
 
 int main(int argc, char **argv)
 {
+
+
+
+
+
 
 
         beethoven.leerFichero("beethoven.ply");
@@ -944,8 +1259,16 @@ int main(int argc, char **argv)
 
 
             ejemploCubo.cargarPerfil(perfilSinTapas);
-            ejemploCubo.revoluciona(4,0,360);
-            ejemploCubo.muestraVertices();
+            ejemploCubo.revoluciona(16,0,360);
+
+            //Cargo la textura
+            //ejemploCubo.cargarTextura("./text-lata-1.bmp");
+            //Genero las coordenadas de textura según la revolución que he realizado
+            //ejemploCubo.generaCoordenadasTextura(16,perfilSinTapas.size(),ejemploCubo.numeroVertices());
+            //peonA.generaCoordenadasTextura(16);
+
+
+            //ejemploCubo.muestraVertices();
 
 
         //Fin de pruebas
@@ -973,7 +1296,7 @@ int main(int argc, char **argv)
         vectorFiguras.push_back(figuraPerfilSinTapas);
 
     //Introducimos vertices a un perfil para que a partir de ellos e genere la figura
-    //vector<_vertex3f> perfil; //Es declarado globlal para poder ser usado en draw_objects()
+    //vector<_vertex3f> perfil; //Es declarado globlal para poder ser usado en draw_obdraw_objects()
 
     //Ojo, aquí se dan los perfiles por orden inverso a como se dibujarían. El primero dado es el de abajo y así hacia arriba. !!
     //perfil.push_back({0,-1,0});
@@ -993,10 +1316,45 @@ int main(int argc, char **argv)
     //puede variarse el número de revoluciones.
 
     //El perfil puede ser un fichero ply.
-      peon.cargarPerfil("perfil.ply");
-     // peon.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
+     // peon.cargarPerfil("perfil.ply");
+     // peon.revoluciona(16, 0, 360);
 
-      vectorFiguras.push_back(peon);
+    //Los peones de la ESCENA 2 de la PRÁCTICA 4
+
+      //Primer peón con textura de madera:
+      peonA.cargarPerfil("perfil.ply");
+      peonA.revoluciona(32,0,360);
+      peonA.generaCoordenadasTextura(32); /*En figuraRevolucionada.h*/
+
+      //Segundo peón sin textura. Material: puramente difuso, sin brillos especulares, de color blanco.
+      peonB.cargarPerfil("perfil.ply");
+      peonB.revoluciona(16,0,360);
+
+      //Tercer peón sin textura. Material: especular sin apenas reflectividad difusa, de color negro.
+      peonC.cargarPerfil("perfil.ply");
+      peonC.revoluciona(16,0,360);
+
+    //La lata de la ESCENA 2 de la PRÁCTICA 4
+
+      int numRevLata=32;
+      cuerpoLata.cargarPerfil("lata-pcue.ply");
+      cuerpoLata.revoluciona(numRevLata,0,360);
+      cuerpoLata.generaCoordenadasTextura(numRevLata);
+
+      culoLata.cargarPerfil("lata-pinf.ply");
+      culoLata.revoluciona(numRevLata,0,360);
+      //culoLata.generaCoordenadasTextura(numRevLata);
+
+      bocaLata.cargarPerfil("lata-psup.ply");
+      bocaLata.revoluciona(numRevLata,0,360);
+      //bocaLata.generaCoordenadasTextura(numRevLata);
+
+
+
+
+
+
+      //vectorFiguras.push_back(peon);
 
     //El perfil tb puede ser un vector de _vertex3f
 
@@ -1117,32 +1475,32 @@ int main(int argc, char **argv)
 
     //Los parámetros de la luz son los tres colores más el canal alfa.
 
-    const GLfloat luzAmbiente[]={1, 1, 1, 1.0};
-    const GLfloat luzDifusa[]={1, 1, 1, 1.0};
-    const GLfloat luzEspecular[]={0, 0, 0, 1.0};
+    //const GLfloat luzAmbiente[]={1, 1, 1, 1.0};
+    //const GLfloat luzDifusa[]={1, 1, 1, 1.0};
+    //const GLfloat luzEspecular[]={0, 0, 0, 1.0};
 
-
-    //Aplicamos la componente difusa a la luz número 0
+/*
+    //Aplicamos las tres componentes a la luz número 0
     glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
     glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
 
-    //Aplicamos la componente difusa a la luz número 1
+    //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
     glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
     glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
-
+*/
     //Establezo el tipo de iluminación plano
     glShadeModel(GL_FLAT);
 
     //Rectificamos el valor por defecto de la luz ambiente:
 
 
-    //Activamos la luz 0 (IZQUIERDA FIJA)
-    glEnable(GL_LIGHT0);
+    //Activamos la luz 0 (DERECHA FIJA)
+  //  glEnable(GL_LIGHT0);
 
     //Activamos la luz 1 (SUPERIOR ROTATORIA)
-    glEnable(GL_LIGHT1);
+   // glEnable(GL_LIGHT1);
 
     /*La operación de activación de iluminación general glEnable(GL_LIGHTING) y la posterior de desactivación glDisable(GL_LIGHTING)
     debe de hacerse sólo cuando se quiera dibujar un objeto al que queramos que se le aplique la iluminación. Así podremos tener
@@ -1157,7 +1515,9 @@ int main(int argc, char **argv)
 
     // ## TEXTURAS [INICIALIZACIÓN]## //
 
-    loadTextureFromFile( "./text-lata-1.bmp" );
+    //cargarTextura("./text-lata-1.bmp");
+    cargarTextura(texturaLata, "./text-lata-1.bmp");
+    cargarTextura(texturaMadera, "./text-madera.bmp");
 
         /*
         cout << "Proceso de imagen" << endl;
@@ -1216,6 +1576,11 @@ int main(int argc, char **argv)
 
     // funcion de inicialización
     initialize();
+
+
+
+
+
 
     // inicio del bucle de eventos
     glutIdleFunc(idle);

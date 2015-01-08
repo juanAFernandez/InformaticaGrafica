@@ -57,6 +57,156 @@ class figuraRevolucionada: public figuraSolida{
         */
         figuraRevolucionada(string nuevoNombre): figuraSolida(nuevoNombre){};
 
+
+
+        float distanciaEntreVertices(_vertex3f verticeA, _vertex3f verticeB){
+            return sqrt( ((verticeB.x-verticeA.x)*(verticeB.x-verticeA.x)) +  ((verticeB.y-verticeA.y)*(verticeB.y-verticeA.y))   );
+        }
+
+        vector<float> calculaDistancias(){
+
+            // ## Cálculo acumulado, nos es útil para el algoritmo posterior de calculo de texturas.
+            // ## Podrías haberse calculado sólo por secciones sin el acumulado.
+
+            //muestraPerfil();
+            float acumulado=0.0;
+            vector<float> distanciasTemporal;
+            for(int i=0; i<perfil.size()-1; i++){
+                acumulado+=distanciaEntreVertices(perfil[i],perfil[i+1]);
+                distanciasTemporal.push_back(acumulado);
+            }
+            return distanciasTemporal;
+        }
+
+        float reglaTresSimplificada(float valor, float max){
+            //Teniendo en cuenta que siempre se usa 1
+            return (valor/max);
+        }
+
+        vector<float> calculaDistanciasRelativas( vector <float> distancias){
+            /*Nuestro perfil está dividido en secciones de longitud variable que suman un total de la longitud total
+             del perfil, que será n. Pero en el calculo de las coordenadas de textura nos hace falta que mediante una
+             regla de tres estas distancias se ajusten como si la longitud del segmento fuera 1, ques como será la imagen
+             que se utilizará de textura. Por esto se debe de realizar esta transformación.
+            */
+            vector <float> distanciasRelativasTemporal;
+
+            for(int i=0; i<distancias.size(); i++)
+                distanciasRelativasTemporal.push_back(reglaTresSimplificada(distancias[i],distancias[distancias.size()-1]));
+
+            return distanciasRelativasTemporal;
+        }
+
+
+        void generaCoordenadasTextura(int numRevoluciones){
+
+
+            if(vertices.empty()){
+                cout << "El perfil aún no ha sido revolucionado" << endl;
+            }
+
+            if(cTs.empty()){
+
+            cout << endl << endl << "Generando coordenadas de TEXTURA" << endl;
+            cout << "Vertices en el vector de vértices: " << vertices.size() << endl;
+            cout << "Número de revoluciones: " << numRevoluciones << endl;
+            cout << "Número de vértices en el perfil: " << perfil.size() << endl;
+            //cout << "Generadas " << cTs.size() << "coordenadas";
+
+            //Calulamos la longitud de todos los vertices del pefil de forma acumulada, podría hacerse de otra manera
+            //pero así ahorramos operaciones después.
+            vector<float>distancias;
+            distancias=calculaDistancias();
+
+            cout << "Contenido de. vector distancias" << endl;
+            for(int i=0; i<distancias.size(); i++)
+                cout << "Longitud seccion: " << i << " : " << distancias[i] << endl;
+
+            //Una vez que tenemos las distancias acumuladas del perfil calculamos las distancias relativas:
+            vector<float>distanciasRelativas;
+            distanciasRelativas=calculaDistanciasRelativas(distancias);
+
+            cout << "Contenido de. vector distanciasRelativas" << endl;
+            for(int i=0; i<distanciasRelativas.size(); i++)
+                cout << "Longitud seccion: " << i << " : " << distanciasRelativas[i] << endl;
+
+
+           // --> ultimo!//Una vez calculadas las distancias pasamos a calcular las coordenadas de textura:
+            /* Debe de haber tantas coordenadas de textura como vértices en el vector de vértices para procesar
+            después el dibujado de la textura. Por tanto necesitaremos un vector que repita tantas veces como revoluciones
+            el vertices superior e inferior (tapas) del perfil en el caso de que los haya.*/
+
+            //Es por tanto probable que haya que volver a revolucionar el perfil para conseguir el objetivo.
+
+
+            //En esta segunda versión al no considerara tapas no vamos a necesitar modificar nada de nada!
+            float razon=(float)1/numRevoluciones;
+
+            //Inicializamos las primeras coordenadas de textura correspondientes al perfil inicial de nuestro modeo revolucionado.
+            cTs.push_back({1,0});
+            for(int i=0; i<perfil.size()-1; i++){
+                //El valor de X se mantiene constante a 1 durante todo el perfil.
+                //Es el valor de Y el que varía desde 0 hasta 1 siguiendo el vector de distancias relativas.
+                cTs.push_back({1,distanciasRelativas[i]});
+            }
+
+            //Por depuración para ver el estado después de inicializar el primer vértice de texturas:
+            //muestraCoordenadasTextura();
+
+            //Una vez inicializado el primer vértice en texturas se completa el resto:
+
+            float distancia=1.0;
+            for(int i=0; i<numRevoluciones; i++){
+                distancia-=razon;
+                //Rellenamos el perfil
+                for(int i=0; i<perfil.size()-1; i++){
+                    if(i==0)
+                        cTs.push_back({distancia,0});
+                    cTs.push_back({distancia,distanciasRelativas[i]});
+                }
+            }
+
+             //Por depuración para ver el estado después de añadir el resto de coor. de textura.
+             //muestraCoordenadasTextura();
+
+
+            }else{
+                cout << "Ya han sido calculadas" << endl;
+                muestraCoordenadasTextura();
+            }
+
+        }
+
+        void dibujarPerfil(){
+
+            //Dibujo de los vértices del perfil
+            glColor3fv(VERDE);
+            glPointSize(4);
+            glBegin(GL_POINTS);
+                    for(unsigned int i=0; i<perfil.size(); i++)
+                        glVertex3f(perfil[i].x,perfil[i].y,perfil[i].z);
+            glEnd();
+
+            //Dibujo de las aristas del perfil:
+            glColor3fv(GRIS_CLARO);
+            for(unsigned int i=0; i<perfil.size()-1; i++){
+                glBegin(GL_LINES);
+                    //Recordando que caras[0]._0 es: cara nº 0 vértice nº0
+                    glVertex3f(perfil[i].x, perfil[i].y ,perfil[i].z);
+                    glVertex3f(perfil[i+1].x, perfil[i+1].y ,perfil[i+1].z);
+                glEnd();
+            }
+
+
+        }
+
+
+
+
+
+
+
+
         /**
         * @brief Función para cargar el perfil a partir de un fichero .ply
         * @param nombreFichero El nombre dle fichero que vamos a usar.

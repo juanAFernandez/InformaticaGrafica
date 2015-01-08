@@ -28,23 +28,23 @@
 	<File name="figuraCargada.cc" open="0" top="0" tabpos="0">
 		<Cursor position="1468" topLine="0" />
 	</File>
-	<File name="figuraRevolucionada.cc" open="1" top="0" tabpos="7">
-		<Cursor position="6542" topLine="135" />
+	<File name="figuraRevolucionada.cc" open="1" top="0" tabpos="6">
+		<Cursor position="205" topLine="0" />
 	</File>
-	<File name="figuraRevolucionada.h" open="0" top="0" tabpos="0">
-		<Cursor position="4162" topLine="62" />
+	<File name="figuraRevolucionada.h" open="1" top="0" tabpos="5">
+		<Cursor position="8335" topLine="154" />
 	</File>
-	<File name="figuraSimple.cc" open="1" top="0" tabpos="4">
-		<Cursor position="106" topLine="0" />
+	<File name="figuraSimple.cc" open="0" top="0" tabpos="4">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="figuraSimple.h" open="1" top="0" tabpos="3">
-		<Cursor position="1350" topLine="21" />
+	<File name="figuraSimple.h" open="0" top="0" tabpos="3">
+		<Cursor position="585" topLine="48" />
 	</File>
-	<File name="figuraSolida.cc" open="1" top="0" tabpos="6">
-		<Cursor position="9041" topLine="23" />
+	<File name="figuraSolida.cc" open="1" top="0" tabpos="4">
+		<Cursor position="7797" topLine="17" />
 	</File>
-	<File name="figuraSolida.h" open="1" top="0" tabpos="5">
-		<Cursor position="695" topLine="60" />
+	<File name="figuraSolida.h" open="1" top="0" tabpos="2">
+		<Cursor position="2230" topLine="62" />
 	</File>
 	<File name="jconfig.h" open="0" top="0" tabpos="0">
 		<Cursor position="1668" topLine="24" />
@@ -68,24 +68,27 @@
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="main.cc" open="1" top="1" tabpos="1">
-		<Cursor position="25413" topLine="768" />
+		<Cursor position="23571" topLine="396" />
 	</File>
 	<File name="material.h" open="0" top="0" tabpos="0">
 		<Cursor position="176" topLine="0" />
 	</File>
-	<File name="materiales.h" open="0" top="0" tabpos="0">
+	<File name="materiales.h" open="1" top="0" tabpos="7">
 		<Cursor position="959" topLine="0" />
 	</File>
 	<File name="parametrosRover.h" open="0" top="0" tabpos="0">
-		<Cursor position="241" topLine="0" />
+		<Cursor position="627" topLine="0" />
 	</File>
 	<File name="perfil.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="18" topLine="0" />
 	</File>
-	<File name="perfil.h" open="1" top="0" tabpos="2">
-		<Cursor position="461" topLine="0" />
+	<File name="perfil.h" open="0" top="0" tabpos="2">
+		<Cursor position="463" topLine="12" />
 	</File>
-	<File name="rover.h" open="0" top="0" tabpos="0">
-		<Cursor position="0" topLine="182" />
+	<File name="variablesControl.h" open="1" top="0" tabpos="3">
+		<Cursor position="395" topLine="0" />
+	</File>
+	<File name="vertex.h" open="0" top="0" tabpos="4">
+		<Cursor position="973" topLine="38" />
 	</File>
 </CodeBlocks_layout_file>
