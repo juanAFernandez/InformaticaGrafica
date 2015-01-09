@@ -43,10 +43,10 @@ class Robot{
         */
 
 
-        void dibujarCubo(const GLfloat color[]);
-        void dibujarSemiCilindro(const GLfloat color[]);
+        void dibujarCubo(const GLfloat color[], material materialPasado);
+        void dibujarSemiCilindro(const GLfloat color[], material materialPasado);
         //Para examen:
-        void dibujarCilindro(const GLfloat color[]);
+        void dibujarCilindro(const GLfloat color[], material materialPasado);
 
         void dibujarSoporte();
         void dibujarBrazo(double medida);
@@ -119,10 +119,14 @@ Robot::Robot(){
         //Cargamos el perfil en la figura:
         semiCilindro.cargarPerfil(perfilCompleto);
         semiCilindro.revoluciona(8,0,180);
+        //Para iluminación:
+        semiCilindro.calculaNormalesCaras();
 
         //Para exmane:
         cilindro.cargarPerfil(perfilCompleto);
         cilindro.revoluciona(8,0,360);
+        //Para la iluminación:
+        cilindro.calculaNormalesCaras();
 
 
         //### CUBO ###
@@ -156,6 +160,9 @@ Robot::Robot(){
         cubo.setCaraManual(0,1,5);
         cubo.setCaraManual(0,5,4);
 
+        //Calculamos las normales de las caras del cubo para iluminación:
+        cubo.calculaNormalesCaras();
+
         //Inicialización de las variables de control:
         traslacion=0.0;
         gradosBrazo3=-30.0;
@@ -170,7 +177,9 @@ Robot::Robot(){
 
 }
 
-    void Robot::dibujarCubo(const GLfloat color[]){
+    void Robot::dibujarCubo(const GLfloat color[], material materialPasado){
+
+
             if(MODO==1) //Vertices
                 cubo.dibujarVertices("todo");
             if(MODO==2) //Aristas
@@ -179,9 +188,24 @@ Robot::Robot(){
                 cubo.dibujarCaras("todo","solido",color);
                 cubo.dibujarAristas("todo");
             }
-    }
+            if(MODO==4){//Modo sólido con ILUMINACIÓN PLANA
+                glEnable(GL_LIGHTING); //Activo la iluminación.
+                cubo.dibujarCarasIluminacionPlana(materialPasado);
+                glDisable(GL_LIGHTING); //Desactivo la iluminación.
+            }
+            if(MODO==5){//Modo sólido con ILUMINACIÓN SUAVE o de Gouraud
+                glEnable(GL_LIGHTING);
+                cubo.dibujarCarasIluminacionSuave(materialPasado);
+                glDisable(GL_LIGHTING);
+            }
+            if(MODO==6){ //Solido + Aristas + Normales
+                cubo.dibujarCaras("todo","solido",color);
+                cubo.dibujarAristas("todo");
+                cubo.dibujarNormales();
+            }
+        }
 
-        void Robot::dibujarCilindro(const GLfloat color[]){
+        void Robot::dibujarCilindro(const GLfloat color[], material materialPasado){
             if(MODO==1) //Vertices
                 cilindro.dibujarVertices("todo");
             if(MODO==2) //Aristas
@@ -190,9 +214,24 @@ Robot::Robot(){
                 cilindro.dibujarCaras("todo","solido",color);
                 cilindro.dibujarAristas("todo");
             }
+            if(MODO==4){//Modo sólido con ILUMINACIÓN PLANA
+                glEnable(GL_LIGHTING); //Activo la iluminación.
+                cilindro.dibujarCarasIluminacionPlana(materialPasado);
+                glDisable(GL_LIGHTING); //Desactivo la iluminación.
+            }
+            if(MODO==5){//Modo sólido con ILUMINACIÓN SUAVE o de Gouraud
+                glEnable(GL_LIGHTING);
+                cilindro.dibujarCarasIluminacionSuave(materialPasado);
+                glDisable(GL_LIGHTING);
+            }
+            if(MODO==6){ //Solido + Aristas + Normales
+                cilindro.dibujarCaras("todo","solido",color);
+                cilindro.dibujarAristas("todo");
+                cilindro.dibujarNormales();
+            }
         }
 
-        void Robot::dibujarSemiCilindro(const GLfloat color[]){
+        void Robot::dibujarSemiCilindro(const GLfloat color[], material materialPasado){
             if(MODO==1) //Vertices
                 semiCilindro.dibujarVertices("todo");
             if(MODO==2) //Aristas
@@ -201,8 +240,22 @@ Robot::Robot(){
                 semiCilindro.dibujarCaras("todo","solido",color);
                 semiCilindro.dibujarAristas("todo");
             }
+            if(MODO==4){//Modo sólido con ILUMINACIÓN PLANA
+                glEnable(GL_LIGHTING); //Activo la iluminación.
+                semiCilindro.dibujarCarasIluminacionPlana(materialPasado);
+                glDisable(GL_LIGHTING); //Desactivo la iluminación.
+            }
+            if(MODO==5){//Modo sólido con ILUMINACIÓN SUAVE o de Gouraud
+                glEnable(GL_LIGHTING);
+                semiCilindro.dibujarCarasIluminacionSuave(materialPasado);
+                glDisable(GL_LIGHTING);
+            }
+            if(MODO==6){ //Solido + Aristas + Normales
+                semiCilindro.dibujarCaras("todo","solido",color);
+                semiCilindro.dibujarAristas("todo");
+                semiCilindro.dibujarNormales();
+            }
         }
-
         void Robot::dibujarBeethoven(){
             if(MODO==1) //Vertices
                 beethoven.dibujarVertices("todo");
@@ -224,7 +277,7 @@ void Robot::dibujarSoporte(){
         glTranslated(0,-0.5,1);
         glScaled(2,2,1);
         glRotated(-90,1,0,0);
-        dibujarSemiCilindro(GRIS_OSCURO);
+        dibujarSemiCilindro(GRIS_OSCURO, silver);
     glPopMatrix();
 
     //Puente derecho:
@@ -232,20 +285,20 @@ void Robot::dibujarSoporte(){
         glTranslated(0,-0.5,-1);
         glScaled(2,2,1);
         glRotated(-90,1,0,0);
-        dibujarSemiCilindro(GRIS_OSCURO);
+        dibujarSemiCilindro(GRIS_OSCURO, silver);
     glPopMatrix();
 
     //Base circular
     glPushMatrix();
         glTranslated(0,-1,0);
         glScaled(3.8,1,3.8);
-        dibujarSemiCilindro(VERDE);
+        dibujarSemiCilindro(VERDE, plasticoVerde);
     glPopMatrix();
     glPushMatrix();
         glTranslated(0,-1,0);
         glScaled(3.8,1,3.8);
         glRotated(180,0,1,0);
-        dibujarSemiCilindro(VERDE);
+        dibujarSemiCilindro(VERDE, plasticoVerde);
     glPopMatrix();
 }
 
@@ -258,21 +311,21 @@ void Robot::dibujarBrazo(double medida){
     //Semiesfera izquierda del brazo:
     glPushMatrix();
         glRotated(-90,0,1,0);
-        dibujarSemiCilindro(GRIS_CLARO);
+        dibujarSemiCilindro(GRIS_CLARO, silver);
     glPopMatrix();
 
     //Sección central del brazo:
     glPushMatrix();
         glTranslated(razon/2,0,0);
         glScaled(razon,1,1);
-        dibujarCubo(AMARILLO);
+        dibujarCubo(AMARILLO, plasticoAmarillo);
     glPopMatrix();
 
     //Semiesfera derecha del brazo:
     glPushMatrix();
         glTranslated(razon,0,0);
         glRotated(90,0,1,0);
-        dibujarSemiCilindro(GRIS_CLARO);
+        dibujarSemiCilindro(GRIS_CLARO, silver);
     glPopMatrix();
 }
 
@@ -281,21 +334,21 @@ void Robot::dibujarSoldador(){
     //Primer semicirculo.
     glPushMatrix();
         glTranslated(0,0,-0.25);
-        dibujarSemiCilindro(ROJO);
+        dibujarSemiCilindro(ROJO, plasticoRojo);
     glPopMatrix();
 
     //Segundo semicirculo.
     glPushMatrix();
         glTranslated(0,0,0.25);
         glRotated(180,0,1,0);
-        dibujarSemiCilindro(ROJO);
+        dibujarSemiCilindro(ROJO, plasticoRojo);
     glPopMatrix();
 
     //Soldador.
     glPushMatrix();
         glScaled(1,1,0.5);
         glTranslated(soldar,0,0);
-        dibujarCubo(NARANJA);
+        dibujarCubo(NARANJA, plasticoRojo);
     glPopMatrix();
 
 }

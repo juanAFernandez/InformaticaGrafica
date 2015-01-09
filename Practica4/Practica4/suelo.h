@@ -1,6 +1,7 @@
 #ifndef SUELO
 #define SUELO
 #include "figuraCargada.h"
+#include "parametrosRover.h"
 //#include "colores.h"
 
 class suelo{
@@ -56,10 +57,7 @@ class suelo{
         */
         void dibujarSuelo(){
 
-
-
-                glScaled(10,0,10);
-
+                glScaled(10,1,10);
 
             //Sólido
             if(versionA){
@@ -81,15 +79,29 @@ class suelo{
                 glPushMatrix();
                     glTranslated(-0.5-i,-0.5,-0.5-j);
                     if(j%2==0){
-                        if(i%2==0)
-                            dibujarBloque(MARRON_CLARO);
-                        else
-                            dibujarBloque(MARRON_OSCURO);
+                        if(i%2==0){
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronClaro);
+                            else
+                                dibujarBloque(MARRON_CLARO);
+                            }
+                            else{
+                                if(MODO==4)
+                                    dibujarBloque(plasticoMarronOscuro);
+                                else
+                                    dibujarBloque(MARRON_OSCURO);
+                            }
                     }else{
                         if(i%2==0)
-                            dibujarBloque(MARRON_OSCURO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronOscuro);
+                            else
+                                dibujarBloque(MARRON_OSCURO);
                         else
-                            dibujarBloque(MARRON_CLARO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronClaro);
+                            else
+                                dibujarBloque(MARRON_CLARO);
                     }
 
                 glPopMatrix();
@@ -98,14 +110,26 @@ class suelo{
                     glTranslated(0.5+i,-0.5,-0.5-j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque(MARRON_OSCURO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronOscuro);
+                            else
+                                dibujarBloque(MARRON_OSCURO);
                         else
-                            dibujarBloque(MARRON_CLARO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronClaro);
+                            else
+                                dibujarBloque(MARRON_CLARO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque(MARRON_CLARO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronClaro);
+                            else
+                                dibujarBloque(MARRON_CLARO);
                         else
-                            dibujarBloque(MARRON_OSCURO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronOscuro);
+                            else
+                                dibujarBloque(MARRON_OSCURO);
                     }
                 glPopMatrix();
             }
@@ -116,28 +140,52 @@ class suelo{
                     glTranslated(-0.5-i,-0.5,0.5+j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque(MARRON_OSCURO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronOscuro);
+                            else
+                                dibujarBloque(MARRON_OSCURO);
                         else
-                            dibujarBloque(MARRON_CLARO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronClaro);
+                            else
+                                dibujarBloque(MARRON_CLARO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque(MARRON_CLARO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronClaro);
+                            else
+                                dibujarBloque(MARRON_CLARO);
                         else
-                            dibujarBloque(MARRON_OSCURO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronOscuro);
+                            else
+                                dibujarBloque(MARRON_OSCURO);
                     }
                 glPopMatrix();
                 glPushMatrix();
                     glTranslated(0.5+i,-0.5,0.5+j);
                     if(j%2==0){
                         if(i%2==0)
-                            dibujarBloque(MARRON_CLARO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronClaro);
+                            else
+                                dibujarBloque(MARRON_CLARO);
                         else
-                            dibujarBloque(MARRON_OSCURO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronOscuro);
+                            else
+                                dibujarBloque(MARRON_OSCURO);
                     }else{
                         if(i%2==0)
-                            dibujarBloque(MARRON_OSCURO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronOscuro);
+                            else
+                                dibujarBloque(MARRON_OSCURO);
                         else
-                            dibujarBloque(MARRON_CLARO);
+                            if(MODO==4)
+                                dibujarBloque(plasticoMarronClaro);
+                            else
+                                dibujarBloque(MARRON_CLARO);
                     }
                 glPopMatrix();
             }
@@ -153,9 +201,58 @@ class suelo{
         * @param color El color con el que se desea dibujar el bloque.
         */
         void dibujarBloque(const GLfloat color[]){
-            //cubo.prueba(*ROJO);
-            cubo.dibujarCaras("todo","solido",color);
-            //cubo.dibujarAristas("todo");
+            if(MODO==1) //Vertices
+                cubo.dibujarVertices("todo");
+            if(MODO==2) //Aristas
+                cubo.dibujarAristas("todo");
+            if(MODO==3){ //Solido
+                cubo.dibujarCaras("todo","solido",color);
+                cubo.dibujarAristas("todo");
+            }
+            if(MODO==4){//Modo sólido con ILUMINACIÓN PLANA
+                glEnable(GL_LIGHTING); //Activo la iluminación.
+                cubo.dibujarCarasIluminacionPlana(plasticoAmarillo);
+                glDisable(GL_LIGHTING); //Desactivo la iluminación.
+            }
+            if(MODO==5){//Modo sólido con ILUMINACIÓN SUAVE o de Gouraud
+                glEnable(GL_LIGHTING);
+                cubo.dibujarCarasIluminacionSuave(plasticoAmarillo);
+                glDisable(GL_LIGHTING);
+            }
+            if(MODO==6){ //Solido + Aristas + Normales
+                cubo.dibujarCaras("todo","solido",AMARILLO);
+                cubo.dibujarAristas("todo");
+                cubo.dibujarNormales();
+            }
+        }
+        /**
+        * @brief Para dibujar un único bloque.
+        * @param material Material del que se compone el suelo.
+        */
+        void dibujarBloque(material materialParaAplicar){
+            if(MODO==1) //Vertices
+                cubo.dibujarVertices("todo");
+            if(MODO==2) //Aristas
+                cubo.dibujarAristas("todo");
+            if(MODO==3){ //Solido
+                cubo.dibujarCaras("todo","solido",AMARILLO);
+                cubo.dibujarAristas("todo");
+            }
+            if(MODO==4){//Modo sólido con ILUMINACIÓN PLANA
+                glEnable(GL_LIGHTING); //Activo la iluminación.
+                cubo.dibujarCarasIluminacionPlana(materialParaAplicar);
+                glDisable(GL_LIGHTING); //Desactivo la iluminación.
+            }
+            if(MODO==5){//Modo sólido con ILUMINACIÓN SUAVE o de Gouraud
+                glEnable(GL_LIGHTING);
+                cubo.dibujarCarasIluminacionSuave(materialParaAplicar);
+                glDisable(GL_LIGHTING);
+            }
+            if(MODO==6){ //Solido + Aristas + Normales
+                cubo.dibujarCaras("todo","solido",AMARILLO);
+                cubo.dibujarAristas("todo");
+                cubo.dibujarNormales();
+            }
         }
 
 };

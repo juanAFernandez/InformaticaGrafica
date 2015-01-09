@@ -310,8 +310,8 @@ glRotatef(Observer_angle_y,0,1,0);
 
     }
 
-    if(EJERCICIO==2){
-         const GLfloat posicionLuzLocal2[]={0.0, 8.0, 0.0, 1.0};
+    if(EJERCICIO==2 || EJERCICIO==3){
+         const GLfloat posicionLuzLocal2[]={0.0, 16.0, 0.0, 1.0};
 
        //Cono de light 2 //MOVIL
         glMatrixMode(GL_MODELVIEW);
@@ -329,6 +329,25 @@ glRotatef(Observer_angle_y,0,1,0);
         glPopMatrix();
 
 
+    }
+
+    if(EJERCICIO==4){
+        const GLfloat posicionLuzLocal2[]={0.0, 32.0, 0.0, 1.0};
+
+       //Cono de light 2 //MOVIL
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+            glLoadIdentity();
+
+
+            glTranslatef(0,0,-Observer_distance);
+            glRotatef(Observer_angle_x,1,0,0);
+            glRotatef(Observer_angle_y,0,1,0);
+
+            //glRotated(gradoCono,1,0,0);
+
+            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
+        glPopMatrix();
     }
 }
 
@@ -424,20 +443,6 @@ void cargarTextura(GLuint &nombreTextura, char *filename){
 void draw_objects()
 {
 
-
-
-
-    //curiosity.dibujarRover();
-    //base.dibujarSuelo();
-
-
-    //cilindro.dibujarCaras("todo","solido",ROJO);
-   //cilindro.dibujarCarasIluminacionPlana(ROJO);
-    //cilindro.dibujarAristas("todo");
-    //cilindro.dibujarNormales();
-    //cilindro.dibujarNormalesVertices();
-
-
     if(EJERCICIO==1){ // ## Beethoven con dos luces ## //
 
 
@@ -463,6 +468,12 @@ void draw_objects()
             beethoven.dibujarAristas("todo");
             beethoven.dibujarNormales();
         }
+        //Mondo normales. Sólido, aristas más normales.
+        if(MODO==7){
+            beethoven.dibujarCaras("todo","solido",VERDE);
+            beethoven.dibujarAristas("todo");
+            beethoven.dibujarNormalesVertices();
+        }
 
         //Modo sólido con iluminación PLANA
         if(MODO==4){
@@ -478,6 +489,7 @@ void draw_objects()
             glDisable(GL_LIGHTING);
         }
 
+    //Si vemos la escena iluminada, dibujamos los "focos de luz":
     if(MODO==4 || MODO==5){
 
     //Cono de light 0
@@ -551,16 +563,18 @@ void draw_objects()
       glEnable(GL_LIGHTING);
 
         //Para que la textura se combine con el color del objeto
-      //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
+      //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL); --> se ve iluminada
+      glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
 
          //Lata (con sus tres partes):
          glPushMatrix();
             glScaled(2,2,2);
             //glTranslated(0,2,0);
             //cuerpoLata.dibujarPerfil();
-            cuerpoLata.dibujarCarasIluminacionPlana(plasticoVerde);
+            //cuerpoLata.dibujarCarasIluminacionPlana(plasticoBlanco);
             //cuerpoLata.dibujarNormales();
-            //cuerpoLata.dibujarTextura(texturaLata);
+            cuerpoLata.dibujarTextura(texturaLata);
+            //cuerpoLata.dibujarNormales();
 
             //cuerpoLata.dibujarNormales();
             //bocaLata.dibujarPerfil();
@@ -601,6 +615,7 @@ void draw_objects()
             glTranslated(9,2,0);
             //peonC.dibujarPerfil();
             peonC.dibujarCarasIluminacionPlana(plasticoRojo);
+            peonC.dibujarNormales();
         glPopMatrix();
 
 
@@ -614,177 +629,70 @@ void draw_objects()
 
     if(EJERCICIO==3){ // ## Cubo en el que se aplica una imagen con un texto. ## //
 
+        //Modo sólo vértices
+        if(MODO==1){
+            cubo.dibujarVertices("todo");
+        }
+        //Modo sólo aristas
+        if(MODO==2){
+            cubo.dibujarAristas("todo");
+        }
+        //Modo sólido. Sólido más aristas.
+        if(MODO==3){
+            cubo.dibujarCaras("todo","solido",VERDE);
+            cubo.dibujarAristas("todo");
+        }
+        //Modo sólido con iluminación PLANA
+        if(MODO==4){
+            glEnable(GL_LIGHTING); //Activo la iluminación.
+            cubo.dibujarCarasIluminacionPlana(plasticoVerde);
+            glDisable(GL_LIGHTING); //Desactivo la iluminación.
+        }
+        //Modo sólido con iluminación SUAVE
+        if(MODO==5){
+            glEnable(GL_LIGHTING);
+            cubo.dibujarCarasIluminacionSuave(plasticoVerde);
+            glDisable(GL_LIGHTING);
+        }
+        //Mondo normales. Sólido, aristas más normales.
+        if(MODO==6){
+            cubo.dibujarCaras("todo","solido",VERDE);
+            cubo.dibujarAristas("todo");
+            cubo.dibujarNormales();
+        }
+        //Mondo normales. Sólido, aristas más normales de los vértices
+        if(MODO==7){
+            cubo.dibujarCaras("todo","solido",VERDE);
+            cubo.dibujarAristas("todo");
+            cubo.dibujarNormalesVertices();
+        }
+        //Si vemos la escena iluminada, dibujamos los "focos de luz":
+        if(MODO==4 || MODO==5){
+            //Cono de light 1
+            glPushMatrix();
+                glRotated(gradoCono,1,0,0);
+                glTranslated(0,8,0);
+                cono.dibujarCaras("todo","solido",AMARILLO);
+                cono.dibujarAristas("todo");
+            glPopMatrix();
+
+        }
     }
 
-    if(EJERCICIO==4){ /* ## Escena práctica 3 con iluminación superior rotatoria e iluminación en faros del curiosity.
-                            Además de una imagen de tierra en el suelo o de un mosaico con todas las imágenes. ## */
+    if(EJERCICIO==4){
+    /* ## Escena práctica 3 con iluminación superior rotatoria e iluminación en faros del curiosity.
+    Además de una imagen de tierra en el suelo o de un mosaico con todas las imágenes. ## */
 
+        //glDisable(GL_LIGHTING);
+
+        glPushMatrix();
+            //base.dibujarSuelo();
+            curiosity.dibujarRover();
+            base.dibujarSuelo();
+        glPopMatrix();
     }
 
 
-
-    //Independientemente del modo de visualización los conos siempre se ven    }
-
-
-    // ## APLICACIÓN DE TEXTURA ## //
-
-    if(ejercicioTextura){
-
-   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   //glEnable(GL_TEXTURE_2D);
-   //
-
-    /*
-   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, texName);
-
-
-
-   glBegin(GL_QUADS);
-        glColor3f(1.0f,1.0f,1.0f); //cyan
-        // Front Face
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
-        glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
-        glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
-        glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
-
-
-
-    glEnd();
-
-
-   glFlush();
-   glDisable(GL_TEXTURE_2D);
-
-
-
-    */
-
-
-
-
-
-    // ## TEXTURAS [USO]## //
-
-    /*
-
-
-    //Carga la imagen:
-    FIBITMAP *bitmap = FreeImage_Load(FIF_BMP, "text-lata-1.bmp", BMP_DEFAULT);
-    if(bitmap){
-        cout << "Se hac caragado";
-    }
-
-
-    FIBITMAP *pImage = FreeImage_ConvertTo32Bits(bitmap);
-	unsigned width = FreeImage_GetWidth(bitmap);
-    unsigned height = FreeImage_GetHeight(bitmap);
-
-    cout << width << "x" << height << endl;
-
-
-    //makeCheckImage();
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-    glGenTextures(1, &texName);
-    glBindTexture(GL_TEXTURE_2D, texName);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)FreeImage_GetBits(pImage));
-
-    FreeImage_Unload(bitmap);
-
-   glEnable(GL_TEXTURE_2D);
-
-   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-
-   //Enlazado con la imagen para asociar a coordenadas:
-   glBindTexture(GL_TEXTURE_2D, texName);
-
-   glBegin(GL_QUADS);
-    glTexCoord2f(0.0, 0.0); glVertex3f(-2.0, -2.0, 0.0);
-    glTexCoord2f(0.0, 1.0); glVertex3f(-2.0, 2.0, 0.0);
-    glTexCoord2f(1.0, 1.0); glVertex3f(2.0, 2.0, 0.0);
-    glTexCoord2f(1.0, 0.0); glVertex3f(2.0, -2.0, 0.0);
-
-   glEnd();
-
-
-   glDisable(GL_TEXTURE_2D);
-
-    */
-
-    /*
-        makeCheckImage();
-    //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-    glGenTextures(1, &texName);
-    glBindTexture(GL_TEXTURE_2D, texName);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, checkImageWidth, checkImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
-
-
-
-   glEnable(GL_TEXTURE_2D);
-
-   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-
-   //Enlazado con la imagen para asociar a coordenadas:
-   glBindTexture(GL_TEXTURE_2D, texName);
-
-   glBegin(GL_QUADS);
-    glTexCoord2f(0.0, 0.0); glVertex3f(-2.0, -2.0, 0.0);
-    glTexCoord2f(0.0, 1.0); glVertex3f(-2.0, 2.0, 0.0);
-    glTexCoord2f(1.0, 1.0); glVertex3f(2.0, 2.0, 0.0);
-    glTexCoord2f(1.0, 0.0); glVertex3f(2.0, -2.0, 0.0);
-
-   glEnd();
-
-
-   glDisable(GL_TEXTURE_2D);
-
-    */
-
-
-
-
-    }
-
-    // ## FIN APLICACIÓN DE TEXTURA ## //
-
-    //perfilSinTapasPrueba.dibujar();
-
-
-    //perfilSinTapasPrueba.muestraVertices();
-
-   // ejemploCubo.dibujarCaras("todo","solido",VERDE);
-    //ejemploCubo.dibujarAristas("todo");
-
-    //ejemploCubo.dibujarTextura();
-    //ejemploCubo.dibujarNormales();
-
-   // peon.dibujarCaras("todo","solido",ROJO);
-   // peon.dibujarAristas("todo");
-   // peon.dibujarNormales();
-
-
-
-
-    //ejemploCubo.muestraCaras();
-
-   // ejemploCubo.muestraCoordenadasTextura();
-
-    //cout << ejemploCubo.numeroCaras();
-    //cout << ejemploCubo.numeroVertices();
 
 
 
@@ -934,7 +842,45 @@ void ajusteEscena(int escena){
 
     }
 
+    if(escena==3){
 
+
+        //Especificamos las características de las luces:
+        luzAmbiente={1, 1, 1, 1.0};
+        luzDifusa={1, 1, 1, 1.0};
+        luzEspecular={0, 0, 0, 1.0};
+
+        //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
+        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+
+
+        //Desactivamos toda iluminación
+        glDisable(GL_LIGHT0);
+        glEnable(GL_LIGHT1);
+    }
+
+    if(escena==4){
+
+        glClearColor(0,0,0,1); //Fondo blanco
+
+        luzAmbiente={1, 1, 1, 1.0};
+        luzDifusa={1, 1, 1, 1.0};
+        luzEspecular={0, 0, 0, 1.0};
+
+        //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
+        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+
+
+        glDisable(GL_LIGHT0);
+        //Activamos la luz 1 (SUPERIOR)
+        glEnable(GL_LIGHT1);
+        glEnable(GL_NORMALIZE);
+
+    }
 }
 
 
@@ -960,6 +906,10 @@ if(toupper(Tecla1)=='Q') exit(0);
 if(toupper(Tecla1)=='1'){EJERCICIO=1; ajusteEscena(1); draw_scene(); cout << "Seleccionada escena 1:  Beethoven con dos focos" << endl;}
 //## 2: EJERCICIO CENTRAL--> Lata más tres peones.
 if(toupper(Tecla1)=='2'){EJERCICIO=2; ajusteEscena(2); draw_scene(); cout << "Seleccionada escena 2:  Lata más tres peones de distintos materiales" << endl;}
+//## 3: EJERCICIO TRES--> Cubo con imagen texturizada a modo de dado.
+if(toupper(Tecla1)=='3'){EJERCICIO=3, ajusteEscena(3); draw_scene(); cout << "Seleccionada escena 3: Cubo con imagen texturizada simple" << endl;}
+//## 4: EJERCICIO CUATRO--> curiosity
+if(toupper(Tecla1)=='4'){EJERCICIO=4; ajusteEscena(4); draw_scene(); cout << "Seleccionada escena 4:  Rover Curiosity" << endl;}
 
 
 
@@ -971,8 +921,10 @@ if(toupper(Tecla1)=='V'){MODO=1; draw_scene();}
 if(toupper(Tecla1)=='A'){MODO=2; draw_scene();}
 //Para dibujar la escena en modo SÓLIDO
 if(toupper(Tecla1)=='S'){MODO=3; draw_scene();}
-//Para dibujar la escena en modo SÓLIDO con las normales disponibles dibujadas.
+//Para dibujar la escena en modo SÓLIDO con las normales de las caras dibujadas.
 if(toupper(Tecla1)=='N'){MODO=6; draw_scene();}
+//Para dibujar la escena en modo SÓLIDO con las normales de los vértices dibujadas.
+if(toupper(Tecla1)=='B'){MODO=7; draw_scene();}
 //Para dibujar la escena en modo SÓLIDO con ILUMINACIÓN PLANA (CARAS)
 if(toupper(Tecla1)=='Z'){MODO=4; draw_scene();}
 //Para dibujar la escena en modo SÓLIDO con ILUMINACIÓN SUAVE (VÉRTICES)
@@ -1124,6 +1076,8 @@ Observer_angle_y=0;
 
 // se habilita el z-bufer
 glEnable(GL_DEPTH_TEST);
+
+//glEnable(GL_NORMALIZE);
 change_projection();
 glViewport(0,0,UI_window_width,UI_window_height);
 }
@@ -1194,9 +1148,10 @@ int main(int argc, char **argv)
 
 
 
-
-
         beethoven.leerFichero("beethoven.ply");
+        //Al hacer lo anterior se cargan las caras y las normales de las caras pero no las de los vértices.
+        //Esas tenemos que calcularlas nosotros para la iluminación suave
+        beethoven.calculaNormalesVertices();
 
 
     //Definimos los perfiles para el examen dándoles vértices:
@@ -1259,7 +1214,8 @@ int main(int argc, char **argv)
 
 
             ejemploCubo.cargarPerfil(perfilSinTapas);
-            ejemploCubo.revoluciona(16,0,360);
+            ejemploCubo.revoluciona(4,0,360);
+
 
             //Cargo la textura
             //ejemploCubo.cargarTextura("./text-lata-1.bmp");
@@ -1402,24 +1358,32 @@ int main(int argc, char **argv)
     /*Al hacer esta operación estamos diciéndole que la cara 1 está compuesta
     por los vértices 0 1 y 2.
     */
+    //Cara delantera:
     cubo.setCaraManual(0,1,2);
-    //Seguimos definiendo el resto de las caras del cubo:
     cubo.setCaraManual(0,2,3);
 
+    //Cara derecha:
     cubo.setCaraManual(1,5,6);
     cubo.setCaraManual(1,6,2);
 
-    cubo.setCaraManual(4,5,7);
-    cubo.setCaraManual(5,6,7);
+    //Cara trasera:
+    cubo.setCaraManual(5,4,7);
+    cubo.setCaraManual(5,7,6);
 
-    cubo.setCaraManual(0,4,7);
-    cubo.setCaraManual(0,3,7);
+    //Cara izquierda:
+    cubo.setCaraManual(4,0,3);
+    cubo.setCaraManual(4,3,7);
 
-    cubo.setCaraManual(2,3,6);
+    //Cara superior
+    cubo.setCaraManual(3,2,6);
     cubo.setCaraManual(3,6,7);
 
-    cubo.setCaraManual(0,1,5);
-    cubo.setCaraManual(0,5,4);
+    //Cara inferior
+    cubo.setCaraManual(5,1,0);
+    cubo.setCaraManual(5,0,4);
+
+    cubo.calculaNormalesCaras();
+    cubo.calculaNormalesVertices();
 
 
     // ########################## FIN CUBO ##############################################

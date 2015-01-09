@@ -140,7 +140,7 @@ void figuraSolida::dibujarCarasIluminacionPlana(material materialParaAplicar){
 
             //Debemos de asegurarnos de que tanto el vector de normales como el de vértices tiene contenido.
 
-            if(normales.empty() && vertices.empty()){
+            if(normales.empty() || vertices.empty()){
                 cout << "##Error## No se puede dibujar con iluminación plana " << endl;
             }
 
@@ -158,6 +158,25 @@ void figuraSolida::dibujarCarasIluminacionPlana(material materialParaAplicar){
 }
 
 void figuraSolida::dibujarCarasIluminacionSuave(material materialParaAplicar){
+
+    if(normalesVertices.empty())
+        cout << "##Error## No se puede dibujar iluminación suave. Las normales de los vértices no han sido calculadas." << endl;
+
+    materialParaAplicar.activar();
+
+    //En la iluminación suave se da una normal por cada vértice:
+    glBegin(GL_TRIANGLES);
+        for(unsigned i=0; i<caras.size(); i++){
+            glNormal3f(normalesVertices[caras[i]._0].x, normalesVertices[caras[i]._0].y, normalesVertices[caras[i]._0].z);
+            glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
+            glNormal3f(normalesVertices[caras[i]._1].x, normalesVertices[caras[i]._1].y, normalesVertices[caras[i]._1].z);
+            glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
+            glNormal3f(normalesVertices[caras[i]._2].x, normalesVertices[caras[i]._2].y, normalesVertices[caras[i]._2].z);
+            glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+
+        }
+    glEnd();
+
 }
 
 void figuraSolida::dibujarAristas(string seccion){
@@ -277,7 +296,7 @@ void figuraSolida::calculaNormalesCaras(){
             _vertex3f ab,ac; //Vectores rsultantes de los puntos.
             _vertex3f normal; //Vector normal resultante del proceso.
 
-            float modulo; //Para la normalizción de la normal.
+           // float modulo; //Para la normalizción de la normal.
 
             //cout << endl << endl << " ### Procesamiento de normales ### " << endl;
 

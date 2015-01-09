@@ -2,6 +2,7 @@
 #define ROVER
 #include <math.h>
 //#include "colores.h"
+#include "materiales.h"
 #include "figuraCargada.h"
 #include "parametrosRover.h"
 //#include "v.h"
@@ -47,20 +48,20 @@ class rover{
             glPushMatrix();
                 glTranslated(5,16,-20);
                 glScaled(5,5,5);
-                dibujarCubo(ROJO);
+                dibujarCubo(ROJO, plasticoRojo);
             glPopMatrix();
             //Izquierdo:
             glPushMatrix();
                 glTranslated(-5,16,-20);
                 glScaled(5,5,5);
-                dibujarCubo(ROJO);
+                dibujarCubo(ROJO, plasticoRojo);
             glPopMatrix();
 
             //Parachoques trasero:
             glPushMatrix();
                 glTranslated(0,6,-25.5);
                 glScaled(20,1,1);
-                dibujarCubo(GRIS_OSCURO);
+                dibujarCubo(GRIS_OSCURO, silver);
             glPopMatrix();
 
             //Tanques de combustible:
@@ -70,7 +71,7 @@ class rover{
                 glTranslated(6,13,6);
                 glScaled(5,5,30);
                 glRotated(-90,1,0,0);
-                dibujarSemiCilindro(AZUL);
+                dibujarSemiCilindro(AZUL, plasticoAzul);
             glPopMatrix();
 
             //Derecho:
@@ -78,7 +79,7 @@ class rover{
                 glTranslated(-6,13,6);
                 glScaled(5,5,30);
                 glRotated(-90,1,0,0);
-                dibujarSemiCilindro(AZUL);
+                dibujarSemiCilindro(AZUL, plasticoAzul);
             glPopMatrix();
 
 
@@ -87,7 +88,7 @@ class rover{
                 glTranslated(0,22,-20);
                 glScaled(7,2.5,7);
                 glRotated(gradosRotacionCoche*10,0,1,0);
-                dibujarSemiCilindro(GRIS_CLARO);
+                dibujarSemiCilindro(GRIS_CLARO, silver);
             glPopMatrix();
 
 
@@ -96,7 +97,7 @@ class rover{
             glPushMatrix();
                 glTranslated(0,20,-20);
                 glScaled(1,10,1);
-                dibujarCilindro(GRIS_OSCURO);
+                dibujarCilindro(GRIS_OSCURO, silver);
             glPopMatrix();
 
 
@@ -104,7 +105,7 @@ class rover{
 
         void dibujarCuerpo(){
             //Cada vez que se dibuje de nuevo el cuerpo vamos a mostrar la directriz:
-            mostrarVerctorDireccion();
+            //mostrarVerctorDireccion();
 
             //Chasis metálico
             glPushMatrix();
@@ -112,7 +113,7 @@ class rover{
                glTranslated(0,9.5,0);
                dibujarRuedas();
                 //Dibujar chasis gris
-               dibujarChasis(GRIS_CLARO);
+               dibujarChasis(GRIS_CLARO, silver);
             glPopMatrix();
 
             //Brazo robótico:
@@ -129,19 +130,19 @@ class rover{
         }
 
         //El chasis se dibuja del mismo color:
-        void dibujarChasis(const GLfloat color[]){
+        void dibujarChasis(const GLfloat color[], material materialPasado){
 
             //Parte grande del chasis:
             glPushMatrix();
                 glScaled(20,8,50);
-                dibujarCubo(color);
+                dibujarCubo(color, materialPasado);
             glPopMatrix();
 
             //Delantera del chasis:
             glPushMatrix();
                 glTranslated(0,-2,29);
                 glScaled(20,4,8);
-                dibujarCubo(color);
+                dibujarCubo(color, materialPasado);
             glPopMatrix();
 
         }
@@ -183,6 +184,7 @@ class rover{
         }
 
         void dibujarRueda(){
+            glEnable(GL_NORMALIZE);
             int numRadios=10;
             double grados=360.0/numRadios;
             for(int i=0; i<numRadios; i++){
@@ -190,12 +192,18 @@ class rover{
                     glRotated(grados*i,1,0,0);
                     glTranslated(0,5.5,0);
                     glScaled(1,8,1);
-                    dibujarCubo(GRIS_OSCURO);
+                    glEnable(GL_NORMALIZE);
+                        dibujarCubo(GRIS_CLARO, silver);
+                    //glDisable(GL_NORMALIZE);
+                    glEnable(GL_NORMALIZE);
                 glPopMatrix();
             }
+            //glDisable(GL_NORMALIZE);
         }
 
-        void dibujarCubo(const GLfloat color[]){
+        void dibujarCubo(const GLfloat color[], material materialPasado){
+
+
             if(MODO==1) //Vertices
                 cubo.dibujarVertices("todo");
             if(MODO==2) //Aristas
@@ -204,9 +212,24 @@ class rover{
                 cubo.dibujarCaras("todo","solido",color);
                 cubo.dibujarAristas("todo");
             }
+            if(MODO==4){//Modo sólido con ILUMINACIÓN PLANA
+                glEnable(GL_LIGHTING); //Activo la iluminación.
+                cubo.dibujarCarasIluminacionPlana(materialPasado);
+                glDisable(GL_LIGHTING); //Desactivo la iluminación.
+            }
+            if(MODO==5){//Modo sólido con ILUMINACIÓN SUAVE o de Gouraud
+                glEnable(GL_LIGHTING);
+                cubo.dibujarCarasIluminacionSuave(materialPasado);
+                glDisable(GL_LIGHTING);
+            }
+            if(MODO==6){ //Solido + Aristas + Normales
+                cubo.dibujarCaras("todo","solido",color);
+                cubo.dibujarAristas("todo");
+                cubo.dibujarNormales();
+            }
         }
 
-        void dibujarCilindro(const GLfloat color[]){
+        void dibujarCilindro(const GLfloat color[], material materialPasado){
             if(MODO==1) //Vertices
                 cilindro.dibujarVertices("todo");
             if(MODO==2) //Aristas
@@ -215,9 +238,24 @@ class rover{
                 cilindro.dibujarCaras("todo","solido",color);
                 cilindro.dibujarAristas("todo");
             }
+            if(MODO==4){//Modo sólido con ILUMINACIÓN PLANA
+                glEnable(GL_LIGHTING); //Activo la iluminación.
+                cilindro.dibujarCarasIluminacionPlana(materialPasado);
+                glDisable(GL_LIGHTING); //Desactivo la iluminación.
+            }
+            if(MODO==5){//Modo sólido con ILUMINACIÓN SUAVE o de Gouraud
+                glEnable(GL_LIGHTING);
+                cilindro.dibujarCarasIluminacionSuave(materialPasado);
+                glDisable(GL_LIGHTING);
+            }
+            if(MODO==6){ //Solido + Aristas + Normales
+                cilindro.dibujarCaras("todo","solido",color);
+                cilindro.dibujarAristas("todo");
+                cilindro.dibujarNormales();
+            }
         }
 
-        void dibujarSemiCilindro(const GLfloat color[]){
+        void dibujarSemiCilindro(const GLfloat color[], material materialPasado){
             if(MODO==1) //Vertices
                 semiCilindro.dibujarVertices("todo");
             if(MODO==2) //Aristas
@@ -225,6 +263,21 @@ class rover{
             if(MODO==3){ //Solido
                 semiCilindro.dibujarCaras("todo","solido",color);
                 semiCilindro.dibujarAristas("todo");
+            }
+            if(MODO==4){//Modo sólido con ILUMINACIÓN PLANA
+                glEnable(GL_LIGHTING); //Activo la iluminación.
+                semiCilindro.dibujarCarasIluminacionPlana(materialPasado);
+                glDisable(GL_LIGHTING); //Desactivo la iluminación.
+            }
+            if(MODO==5){//Modo sólido con ILUMINACIÓN SUAVE o de Gouraud
+                glEnable(GL_LIGHTING);
+                semiCilindro.dibujarCarasIluminacionSuave(materialPasado);
+                glDisable(GL_LIGHTING);
+            }
+            if(MODO==6){ //Solido + Aristas + Normales
+                semiCilindro.dibujarCaras("todo","solido",color);
+                semiCilindro.dibujarAristas("todo");
+                semiCilindro.dibujarNormales();
             }
         }
 
@@ -255,9 +308,12 @@ class rover{
 
             //Cargamos el modelo del cubo desde un fichero ply
             cubo.leerFichero("cubo.ply");
-            cubo.setNombre("cubo");
+            cubo.setNombre("cuboPrimitivo para Curiosity");
             //Calculamos las normales de las caras:
             cubo.calculaNormalesCaras();
+            //Depuracion: mostramos las normales por terminal:
+            cubo.muestraNormales();
+
             //Cargamos la normal directriz de rover a partir de la normal del frontal del cubo que forma el chasis
             vectorDireccion=cubo.getNormal(0);
 
@@ -288,6 +344,7 @@ class rover{
         //Función para dibujar el rover completo.
         void dibujarRover(){
 
+            //cout << "Dibujando rover " << endl;
 
             //cout << "baricentro x:" << baricentro.x  << " y: " << baricentro.y << " z: " << baricentro.z << endl;
 
