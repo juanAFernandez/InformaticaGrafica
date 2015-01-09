@@ -97,8 +97,28 @@ class figuraRevolucionada: public figuraSolida{
             return distanciasRelativasTemporal;
         }
 
+        int numeroCoordenadasTextura(){return cTs.size();}
 
         void generaCoordenadasTextura(int numRevoluciones){
+
+
+            //Prueba:
+
+                bool tapaSuperior=false;
+                bool tapaInferior=false;
+
+                //Si hay tapa inferior:
+                if( (perfil[0].x==0) && (perfil[0].z==0) ){
+                    tapaInferior=true;
+                    //cout << "hay supertapa inferior!!!!";
+                }
+
+                if( (perfil[perfil.size()-1].x==0) && (perfil[perfil.size()-1].z==0) ){
+                    tapaSuperior=true;
+                    cout << "Hay supertapa superior!!!";
+                }
+
+            //
 
 
             if(vertices.empty()){
@@ -143,12 +163,19 @@ class figuraRevolucionada: public figuraSolida{
             float razon=(float)1/numRevoluciones;
 
             //Inicializamos las primeras coordenadas de textura correspondientes al perfil inicial de nuestro modeo revolucionado.
-            cTs.push_back({1,0});
+            if(!tapaInferior)
+                cTs.push_back({1,0});
             for(int i=0; i<perfil.size()-1; i++){
                 //El valor de X se mantiene constante a 1 durante todo el perfil.
                 //Es el valor de Y el que varía desde 0 hasta 1 siguiendo el vector de distancias relativas.
-                cTs.push_back({1,distanciasRelativas[i]});
-            }
+                    cTs.push_back({1,distanciasRelativas[i]});
+                }
+
+            if(tapaSuperior)
+                //Eliminamos la última entrada:
+                cTs.pop_back();
+            cout << "Se inicializa primeras coordenadas de textura: " << nombreFigura << " : "<< cTs.size() << endl;
+            //muestraCoordenadasTextura();
 
             //Por depuración para ver el estado después de inicializar el primer vértice de texturas:
             //muestraCoordenadasTextura();
@@ -161,12 +188,25 @@ class figuraRevolucionada: public figuraSolida{
                 //Rellenamos el perfil
                 for(int i=0; i<perfil.size()-1; i++){
                     if(i==0)
-                        cTs.push_back({distancia,0});
+                        if(!tapaInferior)
+                            cTs.push_back({distancia,0});
                     cTs.push_back({distancia,distanciasRelativas[i]});
                 }
+                if(tapaSuperior)
+                    cTs.pop_back();
             }
 
              //Por depuración para ver el estado después de añadir el resto de coor. de textura.
+             cout << "REPETIDO EL PROCESO" << endl;
+
+
+             //Después de todo si hubiera tapas se añaden sus coordenadas al final:
+
+             if(tapaInferior)
+                cTs.push_back({0.5,0});
+             if(tapaSuperior)
+                cTs.push_back({0.5,1});
+
              //muestraCoordenadasTextura();
 
 
@@ -230,6 +270,16 @@ class figuraRevolucionada: public figuraSolida{
         * @param numRev Número de revoluciones con las que queremos formar nuestro objeto a partir del perfil.
         */
         void revoluciona(int numRev, float gradosInicial, float gradosFinal);
+
+
+
+        //Versión muy simplificada del algoritmo de revolucion.
+        void revolucionaParaTextura(int numRev){
+
+
+        }
+
+
 
         /**
         * @brief Función que vacía los vectores de contenido generado, todo (caras, vértices, normales de caras y de vértices y baricentros)

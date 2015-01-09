@@ -61,6 +61,7 @@ static GLubyte checkImage[checkImageHeight][checkImageWidth][4];
 
 static GLuint texturaLata;
 static GLuint texturaMadera;
+static GLuint texturaIG;
 
 static GLuint identificadorImagen;
 
@@ -177,7 +178,7 @@ de la que se encargará un función independiente.
 
     vector <figuraRevolucionada> vectorFiguras;
 
-    figuraRevolucionada figuraPerfilCompleto("h");
+    figuraRevolucionada figuraPerfilCompleto("figuraPerfilCompleto");
     figuraRevolucionada figuraPerfilParcialSinTapaArriba("a");
     figuraRevolucionada figuraPerfilParcialSinTapaAbajo("b");
     figuraRevolucionada figuraPerfilSinTapas("c");
@@ -348,6 +349,24 @@ glRotatef(Observer_angle_y,0,1,0);
 
             glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
         glPopMatrix();
+
+
+        const GLfloat posicionLuzLocal1[]={0.0, 7.5, 50, 1.0};
+
+       //Cono de light 2 //MOVIL
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+            glLoadIdentity();
+
+
+            glTranslatef(0,0,-Observer_distance);
+            glRotatef(Observer_angle_x,1,0,0);
+            glRotatef(Observer_angle_y,0,1,0);
+
+            //glRotated(gradoCono,1,0,0);
+
+            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal1);
+        glPopMatrix();
     }
 }
 
@@ -445,34 +464,43 @@ void draw_objects()
 
     if(EJERCICIO==1){ // ## Beethoven con dos luces ## //
 
+        //Examen:
 
         //Modo sólo vértices
         if(MODO==1){
-            beethoven.dibujarVertices("todo");
+            figuraPerfilCompleto.dibujarVertices("todo");
         }
 
         //Modo sólo aristas
         if(MODO==2){
-            beethoven.dibujarAristas("todo");
+            figuraPerfilCompleto.dibujarAristas("todo");
         }
 
         //Modo sólido. Sólido más aristas.
         if(MODO==3){
-            beethoven.dibujarCaras("todo","solido",VERDE);
-            beethoven.dibujarAristas("todo");
+            //figuraPerfilSinTapas.dibujarCaras("todo","solido",VERDE);
+            //figuraPerfilSinTapas.dibujarAristas("todo");
+            glEnable(GL_LIGHTING);
+
+                //figuraPerfilCompleto.dibujarCaras("todo","solido",BLANCO);
+                cout << figuraPerfilCompleto.numeroVertices();
+                cout << figuraPerfilCompleto.numeroCoordenadasTextura();
+                cout << figuraPerfilCompleto.numeroCaras();
+                figuraPerfilCompleto.dibujarTextura(texturaLata);
+            glDisable(GL_LIGHTING);
         }
 
         //Mondo normales. Sólido, aristas más normales.
         if(MODO==6){
-            beethoven.dibujarCaras("todo","solido",VERDE);
-            beethoven.dibujarAristas("todo");
-            beethoven.dibujarNormales();
+            figuraPerfilCompleto.dibujarCaras("todo","solido",VERDE);
+            figuraPerfilCompleto.dibujarAristas("todo");
+            figuraPerfilCompleto.dibujarNormales();
         }
         //Mondo normales. Sólido, aristas más normales.
         if(MODO==7){
-            beethoven.dibujarCaras("todo","solido",VERDE);
-            beethoven.dibujarAristas("todo");
-            beethoven.dibujarNormalesVertices();
+            figuraPerfilCompleto.dibujarCaras("todo","solido",VERDE);
+            figuraPerfilCompleto.dibujarAristas("todo");
+            figuraPerfilCompleto.dibujarNormalesVertices();
         }
 
         //Modo sólido con iluminación PLANA
@@ -485,12 +513,12 @@ void draw_objects()
 
         if(MODO==5){
             glEnable(GL_LIGHTING);
-            beethoven.dibujarCarasIluminacionSuave(plasticoVerde);
+            figuraPerfilCompleto.dibujarCarasIluminacionSuave(plasticoVerde);
             glDisable(GL_LIGHTING);
         }
 
     //Si vemos la escena iluminada, dibujamos los "focos de luz":
-    if(MODO==4 || MODO==5){
+    if(MODO==4 || MODO==5 ||MODO==3){
 
     //Cono de light 0
     glPushMatrix();
@@ -629,6 +657,38 @@ void draw_objects()
 
     if(EJERCICIO==3){ // ## Cubo en el que se aplica una imagen con un texto. ## //
 
+
+        //Dibujamos una pantalla con la imagen:
+        glDisable(GL_LIGHTING);
+
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, texturaIG);
+
+        glBegin(GL_QUADS);
+        glColor3f(1.0f,1.0f,1.0f);
+
+            glTexCoord2f(0,0);
+            glVertex3f(-5,0,-5);
+
+            glTexCoord2f(1,0);
+            glVertex3f(5,0,-5);
+
+            glTexCoord2f(1,1);
+            glVertex3f(5,5,-5);
+
+            glTexCoord2f(0,1);
+            glVertex3f(-5,5,-5);
+
+
+
+        glEnd();
+
+
+        glFlush();
+        glDisable(GL_TEXTURE_2D);
+
+
+
         //Modo sólo vértices
         if(MODO==1){
             cubo.dibujarVertices("todo");
@@ -639,8 +699,106 @@ void draw_objects()
         }
         //Modo sólido. Sólido más aristas.
         if(MODO==3){
-            cubo.dibujarCaras("todo","solido",VERDE);
-            cubo.dibujarAristas("todo");
+            //cubo.dibujarCaras("todo","solido",VERDE);
+            //cubo.dibujarAristas("todo");
+            //cubo.dibujarTextura(texturaIG);
+
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, texturaMadera);
+            glColor3f(1.0f,1.0f,1.0f);
+
+            //DANDO LAS COORDENADAS DE TEXTURA DE UN CUBO A MANO DE FORMA MUY ESPECÍFICA
+
+            int a,b,c,d;
+
+            //Cara A:
+            a=0;b=1;c=2;d=3;
+            glBegin(GL_QUADS);
+                glTexCoord2f(0,0.33);
+                glVertex3f(cubo.getVertice(a).x, cubo.getVertice(a).y, cubo.getVertice(a).z );
+                glTexCoord2f(0.25,0.33);
+                glVertex3f(cubo.getVertice(b).x, cubo.getVertice(b).y, cubo.getVertice(b).z );
+                glTexCoord2f(0.25,0.66);
+                glVertex3f(cubo.getVertice(c).x, cubo.getVertice(c).y, cubo.getVertice(c).z );
+                glTexCoord2f(0,0.66);
+                glVertex3f(cubo.getVertice(d).x, cubo.getVertice(d).y, cubo.getVertice(d).z );
+            glEnd();
+
+            //Cara B:
+            a=1;b=5;c=6;d=2;
+            glBegin(GL_QUADS);
+                glTexCoord2f(0.25,0.33);
+                glVertex3f(cubo.getVertice(a).x, cubo.getVertice(a).y, cubo.getVertice(a).z );
+                glTexCoord2f(0.50,0.33);
+                glVertex3f(cubo.getVertice(b).x, cubo.getVertice(b).y, cubo.getVertice(b).z );
+                glTexCoord2f(0.50,0.66);
+                glVertex3f(cubo.getVertice(c).x, cubo.getVertice(c).y, cubo.getVertice(c).z );
+                glTexCoord2f(0.25,0.66);
+                glVertex3f(cubo.getVertice(d).x, cubo.getVertice(d).y, cubo.getVertice(d).z );
+            glEnd();
+
+            //Cara C:
+            a=5;b=4;c=7;d=6;
+            glBegin(GL_QUADS);
+                glTexCoord2f(0.50,0.33);
+                glVertex3f(cubo.getVertice(a).x, cubo.getVertice(a).y, cubo.getVertice(a).z );
+                glTexCoord2f(0.75,0.33);
+                glVertex3f(cubo.getVertice(b).x, cubo.getVertice(b).y, cubo.getVertice(b).z );
+                glTexCoord2f(0.75,0.66);
+                glVertex3f(cubo.getVertice(c).x, cubo.getVertice(c).y, cubo.getVertice(c).z );
+                glTexCoord2f(0.50,0.66);
+                glVertex3f(cubo.getVertice(d).x, cubo.getVertice(d).y, cubo.getVertice(d).z );
+            glEnd();
+
+
+            //Cara D:
+            a=4;b=0;c=3;d=7;
+            glBegin(GL_QUADS);
+                glTexCoord2f(0.75,0.33);
+                glVertex3f(cubo.getVertice(a).x, cubo.getVertice(a).y, cubo.getVertice(a).z );
+                glTexCoord2f(1,0.33);
+                glVertex3f(cubo.getVertice(b).x, cubo.getVertice(b).y, cubo.getVertice(b).z );
+                glTexCoord2f(1,0.66);
+                glVertex3f(cubo.getVertice(c).x, cubo.getVertice(c).y, cubo.getVertice(c).z );
+                glTexCoord2f(0.75,0.66);
+                glVertex3f(cubo.getVertice(d).x, cubo.getVertice(d).y, cubo.getVertice(d).z );
+            glEnd();
+
+            //Cara E:
+            a=2;b=6;c=7;d=3;
+            glBegin(GL_QUADS);
+                glTexCoord2f(0.25,0.66);
+                glVertex3f(cubo.getVertice(a).x, cubo.getVertice(a).y, cubo.getVertice(a).z );
+                glTexCoord2f(0.50,0.66);
+                glVertex3f(cubo.getVertice(b).x, cubo.getVertice(b).y, cubo.getVertice(b).z );
+                glTexCoord2f(0.50,1);
+                glVertex3f(cubo.getVertice(c).x, cubo.getVertice(c).y, cubo.getVertice(c).z );
+                glTexCoord2f(0.25,1);
+                glVertex3f(cubo.getVertice(d).x, cubo.getVertice(d).y, cubo.getVertice(d).z );
+            glEnd();
+
+            //Cara F:
+            a=0;b=4;c=5;d=1;
+            glBegin(GL_QUADS);
+                glTexCoord2f(0.25,0);
+                glVertex3f(cubo.getVertice(a).x, cubo.getVertice(a).y, cubo.getVertice(a).z );
+                glTexCoord2f(0.50,0);
+                glVertex3f(cubo.getVertice(b).x, cubo.getVertice(b).y, cubo.getVertice(b).z );
+                glTexCoord2f(0.50,0.33);
+                glVertex3f(cubo.getVertice(c).x, cubo.getVertice(c).y, cubo.getVertice(c).z );
+                glTexCoord2f(0.25,0.33);
+                glVertex3f(cubo.getVertice(d).x, cubo.getVertice(d).y, cubo.getVertice(d).z );
+            glEnd();
+
+
+            glFlush();
+            glDisable(GL_TEXTURE_2D);
+
+
+
+
+
+            cubo.muestraCoordenadasTextura();
         }
         //Modo sólido con iluminación PLANA
         if(MODO==4){
@@ -650,6 +808,7 @@ void draw_objects()
         }
         //Modo sólido con iluminación SUAVE
         if(MODO==5){
+            glEnable(GL_LIGHTING);
             glEnable(GL_LIGHTING);
             cubo.dibujarCarasIluminacionSuave(plasticoVerde);
             glDisable(GL_LIGHTING);
@@ -863,10 +1022,12 @@ void ajusteEscena(int escena){
 
     if(escena==4){
 
-        glClearColor(0,0,0,1); //Fondo blanco
+
+
+        glClearColor(0,0,0,1); //Fondo negro
 
         luzAmbiente={1, 1, 1, 1.0};
-        luzDifusa={1, 1, 1, 1.0};
+        luzDifusa={intensidadLuz, intensidadLuz, intensidadLuz , 1.0};
         luzEspecular={0, 0, 0, 1.0};
 
         //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
@@ -874,8 +1035,14 @@ void ajusteEscena(int escena){
         glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
         glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
 
+        //La delantera del coche
+        //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
+        glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
+        glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
 
-        glDisable(GL_LIGHT0);
+
+        glEnable(GL_LIGHT0);
         //Activamos la luz 1 (SUPERIOR)
         glEnable(GL_LIGHT1);
         glEnable(GL_NORMALIZE);
@@ -995,6 +1162,10 @@ if(toupper(Tecla1)=='P'){curiosity.brazo.girarPositivo("brazo3"); draw_scene();}
 if(toupper(Tecla1)=='J'){curiosity.brazo.girarNegativo("brazo3"); draw_scene();}
 if(toupper(Tecla1)=='K'){curiosity.brazo.girarBasePositivo(); draw_scene();}
 if(toupper(Tecla1)=='L'){curiosity.brazo.girarBaseNegativo(); draw_scene();}
+
+//Control de iluminación:
+if(toupper(Tecla1)=='+'){intensidadLuz+=0.1; ajusteEscena(4); draw_scene();}
+if(toupper(Tecla1)=='-'){intensidadLuz-=0.1; ajusteEscena(4); draw_scene();}
 
 
 
@@ -1230,9 +1401,9 @@ int main(int argc, char **argv)
         //Fin de pruebas
 
 
-        figuraPerfilCompleto.cargarPerfil(perfilCompleto);
-        figuraPerfilCompleto.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
-        figuraPerfilCompleto.muestraVertices();
+        //figuraPerfilCompleto.cargarPerfil(perfilCompleto);
+        //figuraPerfilCompleto.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
+        //figuraPerfilCompleto.muestraVertices();
 
 
         figuraPerfilParcialSinTapaAbajo.cargarPerfil(perfilParcialSinTapaAbajo);
@@ -1241,7 +1412,7 @@ int main(int argc, char **argv)
         figuraPerfilParcialSinTapaArriba.cargarPerfil(perfilParcialSinTapaArriba);
         //figuraPerfilParcialSinTapaArriba.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
 
-        figuraPerfilSinTapas.cargarPerfil(perfilSinTapas);
+        //figuraPerfilSinTapas.cargarPerfil(perfilSinTapas);
         //figuraPerfilSinTapas.revoluciona(REVOLUCIONES, GRADOS_INICIAL, GRADOS_FINAL);
 
         //Después de inicializarlas las meto en un vector para poder trabajar con ellas mejor.
@@ -1386,9 +1557,31 @@ int main(int argc, char **argv)
     cubo.calculaNormalesVertices();
 
 
+
+
+
+
+
+
+
+
+
+
     // ########################## FIN CUBO ##############################################
 
 
+
+    //EXAMEN P4 :
+
+    figuraPerfilCompleto.cargarPerfil(perfilCompleto);
+    figuraPerfilCompleto.revoluciona(4, 0, 360);
+    figuraPerfilCompleto.generaCoordenadasTextura(4);
+
+    //FIN EXAMEN P4
+
+    figuraPerfilSinTapas.cargarPerfil(perfilSinTapas);
+    figuraPerfilSinTapas.revoluciona(16, 0, 360);
+    figuraPerfilSinTapas.generaCoordenadasTextura(16);
 
     // se llama a la inicialización de glut
     glutInit(&argc, argv);
@@ -1482,6 +1675,7 @@ int main(int argc, char **argv)
     //cargarTextura("./text-lata-1.bmp");
     cargarTextura(texturaLata, "./text-lata-1.bmp");
     cargarTextura(texturaMadera, "./text-madera.bmp");
+    cargarTextura(texturaIG, "./ig.bmp");
 
         /*
         cout << "Proceso de imagen" << endl;

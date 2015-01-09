@@ -19,8 +19,8 @@
 	<File name="TextureManager.h" open="0" top="0" tabpos="0">
 		<Cursor position="436" topLine="15" />
 	</File>
-	<File name="colores.h" open="0" top="0" tabpos="4">
-		<Cursor position="0" topLine="0" />
+	<File name="colores.h" open="1" top="0" tabpos="7">
+		<Cursor position="775" topLine="0" />
 	</File>
 	<File name="display.h" open="0" top="0" tabpos="3">
 		<Cursor position="142" topLine="2" />
@@ -28,11 +28,11 @@
 	<File name="figuraCargada.cc" open="0" top="0" tabpos="0">
 		<Cursor position="1468" topLine="0" />
 	</File>
-	<File name="figuraRevolucionada.cc" open="1" top="0" tabpos="6">
+	<File name="figuraRevolucionada.cc" open="0" top="0" tabpos="6">
 		<Cursor position="205" topLine="0" />
 	</File>
 	<File name="figuraRevolucionada.h" open="1" top="0" tabpos="5">
-		<Cursor position="8335" topLine="154" />
+		<Cursor position="10259" topLine="80" />
 	</File>
 	<File name="figuraSimple.cc" open="0" top="0" tabpos="4">
 		<Cursor position="0" topLine="0" />
@@ -43,8 +43,8 @@
 	<File name="figuraSolida.cc" open="1" top="0" tabpos="4">
 		<Cursor position="7797" topLine="17" />
 	</File>
-	<File name="figuraSolida.h" open="1" top="0" tabpos="2">
-		<Cursor position="2230" topLine="62" />
+	<File name="figuraSolida.h" open="1" top="1" tabpos="2">
+		<Cursor position="2230" topLine="140" />
 	</File>
 	<File name="jconfig.h" open="0" top="0" tabpos="0">
 		<Cursor position="1668" topLine="24" />
@@ -67,13 +67,13 @@
 	<File name="jpg_memsrc.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="main.cc" open="1" top="1" tabpos="1">
-		<Cursor position="23571" topLine="396" />
+	<File name="main.cc" open="1" top="0" tabpos="1">
+		<Cursor position="47043" topLine="1279" />
 	</File>
 	<File name="material.h" open="0" top="0" tabpos="0">
 		<Cursor position="176" topLine="0" />
 	</File>
-	<File name="materiales.h" open="1" top="0" tabpos="7">
+	<File name="materiales.h" open="1" top="0" tabpos="6">
 		<Cursor position="959" topLine="0" />
 	</File>
 	<File name="parametrosRover.h" open="0" top="0" tabpos="0">
