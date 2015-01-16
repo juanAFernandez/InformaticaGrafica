@@ -137,7 +137,7 @@ void figuraSolida::dibujarCaras(string seccion, string modo, const GLfloat color
 void figuraSolida::dibujarCarasIluminacionPlana(material materialParaAplicar){
 
             //En el tipo de iluminación con Suavizado Plano usamos una normal por cara.
-
+            glShadeModel(GL_FLAT);
             //Debemos de asegurarnos de que tanto el vector de normales como el de vértices tiene contenido.
 
             if(normales.empty() || vertices.empty()){
@@ -159,8 +159,11 @@ void figuraSolida::dibujarCarasIluminacionPlana(material materialParaAplicar){
 
 void figuraSolida::dibujarCarasIluminacionSuave(material materialParaAplicar){
 
-    if(normalesVertices.empty())
+    glShadeModel(GL_SMOOTH);
+
+    if(normalesVertices.empty()){
         cout << "##Error## No se puede dibujar iluminación suave. Las normales de los vértices no han sido calculadas." << endl;
+    }
 
     materialParaAplicar.activar();
 

@@ -51,6 +51,8 @@
 
 //#include "loadBMP.cpp"
 
+const int PICK=1;
+
 
 /*  Create checkerboard texture  */
 #define checkImageWidth 64
@@ -102,7 +104,7 @@ Perfil perfilSinTapasPrueba("perfilSinTapas");
 //#include "jpg_imagen.hpp"
 
 //Declaramos un puntero a la imagen y cargamos en memoria esta:
-//jpg::Imagen * pimg = new jpg::Imagen("text-lata-1.jpg");
+//jpg::Imagen * pimg = new ::Imagen("text-lata-1.jpg");
 
 
 
@@ -1213,6 +1215,23 @@ switch (Tecla1){
 glutPostRedisplay();
 }
 
+void mensaje(){
+cout << "hola";}
+
+
+
+void controlRaton(int boton, int estado, int x, int y){
+
+
+if( (boton==GLUT_LEFT_BUTTON) && (estado==GLUT_DOWN))
+            cout << "Clap your hand say yeah!";
+}
+
+void ratonMovido(int x, int y){
+    //Info por terminal:
+    cout << "Raton x: " << x << " y:" << y << endl;
+}
+
 
 
 //***************************************************************************
@@ -1312,7 +1331,6 @@ if(animacion){
 
 int main(int argc, char **argv)
 {
-
 
 
 
@@ -1595,15 +1613,15 @@ int main(int argc, char **argv)
     // GLUT_STENCIL -> memoria de estarcido
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 
-    // posicion de la esquina inferior izquierdad de la ventana
+    // Posicion de la esquina inferior izquierdad de la ventana
     glutInitWindowPosition(UI_window_pos_x,UI_window_pos_y);
 
-    // tamaño de la ventana (ancho y alto)
+    // Tamaño de la ventana (ancho y alto)
     glutInitWindowSize(UI_window_width,UI_window_height);
 
-    // llamada para crear la ventana, indicando el titulo (no se visualiza hasta que se llama
+    // Llamada para crear la ventana, indicando el titulo (no se visualiza hasta que se llama
     // al bucle de eventos)
-    glutCreateWindow("Practica 4");
+    glutCreateWindow("Practica 5");
 
     // asignación de la funcion llamada "dibujar" al evento de dibujo
     glutDisplayFunc(draw_scene);
@@ -1734,12 +1752,20 @@ int main(int argc, char **argv)
     initialize();
 
 
-
-
+    /*Para controlar la cámara con el ratón es necesario hacer que los cambios de posición del ratón afecten a la posición de
+    la cámara y en glut eso se hace indicando las funciones que queremos que procesen los eventos del ratón, antes de glutMainLoop*/
+    /**Interesante de la práctica 5 */
+    glutMouseFunc(controlRaton);
+    //glutMotionFunc(controlMovimientoRaton);
+    //glutMotionFunc(controlMovimientoRaton);
+    /**-----------------------------*/
 
 
     // inicio del bucle de eventos
     glutIdleFunc(idle);
+
+
+
     glutMainLoop();
     return 0;
 }

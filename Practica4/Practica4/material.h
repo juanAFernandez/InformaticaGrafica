@@ -22,8 +22,11 @@ class material{
     public:
 
         material(GLfloat ar, GLfloat ag, GLfloat ab, GLfloat dr, GLfloat dg, GLfloat db, GLfloat sr, GLfloat sg, GLfloat sb){
+
             ambient_r=ar;   ambient_g=ag;   ambient_b=ab;
+
             diffuse_r=dr;   diffuse_g=dg;   diffuse_b=db;
+
             specular_r=sr;  specular_g=sg;  specular_b=sb;
         }
 

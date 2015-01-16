@@ -243,8 +243,210 @@ class figuraRevolucionada: public figuraSolida{
 
 
 
+         void dibujarTextura2(GLuint texName){
+
+            //Para saber cuales eran las caras de abajo mostramos el vector de caras:
+            //muestraCaras();
 
 
+             glEnable(GL_TEXTURE_2D);
+             glBindTexture(GL_TEXTURE_2D, texName);
+
+
+                bool tapaSuperior=false;
+                bool tapaInferior=false;
+
+                //Si hay tapa inferior:
+                if( (perfil[0].x==0) && (perfil[0].z==0) ){
+                    tapaInferior=true;
+                }
+
+                if( (perfil[perfil.size()-1].x==0) && (perfil[perfil.size()-1].z==0) ){
+                    tapaSuperior=true;
+                }
+
+                int posVerticeTapaSuperior, posVerticeTapaInferior;
+                if(tapaSuperior)
+                    posVerticeTapaSuperior=vertices.size()-1;
+                if(tapaInferior)
+                    posVerticeTapaInferior=vertices.size()-2;
+
+                //muestraCaras();
+                //cout << "posVerticeTapaInferior: " << posVerticeTapaInferior << endl;
+                //cout << "posVerticeTapaSuperior: " << posVerticeTapaSuperior << endl;
+
+
+
+        glBegin(GL_TRIANGLES);
+        glColor3f(1.0f,1.0f,1.0f);
+        for(int i=0; i<caras.size(); i++){
+
+            if(caras[i]._0==posVerticeTapaInferior || caras[i]._1==posVerticeTapaInferior || caras[i]._2==posVerticeTapaInferior){
+                //cout << "Me la salto porque no me gusta";
+            }else{
+                glTexCoord2f(cTs[caras[i]._0].x, cTs[caras[i]._0].y);
+                glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
+                glTexCoord2f(cTs[caras[i]._1].x, cTs[caras[i]._1].y);
+                glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
+                glTexCoord2f(cTs[caras[i]._2].x, cTs[caras[i]._2].y);
+                glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+            }
+
+        }
+
+
+    glEnd();
+
+
+   glFlush();
+   glDisable(GL_TEXTURE_2D);
+
+
+        }
+
+ void dibujarTexturaIluminacionPlana2(GLuint texName){
+
+            //Para saber cuales eran las caras de abajo mostramos el vector de caras:
+            //muestraCaras();
+
+
+             glEnable(GL_TEXTURE_2D);
+             glBindTexture(GL_TEXTURE_2D, texName);
+
+
+                bool tapaSuperior=false;
+                bool tapaInferior=false;
+
+                //Si hay tapa inferior:
+                if( (perfil[0].x==0) && (perfil[0].z==0) ){
+                    tapaInferior=true;
+                }
+
+                if( (perfil[perfil.size()-1].x==0) && (perfil[perfil.size()-1].z==0) ){
+                    tapaSuperior=true;
+                }
+
+                int posVerticeTapaSuperior, posVerticeTapaInferior;
+                if(tapaSuperior)
+                    posVerticeTapaSuperior=vertices.size()-1;
+                if(tapaInferior)
+                    posVerticeTapaInferior=vertices.size()-2;
+
+                //muestraCaras();
+                //cout << "posVerticeTapaInferior: " << posVerticeTapaInferior << endl;
+                //cout << "posVerticeTapaSuperior: " << posVerticeTapaSuperior << endl;
+
+
+        glShadeModel(GL_FLAT);
+        glBegin(GL_TRIANGLES);
+        glColor3f(1.0f,1.0f,1.0f);
+        bool texturaSi=true;
+        for(int i=0; i<caras.size(); i++){
+
+            if(caras[i]._0==posVerticeTapaInferior || caras[i]._1==posVerticeTapaInferior || caras[i]._2==posVerticeTapaInferior){
+                cout << "Me la salto porque no me gusta";
+                texturaSi=false;
+            }
+
+                glNormal3f(normales[i].x, normales[i].y, normales[i].z);
+                if(texturaSi==true)
+                    glTexCoord2f(cTs[caras[i]._0].x, cTs[caras[i]._0].y);
+                glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
+                if(texturaSi==true)
+                    glTexCoord2f(cTs[caras[i]._1].x, cTs[caras[i]._1].y);
+                glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
+                if(texturaSi==true)
+                    glTexCoord2f(cTs[caras[i]._2].x, cTs[caras[i]._2].y);
+                glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+
+        texturaSi=true;
+        }
+
+
+
+
+
+    glEnd();
+
+
+   glFlush();
+   glDisable(GL_TEXTURE_2D);
+
+
+        }
+
+
+void dibujarTexturaIluminacionSuave2(GLuint texName){
+
+            //Para saber cuales eran las caras de abajo mostramos el vector de caras:
+            //muestraCaras();
+
+
+             glEnable(GL_TEXTURE_2D);
+             glBindTexture(GL_TEXTURE_2D, texName);
+
+
+                bool tapaSuperior=false;
+                bool tapaInferior=false;
+
+                //Si hay tapa inferior:
+                if( (perfil[0].x==0) && (perfil[0].z==0) ){
+                    tapaInferior=true;
+                }
+
+                if( (perfil[perfil.size()-1].x==0) && (perfil[perfil.size()-1].z==0) ){
+                    tapaSuperior=true;
+                }
+
+                int posVerticeTapaSuperior, posVerticeTapaInferior;
+                if(tapaSuperior)
+                    posVerticeTapaSuperior=vertices.size()-1;
+                if(tapaInferior)
+                    posVerticeTapaInferior=vertices.size()-2;
+
+                //muestraCaras();
+                //cout << "posVerticeTapaInferior: " << posVerticeTapaInferior << endl;
+                //cout << "posVerticeTapaSuperior: " << posVerticeTapaSuperior << endl;
+
+
+        glShadeModel(GL_SMOOTH);
+        glBegin(GL_TRIANGLES);
+        glColor3f(1.0f,1.0f,1.0f);
+        bool texturaSi=true;
+        for(int i=0; i<caras.size(); i++){
+
+            if(caras[i]._0==posVerticeTapaInferior || caras[i]._1==posVerticeTapaInferior || caras[i]._2==posVerticeTapaInferior){
+                cout << "Me la salto porque no me gusta";
+                texturaSi=false;
+            }
+
+                glNormal3f(normalesVertices[caras[i]._0].x, normalesVertices[caras[i]._0].y, normalesVertices[caras[i]._0].z);
+                if(texturaSi==true)
+                    glTexCoord2f(cTs[caras[i]._0].x, cTs[caras[i]._0].y);
+                glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
+
+                glNormal3f(normalesVertices[caras[i]._1].x, normalesVertices[caras[i]._1].y, normalesVertices[caras[i]._1].z);
+                if(texturaSi==true)
+                    glTexCoord2f(cTs[caras[i]._1].x, cTs[caras[i]._1].y);
+                glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
+
+                glNormal3f(normalesVertices[caras[i]._2].x, normalesVertices[caras[i]._2].y, normalesVertices[caras[i]._2].z);
+                if(texturaSi==true)
+                    glTexCoord2f(cTs[caras[i]._2].x, cTs[caras[i]._2].y);
+                glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+
+        texturaSi=true;
+        }
+
+
+    glEnd();
+
+
+   glFlush();
+   glDisable(GL_TEXTURE_2D);
+
+
+        }
 
 
         /**

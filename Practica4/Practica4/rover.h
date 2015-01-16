@@ -27,9 +27,7 @@ class rover{
         figuraRevolucionada semiCilindro;
 
 
-        double Cx;
-        double Cz;
-        int gradosRotacionCoche;
+
         _vertex3f vectorDireccion;
 
         float RAD_TO_DEG;

@@ -63,6 +63,15 @@ static GLuint texturaLata;
 static GLuint texturaMadera;
 static GLuint texturaIG;
 
+//Para el control de las luces por teclado, por deecto la luz0 está activada y esta variable nos sirve para esto.
+bool luz0=true;
+bool luz1=true;
+bool luz2=true;
+
+int n=3; //Numero de texturas:
+GLuint *texturas = new GLuint[3];
+//glGenTextures(n, textures);
+
 static GLuint identificadorImagen;
 
 void makeCheckImage(void)
@@ -246,38 +255,15 @@ glRotatef(Observer_angle_y,0,1,0);
 
 
 
-    if(EJERCICIO==1){
+    if(EJERCICIO==1 || EJERCICIO==2 || EJERCICIO==3 || EJERCICIO==5){
 
-    //Establezco la posición de la luz 0
 
-    /*
 
-        glMatrixMode(GL_MODELVIEW);
-        glPushMatrix();
-            //glLoadIdentity();
-            //glTranslatef(0,0,-Observer_distance);
-            //glRotatef(Observer_angle_x,1,0,0);
-            //glRotatef(Observer_angle_y,0,1,0);
-            //Definición de la posición de la luz local:
-            const GLfloat posicionLuzLocal[]={8.0, 0.0, 8.0, 1.0};
+       //Ajuste de luz a movimiento del observador:
 
-            glColor3fv(VERDE);
-            //Establecemos el grosor de los vértices (al dibujarlos)
-            glPointSize(40);
-                glBegin(GL_POINTS);
-                        glVertex3f(8.0, 0.0, 0.0);
-                glEnd();
+       const GLfloat posicionLuzLocal0[]={8.0, 0.0, 0.0, 1.0};
 
-            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal);
-        glPopMatrix();
-
-    */
-
-       //Ajuste de luz a movimiento de cámara:
-
-       const GLfloat posicionLuzLocal1[]={8.0, 0.0, 0.0, 1.0};
-
-       //Cono de light 1 //FIJO
+       //Cono de light 0 //FIJO
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             glLoadIdentity();
@@ -286,13 +272,13 @@ glRotatef(Observer_angle_y,0,1,0);
             glRotatef(Observer_angle_x,1,0,0);
             glRotatef(Observer_angle_y,0,1,0);
 
-            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal1);
+            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal0);
         glPopMatrix();
 
 
-        const GLfloat posicionLuzLocal2[]={0.0, 8.0, 0.0, 1.0};
+        const GLfloat posicionLuzLocal1[]={0.0, 8.0, 0.0, 1.0};
 
-       //Cono de light 2 //MOVIL
+       //Cono de light 1 //MOVIL
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             glLoadIdentity();
@@ -304,38 +290,22 @@ glRotatef(Observer_angle_y,0,1,0);
 
             glRotated(gradoCono,1,0,0);
 
-            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
+            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal1);
+
+
         glPopMatrix();
 
 
 
     }
 
-    if(EJERCICIO==2 || EJERCICIO==3){
-         const GLfloat posicionLuzLocal2[]={0.0, 16.0, 0.0, 1.0};
-
-       //Cono de light 2 //MOVIL
-        glMatrixMode(GL_MODELVIEW);
-        glPushMatrix();
-            glLoadIdentity();
-
-
-            glTranslatef(0,0,-Observer_distance);
-            glRotatef(Observer_angle_x,1,0,0);
-            glRotatef(Observer_angle_y,0,1,0);
-
-            glRotated(gradoCono,1,0,0);
-
-            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
-        glPopMatrix();
-
-
-    }
 
     if(EJERCICIO==4){
-        const GLfloat posicionLuzLocal2[]={0.0, 32.0, 0.0, 1.0};
 
-       //Cono de light 2 //MOVIL
+
+        //LUZ SUPERIOR (MOVIL ROTATORIA EN EL EJE Z)
+        const GLfloat posicionLuzLocal0[]={0.0, 64.0, 0.0, 1.0};
+
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             glLoadIdentity();
@@ -345,19 +315,25 @@ glRotatef(Observer_angle_y,0,1,0);
             glRotatef(Observer_angle_x,1,0,0);
             glRotatef(Observer_angle_y,0,1,0);
 
-            //glRotated(gradoCono,1,0,0);
+            glRotated(gradoCono,1,0,0);
 
-            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
+            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal0);
+
+
         glPopMatrix();
 
 
-        const GLfloat posicionLuzLocal1[]={0.0, 7.5, 50, 1.0};
 
-       //Cono de light 2 //MOVIL
+        //LUZ DELANTERA DEL CURIOSITY
+        const GLfloat posicionLuzLocal1[]={0.0, 15.0, 32.0, 1.0};
+
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             glLoadIdentity();
 
+            glTranslated(Cx,0,Cz);
+            //El movimiento de los faros del coche:
+            glRotated(gradosRotacionCoche,0,1,0);
 
             glTranslatef(0,0,-Observer_distance);
             glRotatef(Observer_angle_x,1,0,0);
@@ -365,9 +341,17 @@ glRotatef(Observer_angle_y,0,1,0);
 
             //glRotated(gradoCono,1,0,0);
 
-            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal1);
+            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal1);
+
+
         glPopMatrix();
+
+
+
     }
+
+
+
 }
 
 //**************************************************************************
@@ -397,35 +381,7 @@ glEnd();
 /*
 * Lee una textura desde una imagen en formato BMP
 */
-/*
-void cargarTextura(char *filename)
-{
-   glClearColor (0.0, 0.0, 0.0, 0.0);
-   glShadeModel(GL_FLAT);
-   glEnable(GL_DEPTH_TEST);
 
-   RgbImage theTexMap( filename );
-
-   // Pixel alignment: each row is word aligned (aligned to a 4 byte boundary)
-   //    Therefore, no need to call glPixelStore( GL_UNPACK_ALIGNMENT, ... );
-
-
-   glGenTextures(1, &texName);                  // Create The Texture
-   glBindTexture(GL_TEXTURE_2D, texName);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-   // Typical Texture Generation Using Data From The Bitmap
-
-
-    //glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-    //glTexImage2D(GL_TEXTURE_2D, 0, 3, theTexMap.GetNumCols(), theTexMap.GetNumRows(), 0, GL_RGB, GL_UNSIGNED_BYTE, theTexMap.ImageData() );
-    gluBuild2DMipmaps(GL_TEXTURE_2D, 3,theTexMap.GetNumCols(), theTexMap.GetNumRows(), GL_RGB, GL_UNSIGNED_BYTE, theTexMap.ImageData() );
-    cout << "Imagen cargada! " << theTexMap.GetNumRows() << "x" << theTexMap.GetNumCols() << endl;
-}
-*/
 void cargarTextura(GLuint &nombreTextura, char *filename){
 
    //Debemos parasr el primer parámetro por referencia para que no se pierda su modificación.
@@ -437,6 +393,7 @@ void cargarTextura(GLuint &nombreTextura, char *filename){
 
    // Pixel alignment: each row is word aligned (aligned to a 4 byte boundary)
    //    Therefore, no need to call glPixelStore( GL_UNPACK_ALIGNMENT, ... );
+
 
 
    glGenTextures(1, &nombreTextura);                  // Create The Texture
@@ -462,47 +419,33 @@ void cargarTextura(GLuint &nombreTextura, char *filename){
 void draw_objects()
 {
 
-    if(EJERCICIO==1){ // ## Beethoven con dos luces ## //
-
-        //Examen:
-
+    if(EJERCICIO==1){       // ## Beethoven con dos luces ## //
         //Modo sólo vértices
         if(MODO==1){
-            figuraPerfilCompleto.dibujarVertices("todo");
+            beethoven.dibujarVertices("todo");
         }
-
         //Modo sólo aristas
         if(MODO==2){
-            figuraPerfilCompleto.dibujarAristas("todo");
+            beethoven.dibujarAristas("todo");
         }
-
         //Modo sólido. Sólido más aristas.
         if(MODO==3){
-            //figuraPerfilSinTapas.dibujarCaras("todo","solido",VERDE);
-            //figuraPerfilSinTapas.dibujarAristas("todo");
-            glEnable(GL_LIGHTING);
+            beethoven.dibujarCaras("todo","solido",VERDE);
+            beethoven.dibujarAristas("todo");
 
-                //figuraPerfilCompleto.dibujarCaras("todo","solido",BLANCO);
-                cout << figuraPerfilCompleto.numeroVertices();
-                cout << figuraPerfilCompleto.numeroCoordenadasTextura();
-                cout << figuraPerfilCompleto.numeroCaras();
-                figuraPerfilCompleto.dibujarTextura(texturaLata);
-            glDisable(GL_LIGHTING);
         }
-
         //Mondo normales. Sólido, aristas más normales.
         if(MODO==6){
-            figuraPerfilCompleto.dibujarCaras("todo","solido",VERDE);
-            figuraPerfilCompleto.dibujarAristas("todo");
-            figuraPerfilCompleto.dibujarNormales();
+            beethoven.dibujarCaras("todo","solido",VERDE);
+            beethoven.dibujarAristas("todo");
+            beethoven.dibujarNormales();
         }
         //Mondo normales. Sólido, aristas más normales.
         if(MODO==7){
-            figuraPerfilCompleto.dibujarCaras("todo","solido",VERDE);
-            figuraPerfilCompleto.dibujarAristas("todo");
-            figuraPerfilCompleto.dibujarNormalesVertices();
+            beethoven.dibujarCaras("todo","solido",VERDE);
+            beethoven.dibujarAristas("todo");
+            beethoven.dibujarNormalesVertices();
         }
-
         //Modo sólido con iluminación PLANA
         if(MODO==4){
             glEnable(GL_LIGHTING); //Activo la iluminación.
@@ -510,37 +453,33 @@ void draw_objects()
             glDisable(GL_LIGHTING); //Desactivo la iluminación.
 
         }
-
+        //Modo sólido con iluminación SUAVE o de Gouraud
         if(MODO==5){
             glEnable(GL_LIGHTING);
-            figuraPerfilCompleto.dibujarCarasIluminacionSuave(plasticoVerde);
+                beethoven.dibujarCarasIluminacionSuave(plasticoVerde);
             glDisable(GL_LIGHTING);
         }
+        //Independientemente si vemos la escena iluminada, dibujamos los "focos de luz":
+        if(MODO==4 || MODO==5){
 
-    //Si vemos la escena iluminada, dibujamos los "focos de luz":
-    if(MODO==4 || MODO==5 ||MODO==3){
+            //Cono de light 0
+            glPushMatrix();
+                glTranslated(8,0,0);
+                glRotated(-90,0,0,1);
+                cono.dibujarCaras("todo","solido",AMARILLO);
+                cono.dibujarAristas("todo");
+            glPopMatrix();
 
-    //Cono de light 0
-    glPushMatrix();
-     glTranslated(8,0,0);
-     glRotated(-90,0,0,1);
-     cono.dibujarCaras("todo","solido",AMARILLO);
-     cono.dibujarAristas("todo");
-    glPopMatrix();
+            //Cono de light 1
+                glPushMatrix();
+                glRotated(gradoCono,1,0,0);
+                glTranslated(0,8,0);
+                cono.dibujarCaras("todo","solido",AMARILLO);
+                cono.dibujarAristas("todo");
+            glPopMatrix();
 
-    //Cono de light 1
-    glPushMatrix();
-     glRotated(gradoCono,1,0,0);
-     glTranslated(0,8,0);
-     cono.dibujarCaras("todo","solido",AMARILLO);
-     cono.dibujarAristas("todo");
-    glPopMatrix();
-
+        }
     }
-
-    }
-
-
 
     if(EJERCICIO==2){ // ## Lata CocaCola y peones con distintos materiales con una luz ## //
 
@@ -587,12 +526,12 @@ void draw_objects()
     } */
 
 
+        glEnable(GL_LIGHTING);
 
-      glEnable(GL_LIGHTING);
 
         //Para que la textura se combine con el color del objeto
       //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL); --> se ve iluminada
-      glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
+      //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
 
          //Lata (con sus tres partes):
          glPushMatrix();
@@ -601,7 +540,7 @@ void draw_objects()
             //cuerpoLata.dibujarPerfil();
             //cuerpoLata.dibujarCarasIluminacionPlana(plasticoBlanco);
             //cuerpoLata.dibujarNormales();
-            cuerpoLata.dibujarTextura(texturaLata);
+            cuerpoLata.dibujarTextura(texturas[0]);
             //cuerpoLata.dibujarNormales();
 
             //cuerpoLata.dibujarNormales();
@@ -609,7 +548,7 @@ void draw_objects()
             //bocaLata.dibujarAristas("todo");
             //bocaLata.dibujarCaras("todo","solido", ROJO);
 
-            //bocaLata.dibujarCarasIluminacionPlana(chrome);
+            bocaLata.dibujarCarasIluminacionPlana(silver);
 
             //culoLata.dibujarPerfil();
             //culoLata.dibujarAristas("todo");
@@ -655,14 +594,15 @@ void draw_objects()
 
     }
 
-    if(EJERCICIO==3){ // ## Cubo en el que se aplica una imagen con un texto. ## //
+    if(EJERCICIO==3){ // ## Cubo en el que se aplica una imagen con un texto. y pantalla. ## //
 
 
         //Dibujamos una pantalla con la imagen:
-        glDisable(GL_LIGHTING);
+        glEnable(GL_LIGHTING);
 
         glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, texturaIG);
+        plasticoBlanco.activar();
+        glBindTexture(GL_TEXTURE_2D, texturas[2]);
 
         glBegin(GL_QUADS);
         glColor3f(1.0f,1.0f,1.0f);
@@ -687,6 +627,7 @@ void draw_objects()
         glFlush();
         glDisable(GL_TEXTURE_2D);
 
+        glDisable(GL_LIGHTING);
 
 
         //Modo sólo vértices
@@ -704,7 +645,7 @@ void draw_objects()
             //cubo.dibujarTextura(texturaIG);
 
             glEnable(GL_TEXTURE_2D);
-            glBindTexture(GL_TEXTURE_2D, texturaMadera);
+      //      glBindTexture(GL_TEXTURE_2D, texturaMadera);
             glColor3f(1.0f,1.0f,1.0f);
 
             //DANDO LAS COORDENADAS DE TEXTURA DE UN CUBO A MANO DE FORMA MUY ESPECÍFICA
@@ -826,7 +767,7 @@ void draw_objects()
             cubo.dibujarNormalesVertices();
         }
         //Si vemos la escena iluminada, dibujamos los "focos de luz":
-        if(MODO==4 || MODO==5){
+        if(MODO==4 || MODO==5 || MODO==3){
             //Cono de light 1
             glPushMatrix();
                 glRotated(gradoCono,1,0,0);
@@ -838,7 +779,7 @@ void draw_objects()
         }
     }
 
-    if(EJERCICIO==4){
+    if(EJERCICIO==4){ // ## Curiosity con iluminación. ## //
     /* ## Escena práctica 3 con iluminación superior rotatoria e iluminación en faros del curiosity.
     Además de una imagen de tierra en el suelo o de un mosaico con todas las imágenes. ## */
 
@@ -849,9 +790,84 @@ void draw_objects()
             curiosity.dibujarRover();
             base.dibujarSuelo();
         glPopMatrix();
+
+
+
+            //Cono de light SUPERIOR
+                glPushMatrix();
+                glRotated(gradoCono,1,0,0);
+                glTranslated(0,64,0);
+                glScaled(5,5,5);
+                cono.dibujarCaras("todo","solido",AMARILLO);
+                cono.dibujarAristas("todo");
+            glPopMatrix();
+
     }
 
 
+    if(EJERCICIO==5){ // ## Defensa de la práctica 4 ## //
+//Modo sólo vértices
+        if(MODO==1){
+            figuraPerfilCompleto.dibujarVertices("todo");
+        }
+        //Modo sólo aristas
+        if(MODO==2){
+            figuraPerfilCompleto.dibujarAristas("todo");
+        }
+        //Modo sólido. Sólido más aristas.
+        if(MODO==3){
+            figuraPerfilCompleto.dibujarCaras("todo","solido",VERDE);
+            figuraPerfilCompleto.dibujarAristas("todo");
+
+        }
+        //Mondo normales. Sólido, aristas más normales.
+        if(MODO==6){
+            figuraPerfilCompleto.dibujarCaras("todo","solido",VERDE);
+            figuraPerfilCompleto.dibujarAristas("todo");
+            figuraPerfilCompleto.dibujarNormales();
+        }
+        //Mondo normales. Sólido, aristas más normales.
+        if(MODO==7){
+            figuraPerfilCompleto.dibujarCaras("todo","solido",VERDE);
+            figuraPerfilCompleto.dibujarAristas("todo");
+            figuraPerfilCompleto.dibujarNormalesVertices();
+        }
+        //Modo sólido con iluminación PLANA
+        if(MODO==4){
+            glEnable(GL_LIGHTING); //Activo la iluminación.
+                figuraPerfilCompleto.dibujarTexturaIluminacionPlana2(texturas[0]);
+            glDisable(GL_LIGHTING); //Desactivo la iluminación.
+
+        }
+        //Modo sólido con iluminación SUAVE o de Gouraud
+        if(MODO==5){
+            glEnable(GL_LIGHTING);
+                figuraPerfilCompleto.dibujarTexturaIluminacionSuave2(texturas[0]);
+            glDisable(GL_LIGHTING);
+        }
+        //Independientemente si vemos la escena iluminada, dibujamos los "focos de luz":
+        if(MODO==4 || MODO==5){
+
+            //Cono de light 0
+            glPushMatrix();
+                glTranslated(8,0,0);
+                glRotated(-90,0,0,1);
+                cono.dibujarCaras("todo","solido",AMARILLO);
+                cono.dibujarAristas("todo");
+            glPopMatrix();
+
+            //Cono de light 1
+                glPushMatrix();
+                glRotated(gradoCono,1,0,0);
+                glTranslated(0,8,0);
+                cono.dibujarCaras("todo","solido",AMARILLO);
+                cono.dibujarAristas("todo");
+            glPopMatrix();
+
+        }
+
+
+    }
 
 
 
@@ -900,37 +916,51 @@ glutPostRedisplay();
 
 
 
-void ajusteEscena(int escena){
+void ajusteEscena(){
+
+    // AJUSTE DE ILUMINACIÓN PARA CADA ESCENA //
 
     //Parámetros de iluminación, son los tres colores más el canal alfa.
-    GLfloat luzAmbiente[4];
-    GLfloat luzDifusa[4];
-    GLfloat luzEspecular[4];
+    GLfloat luzAmbienteLuz0[4];
+    GLfloat luzDifusaLuz0[4];
+    GLfloat luzEspecularLuz0[4];
 
-    //Parámetros de posición de luces:
+    GLfloat luzAmbienteLuz1[4];
+    GLfloat luzDifusaLuz1[4];
+    GLfloat luzEspecularLuz1[4];
+
+    GLfloat luzAmbienteLuz2[4];
+    GLfloat luzDifusaLuz2[4];
+    GLfloat luzEspecularLuz2[4];
 
 
-    if(escena==1){
-
-        glClearColor(0,0,0,1); //Fondo blanco
 
 
+    if(EJERCICIO==1){
+
+        //Fondo negro
+        glClearColor(0,0,0,1);
 
         //Especificamos las características de las luces:
-        luzAmbiente={1, 1, 1, 1.0};
-        luzDifusa={1, 1, 1, 1.0};
-        luzEspecular={0, 0, 0, 1.0};
+
+        luzAmbienteLuz0={intensidadAmbientalLuz0, intensidadAmbientalLuz0, intensidadAmbientalLuz0, 1.0};
+        luzDifusaLuz0={intensidadDifusaLuz0, intensidadDifusaLuz0, intensidadDifusaLuz0 , 1.0}; //Para controlarla desde teclado
+        luzEspecularLuz0={intensidadEspecularLuz0, intensidadEspecularLuz0, intensidadEspecularLuz0, 1.0};
+
+        luzAmbienteLuz1={intensidadAmbientalLuz1, intensidadAmbientalLuz1, intensidadAmbientalLuz1, 1.0};
+        luzDifusaLuz1={intensidadDifusaLuz1, intensidadDifusaLuz1, intensidadDifusaLuz0 , 1.0}; //Para controlarla desde teclado
+        luzEspecularLuz1={intensidadEspecularLuz1, intensidadEspecularLuz1, intensidadEspecularLuz1, 1.0};
 
 
         //Aplicamos las tres componentes a la luz número 0
-        glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
-        glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
+        glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbienteLuz0);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusaLuz0);
+        glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecularLuz0);
 
         //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
-        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
-        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
-        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbienteLuz1);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusaLuz1);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecularLuz1);
 
         //Activamos dos luces:
 
@@ -939,114 +969,138 @@ void ajusteEscena(int escena){
         //Activamos la luz 1 (SUPERIOR ROTATORIA)
         glEnable(GL_LIGHT1);
 
-/*
 
-        const GLfloat posicionLuzLocal1[]={8.0, 0.0, 0.0, 1.0};
-
-       //Cono de light 1
-        glMatrixMode(GL_MODELVIEW);
-        glPushMatrix();
-            glLoadIdentity();
-
-            glTranslatef(0,0,-Observer_distance);
-            glRotatef(Observer_angle_x,1,0,0);
-            glRotatef(Observer_angle_y,0,1,0);
-
-            glLightfv(GL_LIGHT0, GL_POSITION, posicionLuzLocal1);
-        glPopMatrix();
-
-
-        const GLfloat posicionLuzLocal2[]={0.0, 8.0, 0.0, 1.0};
-
-       //Cono de light 2
-        glMatrixMode(GL_MODELVIEW);
-        glPushMatrix();
-            glLoadIdentity();
-
-
-            glTranslatef(0,0,-Observer_distance);
-            glRotatef(Observer_angle_x,1,0,0);
-            glRotatef(Observer_angle_y,0,1,0);
-
-            glRotated(gradoCono,1,0,0);
-
-            glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal2);
-        glPopMatrix();
-
-*/
+        cout << "Ambiental: " << luzAmbienteLuz0[0] << endl;
+        cout << "Difusa: " << luzDifusaLuz0[0] << endl;
+        cout << "Especular: " << luzEspecularLuz0[0] << endl;
 
     }
 
+    if(EJERCICIO==2){
 
-    if(escena==2){
+        //Fondo negro
+        glClearColor(0,0,0,1);
 
-        glClearColor(0,0,0,1); //Fondo blanco
+
+
+        luzAmbienteLuz1={intensidadAmbientalLuz1, intensidadAmbientalLuz1, intensidadAmbientalLuz1, 1.0};
+        luzDifusaLuz1={intensidadDifusaLuz1, intensidadDifusaLuz1, intensidadDifusaLuz0 , 1.0}; //Para controlarla desde teclado
+        luzEspecularLuz1={intensidadEspecularLuz1, intensidadEspecularLuz1, intensidadEspecularLuz1, 1.0};
+
+
+
+        //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
+        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbienteLuz1);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusaLuz1);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecularLuz1);
+
+        //Activamos dos luces:
+
+        //Activamos la luz 0 (DERECHA FIJA)
+        glDisable(GL_LIGHT0);
+        //Activamos la luz 1 (SUPERIOR ROTATORIA)
+        glEnable(GL_LIGHT1);
+
+
+        cout << "Ambiental: " << luzAmbienteLuz0[0] << endl;
+        cout << "Difusa: " << luzDifusaLuz0[0] << endl;
+        cout << "Especular: " << luzEspecularLuz0[0] << endl;
+
+    }
+
+    if(EJERCICIO==3){
+
 
         //Especificamos las características de las luces:
-        luzAmbiente={1, 1, 1, 1.0};
-        luzDifusa={1, 1, 1, 1.0};
-        luzEspecular={0, 0, 0, 1.0};
+        luzAmbienteLuz1={1, 1, 1, 1.0};
+        luzDifusaLuz1={intensidadLuz1, intensidadLuz1, intensidadLuz1, 1.0};
+        luzEspecularLuz1={0.5, 0.5, 0.5, 1.0};
+
+        //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
+        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbienteLuz1);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusaLuz1);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecularLuz1);
+
+
+
+        glDisable(GL_LIGHT0);
+        glEnable(GL_LIGHT1);
+    }
+
+    if(EJERCICIO==4){
+
+        glClearColor(0,0,0,1); //Fondo negro
+
+        luzAmbienteLuz0={intensidadAmbientalLuz0, intensidadAmbientalLuz0, intensidadAmbientalLuz0, 1.0};
+        luzDifusaLuz0={intensidadDifusaLuz0, intensidadDifusaLuz0, intensidadDifusaLuz0 , 1.0}; //Para controlarla desde teclado
+        luzEspecularLuz0={intensidadEspecularLuz0, intensidadEspecularLuz0, intensidadEspecularLuz0, 1.0};
+
+        luzAmbienteLuz1={intensidadAmbientalLuz1, intensidadAmbientalLuz1, intensidadAmbientalLuz1, 1.0};
+        luzDifusaLuz1={intensidadDifusaLuz1, intensidadDifusaLuz1, intensidadDifusaLuz0 , 1.0}; //Para controlarla desde teclado
+        luzEspecularLuz1={intensidadEspecularLuz1, intensidadEspecularLuz1, intensidadEspecularLuz1, 1.0};
 
 
 
         //Aplicamos las tres componentes a la luz número 0
-        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
-        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
-        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+        glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbienteLuz0);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusaLuz0);
+        glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecularLuz0);
 
-        //Activamos una sola luz general:
+        //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
+        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbienteLuz1);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusaLuz1);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecularLuz1);
 
-        glDisable(GL_LIGHT0);
-        glEnable(GL_LIGHT1);
+
+        //glEnable(GL_LIGHT0);
+
+        //Activamos la luz 1 (SUPERIOR)
+        //glEnable(GL_LIGHT1);
+
+        cout << "Ambiental: " << luzAmbienteLuz0[0] << endl;
+        cout << "Difusa: " << luzDifusaLuz0[0] << endl;
+        cout << "Especular: " << luzEspecularLuz0[0] << endl;
+
 
     }
 
-    if(escena==3){
-
+    if(EJERCICIO==5){
+        //Fondo negro
+ //Fondo negro
+        glClearColor(0,0,0,1);
 
         //Especificamos las características de las luces:
-        luzAmbiente={1, 1, 1, 1.0};
-        luzDifusa={1, 1, 1, 1.0};
-        luzEspecular={0, 0, 0, 1.0};
+
+        luzAmbienteLuz0={intensidadAmbientalLuz0, intensidadAmbientalLuz0, intensidadAmbientalLuz0, 1.0};
+        luzDifusaLuz0={intensidadDifusaLuz0, intensidadDifusaLuz0, intensidadDifusaLuz0 , 1.0}; //Para controlarla desde teclado
+        luzEspecularLuz0={intensidadEspecularLuz0, intensidadEspecularLuz0, intensidadEspecularLuz0, 1.0};
+
+        luzAmbienteLuz1={intensidadAmbientalLuz1, intensidadAmbientalLuz1, intensidadAmbientalLuz1, 1.0};
+        luzDifusaLuz1={intensidadDifusaLuz1, intensidadDifusaLuz1, intensidadDifusaLuz0 , 1.0}; //Para controlarla desde teclado
+        luzEspecularLuz1={intensidadEspecularLuz1, intensidadEspecularLuz1, intensidadEspecularLuz1, 1.0};
+
+
+        //Aplicamos las tres componentes a la luz número 0
+        glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbienteLuz0);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusaLuz0);
+        glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecularLuz0);
 
         //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
-        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
-        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
-        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
+        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbienteLuz1);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusaLuz1);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecularLuz1);
 
+        //Activamos dos luces:
 
-        //Desactivamos toda iluminación
+        //Activamos la luz 0 (DERECHA FIJA)
         glDisable(GL_LIGHT0);
+        //Activamos la luz 1 (SUPERIOR ROTATORIA)
         glEnable(GL_LIGHT1);
-    }
-
-    if(escena==4){
 
 
-
-        glClearColor(0,0,0,1); //Fondo negro
-
-        luzAmbiente={1, 1, 1, 1.0};
-        luzDifusa={intensidadLuz, intensidadLuz, intensidadLuz , 1.0};
-        luzEspecular={0, 0, 0, 1.0};
-
-        //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
-        glLightfv(GL_LIGHT1, GL_AMBIENT, luzAmbiente);
-        glLightfv(GL_LIGHT1, GL_DIFFUSE, luzDifusa);
-        glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
-
-        //La delantera del coche
-        //Aplicamos las tres componentes a la luz número 1 (no tienen por qué ser las mismas)
-        glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
-        glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
-
-
-        glEnable(GL_LIGHT0);
-        //Activamos la luz 1 (SUPERIOR)
-        glEnable(GL_LIGHT1);
-        glEnable(GL_NORMALIZE);
-
+        cout << "Ambiental: " << luzAmbienteLuz0[0] << endl;
+        cout << "Difusa: " << luzDifusaLuz0[0] << endl;
+        cout << "Especular: " << luzEspecularLuz0[0] << endl;
     }
 }
 
@@ -1070,13 +1124,15 @@ if(toupper(Tecla1)=='Q') exit(0);
 
 //Control del ejercicio seleccionado:
 //## 1: Beethoven para iluminacion (plana/suave) con dos focos, uno giratorio y otro fijo.
-if(toupper(Tecla1)=='1'){EJERCICIO=1; ajusteEscena(1); draw_scene(); cout << "Seleccionada escena 1:  Beethoven con dos focos" << endl;}
+if(toupper(Tecla1)=='1'){EJERCICIO=1; ajusteEscena(); draw_scene(); cout << "Seleccionada escena 1: Beethoven con dos focos" << endl;}
 //## 2: EJERCICIO CENTRAL--> Lata más tres peones.
-if(toupper(Tecla1)=='2'){EJERCICIO=2; ajusteEscena(2); draw_scene(); cout << "Seleccionada escena 2:  Lata más tres peones de distintos materiales" << endl;}
+if(toupper(Tecla1)=='2'){EJERCICIO=2; ajusteEscena(); draw_scene(); cout << "Seleccionada escena 2: Lata más tres peones de distintos materiales" << endl;}
 //## 3: EJERCICIO TRES--> Cubo con imagen texturizada a modo de dado.
-if(toupper(Tecla1)=='3'){EJERCICIO=3, ajusteEscena(3); draw_scene(); cout << "Seleccionada escena 3: Cubo con imagen texturizada simple" << endl;}
+if(toupper(Tecla1)=='3'){EJERCICIO=3, ajusteEscena(); draw_scene(); cout << "Seleccionada escena 3: Cubo con imagen texturizada simple" << endl;}
 //## 4: EJERCICIO CUATRO--> curiosity
-if(toupper(Tecla1)=='4'){EJERCICIO=4; ajusteEscena(4); draw_scene(); cout << "Seleccionada escena 4:  Rover Curiosity" << endl;}
+if(toupper(Tecla1)=='4'){EJERCICIO=4; ajusteEscena(); draw_scene(); cout << "Seleccionada escena 4: Rover Curiosity" << endl;}
+//## 5: DEFENSA P4--> figura revoluiconada, con dos luces, una fija y otra movil con textura que no completa el modelo.
+if(toupper(Tecla1)=='5'){EJERCICIO=5; ajusteEscena(); draw_scene(); cout << "Seleccionada escena 5: EXAMEN DEFENSA P4" << endl;}
 
 
 
@@ -1106,17 +1162,60 @@ if(toupper(Tecla1)=='M'){
     draw_scene();
 }
 
+//Activación de la luz 0:
+if(toupper(Tecla1)=='W'){
+    if(luz0==true){
+        cout << "Apagando LIGHT_0" << endl;
+        glDisable(GL_LIGHT0);
+        draw_scene();
+        luz0=false;
+    }else if(luz0==false){
+        cout << "Encendiendo LIGHT_0" << endl;
+        glEnable(GL_LIGHT0);
+        draw_scene();
+        luz0=true;
+    }
+}
+
+//Activación de la luz 1:
+if(toupper(Tecla1)=='E'){
+    if(luz1==true){
+        cout << "Apagando LIGHT_1" << endl;
+        glDisable(GL_LIGHT1);
+        draw_scene();
+        luz1=false;
+    }else if(luz1==false){
+        cout << "Encendiendo LIGHT_1" << endl;
+        glEnable(GL_LIGHT1);
+        draw_scene();
+        luz1=true;
+    }
+}
+
+
 //## Control MOVIMIENTO del Curiosity ##
 //Mov. adelante
 if(toupper(Tecla1)=='T'){
     //###Aumentamos el número de revoluciones:
-   // GRADOS_RUEDA_DERECHA++;
-   // GRADOS_RUEDA_IZQUIERDA++;
 
     curiosity.desplazaAdelante();
 
-  //  X+=cos(GRADOS_GIRO_ROVER);
-  //  Z+=sin(GRADOS_GIRO_ROVER);
+       //     glMatrixMode(GL_MODELVIEW);
+       // glPushMatrix();
+           // glLoadIdentity();
+
+            //El movimiento de los faros del coche:
+           // glTranslated(Cx,0,Cz);
+           // glRotated(gradosRotacionCoche,0,1,0);
+
+
+
+            //glRotated(gradoCono,1,0,0);
+
+            //glLightfv(GL_LIGHT1, GL_POSITION, posicionLuzLocal1);
+
+
+       // glPopMatrix();
 
     //Llamamos a dibujar escena donde se decide que y como dibujar
     draw_scene();
@@ -1154,18 +1253,28 @@ if(toupper(Tecla1)=='F'){
 }
 
 //Control de brazo robótico del Curiosity
-if (toupper(Tecla1)=='Y') {curiosity.brazo.girarPositivo("brazo1");curiosity.brazo.girarNegativo("brazo2"); animacion=false; draw_scene();};
-if (toupper(Tecla1)=='U') {curiosity.brazo.girarNegativo("brazo1");curiosity.brazo.girarPositivo("brazo2");draw_scene();};
-if(toupper(Tecla1)=='I'){curiosity.brazo.girarPositivo("brazo2");draw_scene();}
-if(toupper(Tecla1)=='O'){curiosity.brazo.girarNegativo("brazo2");draw_scene();}
+
 if(toupper(Tecla1)=='P'){curiosity.brazo.girarPositivo("brazo3"); draw_scene();}
 if(toupper(Tecla1)=='J'){curiosity.brazo.girarNegativo("brazo3"); draw_scene();}
 if(toupper(Tecla1)=='K'){curiosity.brazo.girarBasePositivo(); draw_scene();}
 if(toupper(Tecla1)=='L'){curiosity.brazo.girarBaseNegativo(); draw_scene();}
 
 //Control de iluminación:
-if(toupper(Tecla1)=='+'){intensidadLuz+=0.1; ajusteEscena(4); draw_scene();}
-if(toupper(Tecla1)=='-'){intensidadLuz-=0.1; ajusteEscena(4); draw_scene();}
+
+//Intensidad de la luz0
+if(toupper(Tecla1)=='+'){intensidadDifusaLuz0+=0.1; intensidadDifusaLuz1+=0.1; cout << "aumentaDifusaLuz0 y 1"; ajusteEscena(); draw_scene();}
+if(toupper(Tecla1)=='-'){intensidadDifusaLuz0-=0.1; intensidadDifusaLuz1-=0.1; ajusteEscena(); draw_scene();}
+if (toupper(Tecla1)=='Y'){intensidadEspecularLuz0+=0.1; intensidadEspecularLuz1+=0.1; ajusteEscena(); draw_scene();}
+if (toupper(Tecla1)=='U'){intensidadEspecularLuz0-=0.1; intensidadEspecularLuz1-=0.1; ajusteEscena(); draw_scene();};
+if(toupper(Tecla1)=='I'){intensidadAmbientalLuz0+=0.1; intensidadAmbientalLuz1+=0.1; ajusteEscena(); draw_scene();}
+if(toupper(Tecla1)=='O'){intensidadAmbientalLuz0-=0.1; intensidadAmbientalLuz1-=0.1; ajusteEscena(); draw_scene();}
+
+
+//Intensidad de la luz1
+if(toupper(Tecla1)==','){intensidadLuz1+=0.1; ajusteEscena(); draw_scene();}
+if(toupper(Tecla1)=='.'){intensidadLuz1-=0.1; ajusteEscena(); draw_scene();}
+
+
 
 
 
@@ -1181,6 +1290,12 @@ if(toupper(Tecla1)=='-'){intensidadLuz-=0.1; ajusteEscena(4); draw_scene();}
 
 //***************************************************************************
 
+void muestraDatosObservador(){
+    cout << "Observer_angle_y " << Observer_angle_y << endl;
+    cout << "Observer_angle_x " << Observer_angle_x << endl;
+    cout << "Observer_distance " << Observer_distance << endl;
+}
+
 void special_keys(int Tecla1,int x,int y)
 {
 
@@ -1188,24 +1303,30 @@ switch (Tecla1){
     //Tecla izquierda:
 	case GLUT_KEY_LEFT:
         Observer_angle_y--;
+        muestraDatosObservador();
         break;
     //Tecla derecha:
 	case GLUT_KEY_RIGHT:
         Observer_angle_y++;
+        muestraDatosObservador();
         break;
     //Tecla arriba:
 	case GLUT_KEY_UP:
         Observer_angle_x--;
+        muestraDatosObservador();
         break;
     //Tecla abajo:
 	case GLUT_KEY_DOWN:
         Observer_angle_x++;
+        muestraDatosObservador();
         break;
 	case GLUT_KEY_PAGE_UP:
         Observer_distance*=1.2;
+        muestraDatosObservador();
         break;
 	case GLUT_KEY_PAGE_DOWN:
         Observer_distance/=1.2;
+        muestraDatosObservador();
         break;
 	}
 
@@ -1274,7 +1395,7 @@ if(animacion){
             gradoCono+=velocidadCono;
             //Giramos toda la escena hacia la derecha.
             Observer_angle_y++;
-        }else if(EJERCICIO==2){
+        }else if(EJERCICIO==2 || EJERCICIO==3 || EJERCICIO==5){
             //Animamos el foco de luz superior.
             gradoCono+=velocidadCono;
         }else{
@@ -1572,10 +1693,10 @@ int main(int argc, char **argv)
 
 
     //EXAMEN P4 :
-
+    int rev=16;
     figuraPerfilCompleto.cargarPerfil(perfilCompleto);
-    figuraPerfilCompleto.revoluciona(4, 0, 360);
-    figuraPerfilCompleto.generaCoordenadasTextura(4);
+    figuraPerfilCompleto.revoluciona(rev, 0, 360);
+    figuraPerfilCompleto.generaCoordenadasTextura(rev);
 
     //FIN EXAMEN P4
 
@@ -1648,7 +1769,7 @@ int main(int argc, char **argv)
     glLightfv(GL_LIGHT1, GL_SPECULAR, luzEspecular);
 */
     //Establezo el tipo de iluminación plano
-    glShadeModel(GL_FLAT);
+
 
     //Rectificamos el valor por defecto de la luz ambiente:
 
@@ -1672,10 +1793,11 @@ int main(int argc, char **argv)
 
     // ## TEXTURAS [INICIALIZACIÓN]## //
 
-    //cargarTextura("./text-lata-1.bmp");
-    cargarTextura(texturaLata, "./text-lata-1.bmp");
-    cargarTextura(texturaMadera, "./text-madera.bmp");
-    cargarTextura(texturaIG, "./ig.bmp");
+    glGenTextures(n, texturas);
+
+    cargarTextura(texturas[0], "./text-lata-1.bmp");
+    cargarTextura(texturas[1], "./text-madera.bmp");
+    cargarTextura(texturas[2], "./ig.bmp");
 
         /*
         cout << "Proceso de imagen" << endl;
@@ -1743,6 +1865,9 @@ int main(int argc, char **argv)
     // inicio del bucle de eventos
     glutIdleFunc(idle);
     glutMainLoop();
+
+    delete texturas;
+
     return 0;
 }
 

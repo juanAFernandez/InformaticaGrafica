@@ -21,7 +21,26 @@ double Z=0.0;
 
 double MODO=0;
 
-double intensidadLuz=0;
+double intensidadDifusaLuz0=1.0;
+double intensidadAmbientalLuz0=1.0;
+double intensidadEspecularLuz0=0.0;
+
+double intensidadDifusaLuz1=1.0;
+double intensidadAmbientalLuz1=1.0;
+double intensidadEspecularLuz1=0.0;
+
+double intensidadLuz0=1.0;
+
+double intensidadLuz1=1.0;
+
+
+//Para el movimiento:
+
+        double Cx;
+        double Cz;
+
+int gradosRotacionCoche;
+
 
 //Normal directriz:
 

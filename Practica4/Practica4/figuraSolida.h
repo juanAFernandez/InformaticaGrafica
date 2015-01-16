@@ -171,35 +171,80 @@ class figuraSolida : public figuraSimple {
 
         void dibujarTextura(GLuint texName){
 
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, texName);
 
+            glBegin(GL_TRIANGLES);
+            glColor3f(1.0f,1.0f,1.0f);
+            for(int i=0; i<caras.size(); i++){
+                glTexCoord2f(cTs[caras[i]._0].x, cTs[caras[i]._0].y);
+                glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
+                glTexCoord2f(cTs[caras[i]._1].x, cTs[caras[i]._1].y);
+                glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
+                glTexCoord2f(cTs[caras[i]._2].x, cTs[caras[i]._2].y);
+                glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+            }
+            glEnd();
 
-             glEnable(GL_TEXTURE_2D);
-             glBindTexture(GL_TEXTURE_2D, texName);
+            glFlush();
+            glDisable(GL_TEXTURE_2D);
+        }
 
+        void dibujarTexturaIluminacionPlana(GLuint texName){
 
+            glShadeModel(GL_FLAT);
 
-        glBegin(GL_TRIANGLES);
-        glColor3f(1.0f,1.0f,1.0f);
-        for(int i=0; i<caras.size(); i++){
-            glTexCoord2f(cTs[caras[i]._0].x, cTs[caras[i]._0].y);
-            glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
-            glTexCoord2f(cTs[caras[i]._1].x, cTs[caras[i]._1].y);
-            glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
-            glTexCoord2f(cTs[caras[i]._2].x, cTs[caras[i]._2].y);
-            glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, texName);
 
+            glBegin(GL_TRIANGLES);
+            glColor3f(1.0f,1.0f,1.0f);
+            for(int i=0; i<caras.size(); i++){
+                glNormal3f(normales[i].x, normales[i].y, normales[i].z);
+                glTexCoord2f(cTs[caras[i]._0].x, cTs[caras[i]._0].y);
+                glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
+                glTexCoord2f(cTs[caras[i]._1].x, cTs[caras[i]._1].y);
+                glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
+                glTexCoord2f(cTs[caras[i]._2].x, cTs[caras[i]._2].y);
+                glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+            }
+            glEnd();
+
+            glFlush();
+            glDisable(GL_TEXTURE_2D);
         }
 
 
-    glEnd();
 
 
-   glFlush();
-   glDisable(GL_TEXTURE_2D);
 
+        void dibujarTexturaIluminacionSuave(GLuint texName){
 
+            glShadeModel(GL_SMOOTH);
+
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, texName);
+
+            glBegin(GL_TRIANGLES);
+            glColor3f(1.0f,1.0f,1.0f);
+            for(int i=0; i<caras.size(); i++){
+                glNormal3f(normalesVertices[caras[i]._0].x, normalesVertices[caras[i]._0].y, normalesVertices[caras[i]._0].z);
+                glTexCoord2f(cTs[caras[i]._0].x, cTs[caras[i]._0].y);
+                glVertex3f(vertices[caras[i]._0].x, vertices[caras[i]._0].y ,vertices[caras[i]._0].z);
+
+                glNormal3f(normalesVertices[caras[i]._1].x, normalesVertices[caras[i]._1].y, normalesVertices[caras[i]._1].z);
+                glTexCoord2f(cTs[caras[i]._1].x, cTs[caras[i]._1].y);
+                glVertex3f(vertices[caras[i]._1].x, vertices[caras[i]._1].y ,vertices[caras[i]._1].z);
+
+                glNormal3f(normalesVertices[caras[i]._2].x, normalesVertices[caras[i]._2].y, normalesVertices[caras[i]._2].z);
+                glTexCoord2f(cTs[caras[i]._2].x, cTs[caras[i]._2].y);
+                glVertex3f(vertices[caras[i]._2].x, vertices[caras[i]._2].y ,vertices[caras[i]._2].z);
+            }
+            glEnd();
+
+            glFlush();
+            glDisable(GL_TEXTURE_2D);
         }
-
 
 
 
