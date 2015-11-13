@@ -4,9 +4,9 @@
 
 Para esta segunda práctica vamos a realizar una reestructuración de las estructuras de datos que hemos usado en la primera práctica. Mientras que en la primera sólo teníamos un tipo de dato abstracto figura ahora vamos a construir una jerarquía de objetos. Primero tendremos figuraSimple que tendrá un vector de vértices y los métodos más simples que nos podamos imaginar como introducir los vértices a mano y la función de visualizar.
 
-De este heredará otro tipo que será figuraSolida que heredará todos los miembros privados pero al que se le añadirá el vector que guarda las caras. Esto implicará que habrá tendremos más métodos, pues tendremos una para indicar las caras y otro para dibujar tanto las aristas que en nuestro caso también vendrán definidas por las caras (otra opción sería tener otro vector de aristas para dibujarlas).
+De este heredará otro tipo que será figuraSolida que heredará todos los miembros privados pero al que se le añadirá el vector que guarda las caras. Esto implicará que ahora tendremos más métodos, pues tendremos una para indicar las caras y otro para dibujar tanto las aristas que en nuestro caso también vendrán definidas por las caras (otra opción sería tener otro vector de aristas para dibujarlas).
 
-De este que ya es un objeto sólido con los suficientes métodos para trabajr con el heredarán los objetos finales que le darán utilidad. Eston serán figuraPly, figuraManual,  figuraRevolucion y figuraBarridoLineal. Esto hace la estructura más compleja pero más clara la separación de los distintos tipos de objetos con los que podemos trabajar.
+De este que ya es un objeto sólido con los suficientes métodos para trabajr con el heredarán los objetos finales que le darán utilidad. Eston serán figuraPly, figuraManual,  figuraRevolucion y figuraBarridoLineal. Esto hace la estructura más compleja, pero más clara la separación de los distintos tipos de objetos con los que podemos trabajar.
 
 ##Revolucionando perfiles 
 
